@@ -12,10 +12,10 @@ namespace StealthRoguelike
         static char[,] map;
         const int minRoomSize = 3;
         const int maxRoomSize = 12;
-        const int minCorridorLength = 4;
+        const int minCorridorLength = 2;
         const int maxCorridorLength = 25;
-        const int maxRooms = 120;
-        const int maxCorridors = 150;
+        const int maxRooms = 15;
+        const int maxCorridors = 20;
 
         public static void setParams(int mapw, int maph)
         {
@@ -89,8 +89,8 @@ namespace StealthRoguelike
                 {
                     dig(x, y - corrLength, 1, corrLength);
                     map[x, y] = '+';
+                    return true;
                 }
-                return true;
             }
             if (dir == 1) //dig right
             {
@@ -98,8 +98,8 @@ namespace StealthRoguelike
                 {
                     dig(x, y, corrLength, 1);
                     map[x, y] = '+';
+                    return true;
                 }
-                return true;
             }
             if (dir == 2) //dig down
             {
@@ -107,8 +107,8 @@ namespace StealthRoguelike
                 {
                     dig(x, y, 1, corrLength);
                     map[x, y] = '+';
+                    return true;
                 }
-                return true;
             }
             if (dir == 3) //dig left
             {
@@ -116,8 +116,8 @@ namespace StealthRoguelike
                 {
                     dig(x - corrLength, y, corrLength, 1);
                     map[x, y] = '+';
+                    return true;
                 }
-                return true;
             }
             //map[x, y] = '+';
             return false;
@@ -139,8 +139,8 @@ namespace StealthRoguelike
                 {
                     dig(x - intersect, y - roomHeight, roomWidth + 1, roomHeight);
                     map[x, y] = '+';
+                    return true;
                 }
-                return true;
             }
             if (dir == 1) //dig right
             {
@@ -149,8 +149,8 @@ namespace StealthRoguelike
                 {
                     dig(x + 1, y - intersect, roomWidth, roomHeight);
                     map[x, y] = '+';
+                    return true;
                 }
-                return true;
             }
             if (dir == 2) //dig down
             {
@@ -159,8 +159,8 @@ namespace StealthRoguelike
                 {
                     dig(x - intersect, y+1, roomWidth, roomHeight);
                     map[x, y] = '+';
+                    return true;
                 }
-                return true;
             }
             if (dir == 3) //dig left
             {
@@ -169,11 +169,45 @@ namespace StealthRoguelike
                 {
                     dig(x - roomWidth, y - intersect, roomWidth, roomHeight);
                     map[x, y] = '+';
+                    return true;
                 }
-                return true;
             }
             //map[x, y] = '+';
             return false;
+        }
+
+        static void FuckingBuildCorridor() //this forcibly either builds a corridor
+        {                                  //OR FUCKING DIES
+            int x, y;
+            bool done = false;
+            while (true)
+            {
+                x = 0; y = 0;
+                while (!isWall(x, y))
+                {
+                    x = Tools.getRandomInt(1, mapWidth - 1);
+                    y = Tools.getRandomInt(1, mapHeight - 1);
+                }
+                done = digCorridor(x, y);
+                if (done) break;
+            }
+        }
+
+        static void FuckingBuildRoom() // either build a room or fucking die
+        {
+            int x, y;
+            bool done = false;
+            while (true)
+            {
+                x = 0; y = 0;
+                while (!isWall(x, y))
+                {
+                    x = Tools.getRandomInt(1, mapWidth - 1);
+                    y = Tools.getRandomInt(1, mapHeight - 1);
+                }
+                done = digRoom(x, y);
+                if (done) break;
+            }
         }
 
         public static char[,] generateDungeon()
@@ -194,16 +228,12 @@ namespace StealthRoguelike
             int rooms = 1;
             int corridors = 0;
             //now let's start a generation loop
-            for (int build = 0; build < maxCorridors + maxRooms; build++)
+            //for (int build = 0; build < maxCorridors + maxRooms; build++)
+            while (corridors < maxCorridors || rooms < maxRooms)
             {
                 //firstly, pick a random wall adjacent to room 
                 //or corridor or something
-                int pickx = 0, picky = 0;
-                while(!isWall(pickx, picky))
-                {
-                    pickx = Tools.getRandomInt(1, mapWidth - 1);
-                    picky = Tools.getRandomInt(1, mapHeight - 1);
-                }
+                    //!!MOVED TO ANOTHER METHOD!!
                 //okay, it's picked. Now let's decide 
                 //will we build whether a corridor or a room
                 int decision = Tools.getRandomInt(maxRooms + maxCorridors);
@@ -211,19 +241,17 @@ namespace StealthRoguelike
                 {
                     if (corridors < maxCorridors)
                     {
-                        if (digCorridor(pickx, picky)) corridors++;
+                        FuckingBuildCorridor();
+                        corridors++;
                     }
-                    else if (rooms < maxRooms)
-                        if (digRoom(pickx, picky)) rooms++;
                 }
                 if (decision >= maxCorridors) //let's build a room
                 {
                     if (rooms < maxRooms)
                     {
-                        if (digRoom(pickx, picky)) rooms++;
+                        FuckingBuildRoom();
+                        rooms++;
                     }
-                    else if (corridors < maxCorridors)
-                        if (digCorridor(pickx, picky)) corridors++;
                 }
                 //повторим...
             }

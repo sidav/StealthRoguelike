@@ -9,7 +9,7 @@ namespace StealthRoguelike
     class Program
     {
         const int mapWidth = 80;
-        const int mapHeight = 20;
+        const int mapHeight = 25;
 
         static void drawTestMap(char[,] map)
         {
