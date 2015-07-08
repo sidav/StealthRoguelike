@@ -14,8 +14,8 @@ namespace StealthRoguelike
         const int maxRoomSize = 10;
         const int minCorridorLength = 2;
         const int maxCorridorLength = 5;
-        const int maxRooms = 10;
-        const int maxCorridors = 15;
+        const int maxRooms = 100;
+        const int maxCorridors = 50;
 
         public static void setParams(int mapw, int maph)
         {
@@ -111,13 +111,14 @@ namespace StealthRoguelike
                 map[x, y] = '+';
                 return true;
             }
-            map[x, y] = '+';
+            //map[x, y] = '+';
             return false;
         }
 
-        static bool digRoom(int x, int y)
+        static bool digRoom(int x, int y) // THERE BE DRAGONS
         {
-            int corrLength = Tools.getRandomInt(minCorridorLength, maxCorridorLength);
+            int roomWidth = Tools.getRandomInt(minRoomSize, maxRoomSize);
+            int roomHeight = Tools.getRandomInt(minRoomSize, maxRoomSize);
             int dir = corrDirection(x, y);
             //directions:
             // 0
@@ -125,33 +126,45 @@ namespace StealthRoguelike
             // 2
             if (dir == 0) //dig up
             {
-                if (isEmpty(x - 1, y - corrLength, 3, corrLength))
-                    dig(x, y - corrLength, 1, corrLength);
-                map[x, y] = '+';
+                int intersect = Tools.getRandomInt(roomWidth);
+                if (isEmpty(x - intersect - 1, y - roomHeight, roomWidth + 1, roomHeight + 1))
+                {
+                    dig(x - intersect, y - roomHeight, roomWidth + 1, roomHeight);
+                    map[x, y] = '+';
+                }
                 return true;
             }
             if (dir == 1) //dig right
             {
-                if (isEmpty(x, y - 1, corrLength, 3))
-                    dig(x, y, corrLength, 1);
-                map[x, y] = '+';
+                int intersect = Tools.getRandomInt(roomHeight);
+                if (isEmpty(x, y - intersect - 1, roomWidth + 1, roomHeight + 1))
+                {
+                    dig(x + 1, y - intersect, roomWidth, roomHeight);
+                    map[x, y] = '+';
+                }
                 return true;
             }
             if (dir == 2) //dig down
             {
-                if (isEmpty(x - 1, y, 3, corrLength))
-                    dig(x, y, 1, corrLength);
-                map[x, y] = '+';
+                int intersect = Tools.getRandomInt(roomWidth);
+                if (isEmpty(x - intersect - 1, y, roomWidth + 1, roomHeight + 1))
+                {
+                    dig(x - intersect, y+1, roomWidth, roomHeight);
+                    map[x, y] = '+';
+                }
                 return true;
             }
             if (dir == 3) //dig left
             {
-                if (isEmpty(x - corrLength, y - 1, corrLength, 3))
-                    dig(x - corrLength, y, corrLength, 1);
-                map[x, y] = '+';
+                int intersect = Tools.getRandomInt(roomHeight);
+                if (isEmpty(x - roomWidth - 1 , y - intersect - 1, roomWidth + 1, roomHeight + 1))
+                {
+                    dig(x - roomWidth, y - intersect, roomWidth, roomHeight);
+                    map[x, y] = '+';
+                }
                 return true;
             }
-            map[x, y] = '+';
+            //map[x, y] = '+';
             return false;
         }
 
