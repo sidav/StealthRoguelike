@@ -13,9 +13,9 @@ namespace StealthRoguelike
         const int minRoomSize = 2;
         const int maxRoomSize = 10;
         const int minCorridorLength = 2;
-        const int maxCorridorLength = 5;
-        const int maxRooms = 500;
-        const int maxCorridors = 100;
+        const int maxCorridorLength = 25;
+        const int maxRooms = 200;
+        const int maxCorridors = 500;
 
         public static void setParams(int mapw, int maph)
         {
@@ -86,29 +86,37 @@ namespace StealthRoguelike
             if (dir == 0) //dig up
             {
                 if (isEmpty(x - 1, y - corrLength, 3, corrLength))
+                {
                     dig(x, y - corrLength, 1, corrLength);
-                map[x, y] = '+';
+                    map[x, y] = '+';
+                }
                 return true;
             }
             if (dir == 1) //dig right
             {
-                if (isEmpty(x, y-1, corrLength, 3))
+                if (isEmpty(x, y - 1, corrLength, 3))
+                {
                     dig(x, y, corrLength, 1);
-                map[x, y] = '+';
+                    map[x, y] = '+';
+                }
                 return true;
             }
             if (dir == 2) //dig down
             {
                 if (isEmpty(x - 1, y, 3, corrLength))
+                {
                     dig(x, y, 1, corrLength);
-                map[x, y] = '+';
+                    map[x, y] = '+';
+                }
                 return true;
             }
             if (dir == 3) //dig left
             {
-                if (isEmpty(x-corrLength, y-1, corrLength, 3))
-                    dig(x-corrLength, y, corrLength, 1);
-                map[x, y] = '+';
+                if (isEmpty(x - corrLength, y - 1, corrLength, 3))
+                {
+                    dig(x - corrLength, y, corrLength, 1);
+                    map[x, y] = '+';
+                }
                 return true;
             }
             //map[x, y] = '+';
