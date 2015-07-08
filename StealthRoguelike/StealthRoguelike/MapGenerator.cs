@@ -14,6 +14,9 @@ namespace StealthRoguelike
             for (int i = 0; i < mapWidth; i++)
                 for (int j = 0; j < mapHeight; j++)
                     map[i, j] = '#';
+            
+
+
             return map;
         }
     }
