@@ -46,6 +46,8 @@ namespace StealthRoguelike
             roomx = mapWidth / 2 - roomwidth / 2;
             roomy = mapHeight / 2 - roomheight / 2;
             digRoom(roomx, roomy, roomwidth, roomheight);
+            
+
             //for (int roomnum = 0; roomnum < maxRooms; roomnum++)
             //{
             //    bool success = false;
