@@ -10,11 +10,11 @@ namespace StealthRoguelike
     {
         static int mapWidth, mapHeight;
         static char[,] map;
-        const int minRoomSize = 4;
-        const int maxRoomSize = 15;
+        const int minRoomSize = 2;
+        const int maxRoomSize = 10;
         const int minCorridorLength = 4;
         const int maxCorridorLength = 10;
-        const int maxRooms = 1;
+        const int maxRooms = 9;
         const int minCorridors = 4;
 
         public static void setParams(int mapw, int maph)
@@ -97,7 +97,7 @@ namespace StealthRoguelike
             if (dir == 3) //dig left
             {
                 if (isEmpty(x-corrLength, y-1, corrLength, 3))
-                    dig(x-corrLength, y, 1, corrLength);
+                    dig(x-corrLength, y, corrLength, 1);
             }
             map[x, y] = '+';
         }
