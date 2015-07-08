@@ -10,12 +10,12 @@ namespace StealthRoguelike
     {
         static int mapWidth, mapHeight;
         static char[,] map;
-        const int minRoomSize = 3;
+        const int minRoomSize = 2;
         const int maxRoomSize = 12;
-        const int minCorridorLength = 2;
+        const int minCorridorLength = 3;
         const int maxCorridorLength = 25;
-        const int maxRooms = 15;
-        const int maxCorridors = 20;
+        const int maxRooms = 60;
+        const int maxCorridors = 10;
 
         public static void setParams(int mapw, int maph)
         {
@@ -75,7 +75,7 @@ namespace StealthRoguelike
             return dir;
         }
 
-        static bool digCorridor(int x, int y)
+        static bool digCorridor(int x, int y) // THERE BE DRAGONS
         {
             int corrLength = Tools.getRandomInt(minCorridorLength,maxCorridorLength);
             int dir = corrDirection(x, y);
@@ -229,15 +229,15 @@ namespace StealthRoguelike
             int corridors = 0;
             //now let's start a generation loop
             //for (int build = 0; build < maxCorridors + maxRooms; build++)
+            int zomg = 0;
             while (corridors < maxCorridors || rooms < maxRooms)
             {
                 //firstly, pick a random wall adjacent to room 
                 //or corridor or something
-                    //!!MOVED TO ANOTHER METHOD!!
+                    ///!!MOVED TO ANOTHER METHOD!!
                 //okay, it's picked. Now let's decide 
                 //will we build whether a corridor or a room
-                int decision = Tools.getRandomInt(maxRooms + maxCorridors);
-                if (decision < maxCorridors) //let's build a corridor
+                if (true)
                 {
                     if (corridors < maxCorridors)
                     {
@@ -245,7 +245,7 @@ namespace StealthRoguelike
                         corridors++;
                     }
                 }
-                if (decision >= maxCorridors) //let's build a room
+                if (zomg % 4 == 0)
                 {
                     if (rooms < maxRooms)
                     {
@@ -254,6 +254,7 @@ namespace StealthRoguelike
                     }
                 }
                 //повторим...
+                zomg++;
             }
 
             return map;
