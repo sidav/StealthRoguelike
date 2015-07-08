@@ -12,10 +12,10 @@ namespace StealthRoguelike
         static char[,] map;
         const int minRoomSize = 2;
         const int maxRoomSize = 10;
-        const int minCorridorLength = 4;
-        const int maxCorridorLength = 10;
-        const int maxRooms = 9;
-        const int minCorridors = 4;
+        const int minCorridorLength = 2;
+        const int maxCorridorLength = 5;
+        const int maxRooms = 10;
+        const int maxCorridors = 15;
 
         public static void setParams(int mapw, int maph)
         {
@@ -51,8 +51,12 @@ namespace StealthRoguelike
                 return false;
             for (int i = 0; i < width; i++)
                 for (int j = 0; j < width; j++)
-                    if (map[x+i, y+j] == '.')
+                {
+                    if (x + i >= mapWidth || y + j >= mapHeight)
                         return false;
+                    if (map[x + i, y + j] == '.')
+                        return false;
+                }
             return true;
         }
 
@@ -71,7 +75,7 @@ namespace StealthRoguelike
             return dir;
         }
 
-        static void digCorridor(int x, int y)
+        static bool digCorridor(int x, int y)
         {
             int corrLength = Tools.getRandomInt(minCorridorLength,maxCorridorLength);
             int dir = corrDirection(x, y);
@@ -83,23 +87,72 @@ namespace StealthRoguelike
             {
                 if (isEmpty(x - 1, y - corrLength, 3, corrLength))
                     dig(x, y - corrLength, 1, corrLength);
+                map[x, y] = '+';
+                return true;
             }
             if (dir == 1) //dig right
             {
                 if (isEmpty(x, y-1, corrLength, 3))
                     dig(x, y, corrLength, 1);
+                map[x, y] = '+';
+                return true;
             }
             if (dir == 2) //dig down
             {
                 if (isEmpty(x - 1, y, 3, corrLength))
                     dig(x, y, 1, corrLength);
+                map[x, y] = '+';
+                return true;
             }
             if (dir == 3) //dig left
             {
                 if (isEmpty(x-corrLength, y-1, corrLength, 3))
                     dig(x-corrLength, y, corrLength, 1);
+                map[x, y] = '+';
+                return true;
             }
             map[x, y] = '+';
+            return false;
+        }
+
+        static bool digRoom(int x, int y)
+        {
+            int corrLength = Tools.getRandomInt(minCorridorLength, maxCorridorLength);
+            int dir = corrDirection(x, y);
+            //directions:
+            // 0
+            //3#1
+            // 2
+            if (dir == 0) //dig up
+            {
+                if (isEmpty(x - 1, y - corrLength, 3, corrLength))
+                    dig(x, y - corrLength, 1, corrLength);
+                map[x, y] = '+';
+                return true;
+            }
+            if (dir == 1) //dig right
+            {
+                if (isEmpty(x, y - 1, corrLength, 3))
+                    dig(x, y, corrLength, 1);
+                map[x, y] = '+';
+                return true;
+            }
+            if (dir == 2) //dig down
+            {
+                if (isEmpty(x - 1, y, 3, corrLength))
+                    dig(x, y, 1, corrLength);
+                map[x, y] = '+';
+                return true;
+            }
+            if (dir == 3) //dig left
+            {
+                if (isEmpty(x - corrLength, y - 1, corrLength, 3))
+                    dig(x - corrLength, y, corrLength, 1);
+                map[x, y] = '+';
+                return true;
+            }
+            map[x, y] = '+';
+            return false;
         }
 
         public static char[,] generateDungeon()
@@ -110,14 +163,17 @@ namespace StealthRoguelike
                 for (int j = 0; j < mapHeight; j++)
                     map[i, j] = '#';
             //place a room in the centre
-            roomwidth = Tools.getRandomInt(minRoomSize, maxRoomSize);
-            roomheight = Tools.getRandomInt(minRoomSize, maxRoomSize);
+            roomwidth = Tools.getRandomInt(minRoomSize+1, maxRoomSize);
+            roomheight = Tools.getRandomInt(minRoomSize+1, maxRoomSize);
             roomx = mapWidth / 2 - roomwidth / 2;
             roomy = mapHeight / 2 - roomheight / 2;
             if (isEmpty(roomx, roomy,roomwidth, roomheight))
                 dig(roomx, roomy, roomwidth, roomheight);
+            //total rooms and corridors
+            int rooms = 1;
+            int corridors = 0;
             //now let's start a generation loop
-            for (int roomnum = 0; roomnum < maxRooms; roomnum++)
+            for (int build = 0; build < maxCorridors + maxRooms; build++)
             {
                 //firstly, pick a random wall adjacent to room 
                 //or corridor or something
@@ -129,9 +185,26 @@ namespace StealthRoguelike
                 }
                 //okay, it's picked. Now let's decide 
                 //will we build whether a corridor or a room
-
-                //(only a corridor for now)
-                digCorridor(pickx, picky);
+                int decision = Tools.getRandomInt(maxRooms + maxCorridors);
+                if (decision < maxCorridors) //let's build a corridor
+                {
+                    if (corridors < maxCorridors)
+                    {
+                        if (digCorridor(pickx, picky)) corridors++;
+                    }
+                    else if (rooms < maxRooms)
+                        if (digRoom(pickx, picky)) rooms++;
+                }
+                if (decision >= maxCorridors) //let's build a room
+                {
+                    if (rooms < maxRooms)
+                    {
+                        if (digRoom(pickx, picky)) rooms++;
+                    }
+                    else if (corridors < maxCorridors)
+                        if (digCorridor(pickx, picky)) corridors++;
+                }
+                //повторим...
             }
 
             return map;
