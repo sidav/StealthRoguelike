@@ -14,5 +14,10 @@ namespace StealthRoguelike
             int val = random.Next(max);
             return val;
         }
+        public static int getRandomInt(int min, int max) 
+        {
+            int val = random.Next(max-min);
+            return val+min;
+        }
     }
 }
