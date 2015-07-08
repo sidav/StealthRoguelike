@@ -8,12 +8,15 @@ namespace StealthRoguelike
 {
     class Program
     {
+        const int mapWidth = 80;
+        const int mapHeight = 20;
+
         static void drawTestMap(char[,] map)
         {
-            for (int j = 0; j < 25; j++)
-                for (int i = 0; i < 80; i++)
+            for (int j = 0; j < mapHeight; j++)
+                for (int i = 0; i < mapWidth; i++)
                     //if (i != 79 || j != 24)
-                    if (i > 0 && i < 80 - 1 && j > 0 && j < 25 - 1)
+                    if (i > 0 && i < mapWidth - 1 && j > 0 && j < mapHeight - 1)
                         if (map[i - 1, j - 1] != '#' || map[i, j - 1] != '#'
                             || map[i + 1, j - 1] != '#' || map[i - 1, j] != '#' ||
                             map[i + 1, j] != '#' || map[i - 1, j + 1] != '#'
@@ -28,7 +31,7 @@ namespace StealthRoguelike
             Console.SetBufferSize(80, 26);
             Console.SetWindowSize(80, 26);
             Console.CursorVisible = false;
-            MapGenerator.setParams(80, 25);
+            MapGenerator.setParams(mapWidth, mapHeight);
             char[,] map = MapGenerator.generateDungeon();
             drawTestMap(map);
             Console.ReadKey();

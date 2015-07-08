@@ -10,12 +10,12 @@ namespace StealthRoguelike
     {
         static int mapWidth, mapHeight;
         static char[,] map;
-        const int minRoomSize = 2;
-        const int maxRoomSize = 10;
-        const int minCorridorLength = 2;
+        const int minRoomSize = 3;
+        const int maxRoomSize = 12;
+        const int minCorridorLength = 4;
         const int maxCorridorLength = 25;
-        const int maxRooms = 200;
-        const int maxCorridors = 500;
+        const int maxRooms = 120;
+        const int maxCorridors = 150;
 
         public static void setParams(int mapw, int maph)
         {
