@@ -10,15 +10,15 @@ namespace StealthRoguelike
     {
         static int mapWidth, mapHeight;
         static char[,] map;
-        const char wallChar = '#';
-        const char doorChar = '+';
-        const char floorChar = ' ';
+        public const char wallChar = '#';
+        public const char doorChar = '+';
+        public const char floorChar = '.';
         const int minRoomSize = 2;
         const int maxRoomSize = 12;
         const int minCorridorLength = 3;
         const int maxCorridorLength = 25;
-        const int maxRooms = 60;
-        const int maxCorridors = 10;
+        const int maxRooms = 25;
+        const int maxCorridors = 20;
 
         public static void setParams(int mapw, int maph)
         {
@@ -232,7 +232,7 @@ namespace StealthRoguelike
             int corridors = 0;
             //now let's start a generation loop
             //for (int build = 0; build < maxCorridors + maxRooms; build++)
-            int zomg = 0;
+            int iteration = 0;
             while (corridors < maxCorridors || rooms < maxRooms)
             {
                 //firstly, pick a random wall adjacent to room 
@@ -248,7 +248,7 @@ namespace StealthRoguelike
                         corridors++;
                     }
                 }
-                if (zomg % 4 == 0)
+                if (iteration % 4 == 0)
                 {
                     if (rooms < maxRooms)
                     {
@@ -257,7 +257,7 @@ namespace StealthRoguelike
                     }
                 }
                 //повторим...
-                zomg++;
+                iteration++;
             }
 
             return map;
