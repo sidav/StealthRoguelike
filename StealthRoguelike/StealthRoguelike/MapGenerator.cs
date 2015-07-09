@@ -10,6 +10,9 @@ namespace StealthRoguelike
     {
         static int mapWidth, mapHeight;
         static char[,] map;
+        const char wallChar = '#';
+        const char doorChar = '+';
+        const char floorChar = '.';
         const int minRoomSize = 2;
         const int maxRoomSize = 12;
         const int minCorridorLength = 3;
@@ -30,17 +33,17 @@ namespace StealthRoguelike
                 return false;
             for (int i = 0; i < roomwidth; i++)
                 for (int j = 0; j < roomheight; j++)
-                    map[x+i, y+j] = '.';
+                    map[x+i, y+j] = floorChar;
             return true; 
         }
        
         static bool isWall(int x, int y)
         {
-            if (map[x, y] != '#')
+            if (map[x, y] != wallChar)
                 return false;
             if (x == 0 || x == mapWidth-1 || y == 0 || y == mapHeight-1)
                 return false;
-            if (map[x-1,y] == '.' || map[x+1,y] == '.' || map[x,y-1] == '.' || map[x,y+1] == '.')
+            if (map[x-1,y] == floorChar || map[x+1,y] == floorChar || map[x,y-1] == floorChar || map[x,y+1] == floorChar)
                 return true;
             return false;
         }
@@ -66,11 +69,11 @@ namespace StealthRoguelike
             //3#1
             // 2
             int dir = 0;
-            if (map[x-1, y] == '.')
+            if (map[x-1, y] == floorChar)
                 dir = 1;
-            if (map[x, y-1] == '.')
+            if (map[x, y-1] == floorChar)
                 dir = 2;
-            if (map[x+1, y] == '.')
+            if (map[x+1, y] == floorChar)
                 dir = 3;
             return dir;
         }
@@ -88,7 +91,7 @@ namespace StealthRoguelike
                 if (isEmpty(x - 1, y - corrLength, 3, corrLength))
                 {
                     dig(x, y - corrLength, 1, corrLength);
-                    map[x, y] = '+';
+                    map[x, y] = doorChar;
                     return true;
                 }
             }
@@ -97,7 +100,7 @@ namespace StealthRoguelike
                 if (isEmpty(x, y - 1, corrLength, 3))
                 {
                     dig(x, y, corrLength, 1);
-                    map[x, y] = '+';
+                    map[x, y] = doorChar;
                     return true;
                 }
             }
@@ -106,7 +109,7 @@ namespace StealthRoguelike
                 if (isEmpty(x - 1, y, 3, corrLength))
                 {
                     dig(x, y, 1, corrLength);
-                    map[x, y] = '+';
+                    map[x, y] = doorChar;
                     return true;
                 }
             }
@@ -115,7 +118,7 @@ namespace StealthRoguelike
                 if (isEmpty(x - corrLength, y - 1, corrLength, 3))
                 {
                     dig(x - corrLength, y, corrLength, 1);
-                    map[x, y] = '+';
+                    map[x, y] = doorChar;
                     return true;
                 }
             }
@@ -138,7 +141,7 @@ namespace StealthRoguelike
                 if (isEmpty(x - intersect - 1, y - roomHeight, roomWidth + 1, roomHeight + 1))
                 {
                     dig(x - intersect, y - roomHeight, roomWidth + 1, roomHeight);
-                    map[x, y] = '+';
+                    map[x, y] = doorChar;
                     return true;
                 }
             }
@@ -148,7 +151,7 @@ namespace StealthRoguelike
                 if (isEmpty(x, y - intersect - 1, roomWidth + 1, roomHeight + 1))
                 {
                     dig(x + 1, y - intersect, roomWidth, roomHeight);
-                    map[x, y] = '+';
+                    map[x, y] = doorChar;
                     return true;
                 }
             }
@@ -158,7 +161,7 @@ namespace StealthRoguelike
                 if (isEmpty(x - intersect - 1, y, roomWidth + 1, roomHeight + 1))
                 {
                     dig(x - intersect, y+1, roomWidth, roomHeight);
-                    map[x, y] = '+';
+                    map[x, y] = doorChar;
                     return true;
                 }
             }
@@ -168,7 +171,7 @@ namespace StealthRoguelike
                 if (isEmpty(x - roomWidth - 1 , y - intersect - 1, roomWidth + 1, roomHeight + 1))
                 {
                     dig(x - roomWidth, y - intersect, roomWidth, roomHeight);
-                    map[x, y] = '+';
+                    map[x, y] = doorChar;
                     return true;
                 }
             }
@@ -216,7 +219,7 @@ namespace StealthRoguelike
             //fill everything with "earth"
             for (int i = 0; i < mapWidth; i++)
                 for (int j = 0; j < mapHeight; j++)
-                    map[i, j] = '#';
+                    map[i, j] = wallChar;
             //place a room in the centre
             roomwidth = Tools.getRandomInt(minRoomSize+1, maxRoomSize);
             roomheight = Tools.getRandomInt(minRoomSize+1, maxRoomSize);
