@@ -12,7 +12,7 @@ namespace StealthRoguelike
         static char[,] map;
         const char wallChar = '#';
         const char doorChar = '+';
-        const char floorChar = '.';
+        const char floorChar = ' ';
         const int minRoomSize = 2;
         const int maxRoomSize = 12;
         const int minCorridorLength = 3;
@@ -57,7 +57,7 @@ namespace StealthRoguelike
                 {
                     if (x + i >= mapWidth || y + j >= mapHeight)
                         return false;
-                    if (map[x + i, y + j] == '.')
+                    if (map[x + i, y + j] == floorChar)
                         return false;
                 }
             return true;
