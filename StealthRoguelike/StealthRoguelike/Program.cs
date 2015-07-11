@@ -9,7 +9,7 @@ namespace StealthRoguelike
     class Program
     {
         const int mapWidth = 80;
-        const int mapHeight = 20;
+        const int mapHeight = 25;
 
         static void drawTestMap(char[,] map)
         {
@@ -23,7 +23,7 @@ namespace StealthRoguelike
                             || map[i, j + 1] != MapGenerator.wallChar || map[i + 1, j + 1] != MapGenerator.wallChar)
                             Console.Write(map[i, j]);
                         else Console.Write(' ');
-                    else Console.Write(map[i, j]);
+                    else Console.Write('#');
         }
 
         static void Main(string[] args)

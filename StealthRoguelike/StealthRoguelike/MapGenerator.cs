@@ -13,6 +13,8 @@ namespace StealthRoguelike
         public const char wallChar = '#';
         public const char doorChar = '+';
         public const char floorChar = '.';
+        public const char upstairChar = '<';
+        public const char downstairChar = '>';
         const int minRoomSize = 2;
         const int maxRoomSize = 12;
         const int minCorridorLength = 3;
