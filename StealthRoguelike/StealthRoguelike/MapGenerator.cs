@@ -8,7 +8,7 @@ namespace StealthRoguelike
 {
     class MapGenerator
     {
-        static int mapWidth, mapHeight;
+        public static int mapWidth, mapHeight;
         static char[,] map;
         public const char wallChar = '#';
         public const char doorChar = '+';
