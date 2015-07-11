@@ -258,9 +258,17 @@ namespace StealthRoguelike
                         rooms++;
                     }
                 }
-                //повторим...
+                //repeat...
                 iteration++;
             }
+            //let's place an entrance stair
+            int sx = 0, sy = 0;
+            while (map[sx, sy] != floorChar)
+            {
+                sx = Tools.getRandomInt(mapWidth);
+                sy = Tools.getRandomInt(mapHeight);
+            }
+            map[sx, sy] = upstairChar;
 
             return map;
         }

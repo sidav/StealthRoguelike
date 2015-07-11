@@ -8,7 +8,7 @@ namespace StealthRoguelike
 {
     class Unit
     {
-        int coordX, coordY;
+        public int coordX, coordY;
         char appearance;
         bool noFOV;
         public Unit(int x, int y, char appear, bool nofov)
