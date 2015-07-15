@@ -8,10 +8,10 @@ namespace StealthRoguelike
 {
     class Program
     {
-        const int mapWidth = 80;
-        const int mapHeight = 24;
+        public const int mapWidth = 80;
+        public const int mapHeight = 24;
         public const int consoleWidth = 80;
-        public const int consoleHeight = 26;
+        public const int consoleHeight = 25;
 
         static void drawTestMap(char[,] map)
         {
@@ -30,13 +30,13 @@ namespace StealthRoguelike
         static void Main(string[] args)
         {
             Console.SetBufferSize(80, 26);
-            Console.SetWindowSize(80, 26);
+            Console.SetWindowSize(80, 25);
             Console.CursorVisible = false;
             MapGenerator.setParams(mapWidth, mapHeight);
             //char[,] map = MapGenerator.generateDungeon();
             //drawTestMap(map);
             World w = new World();
-            w.drawWorld();
+            w.Loop();
             Console.ReadKey();
         }
     }

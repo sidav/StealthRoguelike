@@ -9,7 +9,9 @@ namespace StealthRoguelike
     class World
     {
         public static char[,] map;
-        static Unit Player;
+        static Player player;
+        public const int mapWidth = Program.mapWidth;
+        public const int mapHeight = Program.mapHeight;
         public const char wallChar = '#';
         public const char closedDoorChar = '+';
         public const char openedDoorChar = '\'';
@@ -25,45 +27,75 @@ namespace StealthRoguelike
             for (int i = 0; i < MapGenerator.mapWidth; i++)
                 for (int j = 0; j < MapGenerator.mapHeight; j++)
                     if (map[i, j] == upstairChar)
-                        Player = new Unit(i, j, '@');
+                        player = new Player(i,j);
 
         }
 
-        public void drawPlayer()
+        public static bool isWalkable(int x, int y)
         {
-            Player.draw();
+            if (x < 0 || x >= mapWidth || y < 0 || y >= mapHeight)
+                return false;
+            if (map[x, y] == wallChar)
+                return false;
+            if (map[x, y] == closedDoorChar)
+                return false;
+            return true;
         }
 
-        public void drawWorld() //VERY SHITTY AND VERY TEMPORARY SOLUTION. NEED TO REWRITE
+        public static bool tryOpenDoor(int x, int y)
         {
-            //buffer to draw
-            char[,] buffer = new char[Program.consoleWidth, Program.consoleHeight];
-            for (int i = 0; i < Program.consoleWidth; i++)
-                for (int j = 0; j < Program.consoleHeight; j++)
-                    buffer[i, j] = ' ';
-            //let's form the buffer
-            for (int i = 0; i < MapGenerator.mapWidth; i++)
-                for (int j = 0; j < MapGenerator.mapHeight; j++)
-                    buffer[i,j] = map[i,j];
+            if (x < 0 || x >= mapWidth || y < 0 || y >= mapHeight)
+                return false;
+            if (map[x, y] == closedDoorChar)
+            {
+                map[x, y] = openedDoorChar;
+                return true;
+            }
+            return false;
+        }
 
-            ////draw a player
-            //int x, y;
-            //x = Player.coordX;
-            //y = Player.coordY;
-            //buffer[x, y] = Player.appearance;
-            //now let's draw the buffer
+        public static void drawUnits()
+        {
+            player.Draw();
+        }
+
+        public void drawMap() //TEMPORARY SOLUTION.
+        { 
             Console.SetCursorPosition(0, 0);
-            for (int j = 0; j < Program.consoleHeight; j++)
-                for (int i = 0; i < Program.consoleWidth; i++)
-                    if (i > 0 && i < Program.consoleWidth - 1 && j > 0 && j < Program.consoleHeight - 1)
-                        if (buffer[i - 1, j - 1] != wallChar || buffer[i, j - 1] != wallChar
-                                || buffer[i + 1, j - 1] != wallChar || buffer[i - 1, j] != wallChar ||
-                                buffer[i + 1, j] != wallChar || buffer[i - 1, j + 1] != wallChar
-                                || buffer[i, j + 1] != wallChar || buffer[i + 1, j + 1] != wallChar)
-                            Console.Write(buffer[i, j]);
-                        else Console.Write(' ');
-                    else Console.Write(wallChar);
-            drawPlayer();
+            for (int j = 0; j < Program.mapHeight; j++)
+                for (int i = 0; i < Program.mapWidth; i++)
+                    if (i != Program.mapWidth - 1 || j != Program.mapHeight - 1)
+                        Console.Write(map[i, j]);
+        }
+
+        public static void Redraw(int x, int y)
+        {
+            if (x < 0 || x >= mapWidth || y < 0 || y >= mapHeight)
+                return;
+            Console.SetCursorPosition(x, y);
+            Console.Write(map[x, y]);
+            drawUnits();
+        }
+
+        public void drawWorld()
+        {
+            drawMap();
+            drawUnits();
+        }
+
+        public void Loop()
+        {
+            ConsoleKeyInfo keyPressed;
+            drawWorld();
+            while (true)
+            {
+                keyPressed = Console.ReadKey();
+                if (keyPressed.Key == ConsoleKey.Escape)
+                    break;
+                player.handleKeys(keyPressed);
+                drawUnits();
+            }
+
         }
 
     }

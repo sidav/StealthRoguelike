@@ -32,10 +32,10 @@ namespace StealthRoguelike
             color = ConsoleColor.White;
         }
 
-        public void draw()
+        public void Draw()
         {
             ConsoleColor temp = Console.ForegroundColor;
-            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.ForegroundColor = color;
             Console.SetCursorPosition(this.coordX, this.coordY);
             Console.Write(this.appearance);
             if (hasFOV)
@@ -45,16 +45,25 @@ namespace StealthRoguelike
             Console.ForegroundColor = temp;
         }
 
-        public void moveForward() //move where this unit looks
+        public void MoveForward() //move where this unit looks
         {
             coordX += lookX;
             coordY += lookY;
         }
 
-        public void move(int x, int y) //-1 or 0 or 1 for x and y
+        public void MoveOrOpen(int x, int y) //-1 or 0 or 1 for x and y
         {
-            coordX += x;
-            coordY += y;
+            if (World.tryOpenDoor(coordX + x, coordY + y))
+            {
+                World.Redraw(coordX + x, coordY + y);
+                return;
+            }
+            if (World.isWalkable(coordX + x, coordY + y))
+            {
+                coordX += x;
+                coordY += y;
+            }
+            World.Redraw(coordX-x, coordY-y);
         }
 
     }
