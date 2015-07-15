@@ -9,7 +9,7 @@ namespace StealthRoguelike
     class Program
     {
         public const int mapWidth = 80;
-        public const int mapHeight = 24;
+        public const int mapHeight = 22;
         public const int consoleWidth = 80;
         public const int consoleHeight = 25;
 
