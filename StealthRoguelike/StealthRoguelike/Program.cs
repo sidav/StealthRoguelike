@@ -29,8 +29,8 @@ namespace StealthRoguelike
 
         static void Main(string[] args)
         {
-            Console.SetWindowSize(80, 25);
-            Console.SetBufferSize(80, 25);
+            Console.SetWindowSize(consoleWidth, consoleHeight);
+            Console.SetBufferSize(consoleWidth, consoleHeight);
             Console.CursorVisible = false;
             MapGenerator.setParams(mapWidth, mapHeight);
             //char[,] map = MapGenerator.generateDungeon();
