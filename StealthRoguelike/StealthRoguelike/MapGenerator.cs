@@ -233,7 +233,6 @@ namespace StealthRoguelike
             int rooms = 1;
             int corridors = 0;
             //now let's start a generation loop
-            //for (int build = 0; build < maxCorridors + maxRooms; build++)
             int iteration = 0;
             while (corridors < maxCorridors || rooms < maxRooms)
             {

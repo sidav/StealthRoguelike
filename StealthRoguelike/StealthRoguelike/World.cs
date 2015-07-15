@@ -66,7 +66,7 @@ namespace StealthRoguelike
             Console.SetCursorPosition(0, 0);
             for (int j = 0; j < Program.mapHeight; j++)
                 for (int i = 0; i < Program.mapWidth; i++)
-                    if (i != Program.mapWidth - 1 || j != Program.mapHeight - 1)
+                    //if (i != Program.mapWidth - 1 || j != Program.mapHeight - 1)
                         Console.Write(map[i, j]);
         }
 
