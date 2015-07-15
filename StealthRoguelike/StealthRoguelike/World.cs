@@ -12,7 +12,7 @@ namespace StealthRoguelike
         static Unit Player;
         public const char wallChar = '#';
         public const char closedDoorChar = '+';
-        //public const char openedDoorChar = '''';
+        public const char openedDoorChar = '\'';
         public const char floorChar = '.';
         public const char upstairChar = '<';
         public const char downstairChar = '>';
@@ -25,8 +25,13 @@ namespace StealthRoguelike
             for (int i = 0; i < MapGenerator.mapWidth; i++)
                 for (int j = 0; j < MapGenerator.mapHeight; j++)
                     if (map[i, j] == upstairChar)
-                        Player = new Unit(i, j, '@', true);
+                        Player = new Unit(i, j, '@');
 
+        }
+
+        public void drawPlayer()
+        {
+            Player.draw();
         }
 
         public void drawWorld() //VERY SHITTY AND VERY TEMPORARY SOLUTION. NEED TO REWRITE
@@ -41,12 +46,11 @@ namespace StealthRoguelike
                 for (int j = 0; j < MapGenerator.mapHeight; j++)
                     buffer[i,j] = map[i,j];
 
-            //draw a player
-            int x, y;
-            x = Player.coordX;
-            y = Player.coordY;
-            buffer[x, y] = Player.appearance;
-
+            ////draw a player
+            //int x, y;
+            //x = Player.coordX;
+            //y = Player.coordY;
+            //buffer[x, y] = Player.appearance;
             //now let's draw the buffer
             Console.SetCursorPosition(0, 0);
             for (int j = 0; j < Program.consoleHeight; j++)
@@ -59,6 +63,7 @@ namespace StealthRoguelike
                             Console.Write(buffer[i, j]);
                         else Console.Write(' ');
                     else Console.Write(wallChar);
+            drawPlayer();
         }
 
     }

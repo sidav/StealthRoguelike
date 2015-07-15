@@ -18,7 +18,7 @@ namespace StealthRoguelike
         const int minRoomSize = 2;
         const int maxRoomSize = 12;
         const int minCorridorLength = 3;
-        const int maxCorridorLength = 25;
+        const int maxCorridorLength = 75;
         const int maxRooms = 20;
         const int maxCorridors = 25;
 
@@ -261,6 +261,18 @@ namespace StealthRoguelike
                 //repeat...
                 iteration++;
             }
+            //now let's make walls on perimeter
+            for (int i = 0; i < mapWidth; i++)
+            {
+                map[i, 0] = wallChar;
+                map[i, mapHeight-1] = wallChar;
+            }
+            for (int j = 0; j < mapHeight; j++)
+                {
+                    map[0, j] = wallChar;
+                    map[mapWidth-1, j] = wallChar;
+                }
+
             //let's place an entrance stair
             int sx = 0, sy = 0;
             while (map[sx, sy] != floorChar)
@@ -269,7 +281,7 @@ namespace StealthRoguelike
                 sy = Tools.getRandomInt(mapHeight);
             }
             map[sx, sy] = upstairChar;
-
+            //MAYBE: return int-based array as a map? 
             return map;
         }
     }

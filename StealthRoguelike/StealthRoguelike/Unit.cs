@@ -9,15 +9,40 @@ namespace StealthRoguelike
     class Unit
     {
         public int coordX, coordY; //global coords
-        public int lookX, lookY;   //heading vector
+        public int lookX = 0, lookY = -1;   //heading vector
         public char appearance;
         public bool hasFOV;
-        public Unit(int x, int y, char appear, bool fov)
+        public ConsoleColor color;
+
+        public Unit(int x, int y, char appear, bool fov, ConsoleColor thiscolor)
         {
             coordX = x;
             coordY = y;
             appearance = appear;
             hasFOV = fov;
+            color = thiscolor;
+        }
+
+        public Unit(int x, int y, char appear)
+        {
+            coordX = x;
+            coordY = y;
+            appearance = appear;
+            hasFOV = false;
+            color = ConsoleColor.White;
+        }
+
+        public void draw()
+        {
+            ConsoleColor temp = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.SetCursorPosition(this.coordX, this.coordY);
+            Console.Write(this.appearance);
+            if (hasFOV)
+            {
+
+            }
+            Console.ForegroundColor = temp;
         }
 
         public void moveForward() //move where this unit looks
