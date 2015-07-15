@@ -10,8 +10,10 @@ namespace StealthRoguelike
     {
         public static char[,] map;
         static Player player;
+
         public const int mapWidth = Program.mapWidth;
         public const int mapHeight = Program.mapHeight;
+
         public const char wallChar = '#';
         public const char closedDoorChar = '+';
         public const char openedDoorChar = '\'';
@@ -89,7 +91,7 @@ namespace StealthRoguelike
             drawWorld();
             while (true)
             {
-                keyPressed = Console.ReadKey();
+                keyPressed = Console.ReadKey(true);
                 if (keyPressed.Key == ConsoleKey.Escape)
                     break;
                 player.handleKeys(keyPressed);
