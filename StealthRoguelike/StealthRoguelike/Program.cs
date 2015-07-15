@@ -37,7 +37,6 @@ namespace StealthRoguelike
             //drawTestMap(map);
             World w = new World();
             w.Loop();
-            Console.ReadKey();
         }
     }
 }
