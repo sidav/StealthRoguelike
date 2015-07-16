@@ -21,12 +21,14 @@ namespace StealthRoguelike
         public const char floorChar = '.';
         public const char upstairChar = '<';
         public const char downstairChar = '>';
+        //IMPORTANT(!!!) CONSTANTS
         const int minRoomSize = 2;
         const int maxRoomSize = 12;
         const int minCorridorLength = 3;
         const int maxCorridorLength = 75;
         const int maxRooms = 35;
         const int maxCorridors = 15;
+        const int maxTries = 1000; //maximum amount of tries for structure placing
 
         public static void setParams(int mapw, int maph)
         {
@@ -86,7 +88,7 @@ namespace StealthRoguelike
             return dir;
         }
 
-        static bool digCorridor(int x, int y) // THERE BE DRAGONS
+        static bool digCorridor(int x, int y) // HERE BE DRAGONS
         {
             int corrLength = Tools.getRandomInt(minCorridorLength,maxCorridorLength);
             int dir = corrDirection(x, y);
@@ -134,7 +136,7 @@ namespace StealthRoguelike
             return false;
         }
 
-        static bool digRoom(int x, int y) // THERE BE DRAGONS
+        static bool digRoom(int x, int y) // HERE BE DRAGONS
         {
             int roomWidth = Tools.getRandomInt(minRoomSize, maxRoomSize);
             int roomHeight = Tools.getRandomInt(minRoomSize, maxRoomSize);
@@ -187,11 +189,11 @@ namespace StealthRoguelike
             return false;
         }
 
-        static void FuckingBuildCorridor() //this forcibly either builds a corridor
-        {                                  //OR FUCKING DIES
+        static void tryAddCorridor() //this tries to build a random corridor
+        {                            //in the dungeon      
             int x, y;
             bool done = false;
-            while (true)
+            for (int i = 0; i < maxTries; i++)
             {
                 x = 0; y = 0;
                 while (!isWall(x, y))
@@ -204,11 +206,11 @@ namespace StealthRoguelike
             }
         }
 
-        static void FuckingBuildRoom() // either build a room or fucking die
+        static void tryAddRoom() //this tries to build a random room
         {
             int x, y;
             bool done = false;
-            while (true)
+            for (int i = 0; i < maxTries; i++)
             {
                 x = 0; y = 0;
                 while (!isWall(x, y))
@@ -251,7 +253,7 @@ namespace StealthRoguelike
                 {
                     if (corridors < maxCorridors)
                     {
-                        FuckingBuildCorridor();
+                        tryAddCorridor();
                         corridors++;
                     }
                 }
@@ -259,7 +261,7 @@ namespace StealthRoguelike
                 {
                     if (rooms < maxRooms)
                     {
-                        FuckingBuildRoom();
+                        tryAddRoom();
                         rooms++;
                     }
                 }

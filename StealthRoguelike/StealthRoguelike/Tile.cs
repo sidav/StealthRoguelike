@@ -44,7 +44,7 @@ namespace StealthRoguelike
                 Appearance = World.closedDoorChar;
                 IsDoor = true;
                 IsOpened = false;
-                Color = ConsoleColor.DarkRed;
+                Color = ConsoleColor.DarkMagenta;
             }
             if (code == MapGenerator.upstairCode)
             {
