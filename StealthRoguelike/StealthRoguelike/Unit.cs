@@ -58,7 +58,7 @@ namespace StealthRoguelike
                 World.Redraw(coordX + x, coordY + y);
                 return;
             }
-            if (World.isWalkable(coordX + x, coordY + y))
+            if (World.isPassable(coordX + x, coordY + y))
             {
                 coordX += x;
                 coordY += y;
