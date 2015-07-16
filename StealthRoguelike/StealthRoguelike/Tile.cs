@@ -48,6 +48,7 @@ namespace StealthRoguelike
             }
             if (code == MapGenerator.upstairCode)
             {
+                IsPassable = true;
                 Appearance = World.upstairChar;
                 IsUpstair = true;
                 Color = ConsoleColor.Gray;
