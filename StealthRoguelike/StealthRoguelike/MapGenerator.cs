@@ -90,7 +90,7 @@ namespace StealthRoguelike
 
         static bool digCorridor(int x, int y) // HERE BE DRAGONS
         {
-            int corrLength = Tools.getRandomInt(minCorridorLength,maxCorridorLength);
+            int corrLength = Algorithms.getRandomInt(minCorridorLength,maxCorridorLength);
             int dir = corrDirection(x, y);
             //directions:
             // 0
@@ -138,8 +138,8 @@ namespace StealthRoguelike
 
         static bool digRoom(int x, int y) // HERE BE DRAGONS
         {
-            int roomWidth = Tools.getRandomInt(minRoomSize, maxRoomSize);
-            int roomHeight = Tools.getRandomInt(minRoomSize, maxRoomSize);
+            int roomWidth = Algorithms.getRandomInt(minRoomSize, maxRoomSize);
+            int roomHeight = Algorithms.getRandomInt(minRoomSize, maxRoomSize);
             int dir = corrDirection(x, y);
             //directions:
             // 0
@@ -147,7 +147,7 @@ namespace StealthRoguelike
             // 2
             if (dir == 0) //dig up
             {
-                int intersect = Tools.getRandomInt(roomWidth);
+                int intersect = Algorithms.getRandomInt(roomWidth);
                 if (isEmpty(x - intersect - 1, y - roomHeight, roomWidth + 1, roomHeight + 1))
                 {
                     dig(x - intersect, y - roomHeight, roomWidth + 1, roomHeight);
@@ -157,7 +157,7 @@ namespace StealthRoguelike
             }
             if (dir == 1) //dig right
             {
-                int intersect = Tools.getRandomInt(roomHeight);
+                int intersect = Algorithms.getRandomInt(roomHeight);
                 if (isEmpty(x, y - intersect - 1, roomWidth + 1, roomHeight + 1))
                 {
                     dig(x + 1, y - intersect, roomWidth, roomHeight);
@@ -167,7 +167,7 @@ namespace StealthRoguelike
             }
             if (dir == 2) //dig down
             {
-                int intersect = Tools.getRandomInt(roomWidth);
+                int intersect = Algorithms.getRandomInt(roomWidth);
                 if (isEmpty(x - intersect - 1, y, roomWidth + 1, roomHeight + 1))
                 {
                     dig(x - intersect, y+1, roomWidth, roomHeight);
@@ -177,7 +177,7 @@ namespace StealthRoguelike
             }
             if (dir == 3) //dig left
             {
-                int intersect = Tools.getRandomInt(roomHeight);
+                int intersect = Algorithms.getRandomInt(roomHeight);
                 if (isEmpty(x - roomWidth - 1 , y - intersect - 1, roomWidth + 1, roomHeight + 1))
                 {
                     dig(x - roomWidth, y - intersect, roomWidth, roomHeight);
@@ -198,8 +198,8 @@ namespace StealthRoguelike
                 x = 0; y = 0;
                 while (!isWall(x, y))
                 {
-                    x = Tools.getRandomInt(1, mapWidth - 1);
-                    y = Tools.getRandomInt(1, mapHeight - 1);
+                    x = Algorithms.getRandomInt(1, mapWidth - 1);
+                    y = Algorithms.getRandomInt(1, mapHeight - 1);
                 }
                 done = digCorridor(x, y);
                 if (done) break;
@@ -215,8 +215,8 @@ namespace StealthRoguelike
                 x = 0; y = 0;
                 while (!isWall(x, y))
                 {
-                    x = Tools.getRandomInt(1, mapWidth - 1);
-                    y = Tools.getRandomInt(1, mapHeight - 1);
+                    x = Algorithms.getRandomInt(1, mapWidth - 1);
+                    y = Algorithms.getRandomInt(1, mapHeight - 1);
                 }
                 done = digRoom(x, y);
                 if (done) break;
@@ -231,8 +231,8 @@ namespace StealthRoguelike
                 for (int j = 0; j < mapHeight; j++)
                     map[i, j] = piece.wall;
             //place a room in the centre
-            roomwidth = Tools.getRandomInt(minRoomSize+1, maxRoomSize);
-            roomheight = Tools.getRandomInt(minRoomSize+1, maxRoomSize);
+            roomwidth = Algorithms.getRandomInt(minRoomSize+1, maxRoomSize);
+            roomheight = Algorithms.getRandomInt(minRoomSize+1, maxRoomSize);
             roomx = mapWidth / 2 - roomwidth / 2;
             roomy = mapHeight / 2 - roomheight / 2;
             if (isEmpty(roomx, roomy,roomwidth, roomheight))
@@ -284,8 +284,8 @@ namespace StealthRoguelike
             int sx = 0, sy = 0;
             while (map[sx, sy] != piece.floor)
             {
-                sx = Tools.getRandomInt(mapWidth);
-                sy = Tools.getRandomInt(mapHeight);
+                sx = Algorithms.getRandomInt(mapWidth);
+                sy = Algorithms.getRandomInt(mapHeight);
             }
             map[sx, sy] = piece.upstair;
             //transform "pieces" into ints

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StealthRoguelike
 {
-   class Tools
+   class Algorithms
     {
         static Random random = new Random();
         public static int getRandomInt(int max) //replace with my own?
@@ -19,5 +19,8 @@ namespace StealthRoguelike
             int val = random.Next(max-min);
             return val+min;
         }
+
+
+
     }
 }

@@ -48,7 +48,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tile.cs" />
-    <Compile Include="Tools.cs" />
+    <Compile Include="Algorithms.cs" />
     <Compile Include="Unit.cs" />
     <Compile Include="World.cs" />
   </ItemGroup>
