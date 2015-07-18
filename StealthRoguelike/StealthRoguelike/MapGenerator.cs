@@ -132,7 +132,6 @@ namespace StealthRoguelike
                     return true;
                 }
             }
-            //map[x, y] = '+';
             return false;
         }
 
@@ -185,7 +184,6 @@ namespace StealthRoguelike
                     return true;
                 }
             }
-            //map[x, y] = '+';
             return false;
         }
 
@@ -257,7 +255,7 @@ namespace StealthRoguelike
                         corridors++;
                     }
                 }
-                if (iteration % 4 == 0)
+                if (iteration % 2 == 0)
                 {
                     if (rooms < maxRooms)
                     {
