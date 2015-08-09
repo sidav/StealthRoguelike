@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Line.cs" />
     <Compile Include="MapGenerator.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
