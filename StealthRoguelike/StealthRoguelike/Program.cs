@@ -27,7 +27,7 @@ namespace StealthRoguelike
                     else Console.Write('#');
         }
 
-        static void drawLine(int fx, int fy, int tx, int ty)
+        static void drawLine(int fx, int fy, int tx, int ty) //just for algorithm testing
         {
             Line.Init(fx, fy, tx, ty);
             do
@@ -41,12 +41,8 @@ namespace StealthRoguelike
             while (!Line.Step());
         }
 
-        static void Main(string[] args)
+        static void drawCrap() //just for visual algorithm testing
         {
-            Console.SetWindowSize(consoleWidth, consoleHeight);
-            Console.SetBufferSize(consoleWidth, consoleHeight);
-            Console.CursorVisible = false;
-
             //LINE DRAWING TEST
             for (int i = -consoleWidth; i < consoleWidth; i++)
                 for (int j = -consoleHeight; j < consoleHeight; j++)
@@ -58,7 +54,13 @@ namespace StealthRoguelike
                     }
             Console.ReadKey(true);
             //END OF TEST
+        }
 
+        static void Main(string[] args)
+        {
+            Console.SetWindowSize(consoleWidth, consoleHeight);
+            Console.SetBufferSize(consoleWidth, consoleHeight);
+            Console.CursorVisible = false;
             MapGenerator.setParams(mapWidth, mapHeight);
             //char[,] map = MapGenerator.generateDungeon();
             //drawTestMap(map);
