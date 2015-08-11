@@ -48,12 +48,14 @@ namespace StealthRoguelike
             Console.CursorVisible = false;
 
             //LINE DRAWING TEST
-            //for (int i = 0; i < consoleWidth; i++)
-            //    for (int j = 0; j < consoleHeight; j++)
-            //        if ((40-i)*(40-i) + (12-j)*(12-j) <= 25)
-            //            drawLine(40, 12, i, j);
-            drawLine(5, 20, 10, 5);
-            drawLine(50, 10, 40, 12);
+            for (int i = -consoleWidth; i < consoleWidth; i++)
+                for (int j = -consoleHeight; j < consoleHeight; j++)
+                    if ((i * i + j * j) <= 100)
+                    {
+                        Console.SetCursorPosition(0, 0);
+                        Console.Write(i.ToString() + " " + j.ToString());
+                        drawLine(40, 12, 40 - i, 12 - j);
+                    }
             Console.ReadKey(true);
             //END OF TEST
 
