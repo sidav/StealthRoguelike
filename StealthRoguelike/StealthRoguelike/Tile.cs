@@ -10,7 +10,7 @@ namespace StealthRoguelike
     {
         public char Appearance;
         public ConsoleColor Color;
-        public bool IsPassable, IsDoor, IsOpened, IsLocked, IsUpstair, IsDownstair;
+        public bool IsPassable, isVisionBlocking, IsDoor, IsOpened, IsLocked, IsUpstair, IsDownstair;
 
         public Tile(int code)
         {
@@ -22,7 +22,7 @@ namespace StealthRoguelike
             IsLocked = false;
             IsUpstair = false;
             IsDownstair = false;
-
+            isVisionBlocking = true;
             CodeToTile(code);
         }
 
@@ -38,6 +38,7 @@ namespace StealthRoguelike
                 Appearance = World.floorChar;
                 IsPassable = true;
                 Color = ConsoleColor.Gray;
+                isVisionBlocking = false;
             }
             if (code == MapGenerator.doorCode)
             {
@@ -62,6 +63,7 @@ namespace StealthRoguelike
             {
                 IsOpened = true;
                 IsPassable = true;
+                isVisionBlocking = false;
                 Appearance = World.openedDoorChar;
                 return true;
             }

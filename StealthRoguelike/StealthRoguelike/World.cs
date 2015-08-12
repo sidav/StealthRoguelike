@@ -88,10 +88,42 @@ namespace StealthRoguelike
             drawUnits();
         }
 
+        public bool VisibleLineExist(int fromx, int fromy, int tox, int toy)
+        {
+            Line.Init(fromx, fromy, tox, toy);
+            do
+            {
+                int curX = Line.CurX;
+                int curY = Line.CurY;
+                if (curX >= mapWidth || curY >= mapHeight || curX < 0 || curY < 0)
+                    return false;
+                if (map[curX, curY].isVisionBlocking)
+                    return false;
+            } while (!Line.Step());
+
+            return true;
+        }
+
+        public void drawInCircleFOV(int centerx, int centery, int radius)
+        { // will draw in "fair" circle with vision ray tracing
+            for (int i = -radius; i < radius+1; i++)
+                for (int j = -radius; j < radius+1; j++)
+                {
+                    //if (i*i + j*j <= radius*radius)
+                    //{
+                        int curx = centerx + i;
+                        int cury = centery + j;
+                        if (VisibleLineExist(centerx, centery, curx, cury))
+                            Redraw(curx, cury);
+                    //}
+                }
+        }
+
         public void Loop()
         {
             ConsoleKeyInfo keyPressed;
-            drawWorld();
+            drawInCircleFOV(player.coordX, player.coordY, 9);
+            //drawWorld();
             while (true)
             {
                 keyPressed = Console.ReadKey(true);

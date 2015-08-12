@@ -46,10 +46,9 @@ namespace StealthRoguelike
             //LINE DRAWING TEST
             for (int i = -consoleWidth; i < consoleWidth; i++)
                 for (int j = -consoleHeight; j < consoleHeight; j++)
-                    if ((i * i + j * j) <= 100)
+                    if ((i * i + j * j) <= 25)
                     {
                         Console.SetCursorPosition(0, 0);
-                        Console.Write(i.ToString() + " " + j.ToString());
                         drawLine(40, 12, 40 - i, 12 - j);
                     }
             Console.ReadKey(true);
@@ -62,8 +61,11 @@ namespace StealthRoguelike
             Console.SetBufferSize(consoleWidth, consoleHeight);
             Console.CursorVisible = false;
             MapGenerator.setParams(mapWidth, mapHeight);
+
+            //drawCrap();
             //char[,] map = MapGenerator.generateDungeon();
             //drawTestMap(map);
+
             World w = new World();
             w.Loop();
         }
