@@ -82,16 +82,25 @@ namespace StealthRoguelike
             drawUnits();
         }
 
-        public void drawWorld()
+        public void drawWorld(int mode)
         {
-            drawMap();
-            drawUnits();
+            if (mode == 0) //draw from player
+            {
+                Console.Clear();
+                drawInCircleFOV(player.coordX, player.coordY, player.visibilityRaduis);
+                drawUnits();
+            }
+            if (mode == -1) //developer mode
+            {
+                drawMap();
+                drawUnits();
+            }
         }
 
         public bool VisibleLineExist(int fromx, int fromy, int tox, int toy)
         {
             Line.Init(fromx, fromy, tox, toy);
-            do
+            while (!Line.Step())
             {
                 int curX = Line.CurX;
                 int curY = Line.CurY;
@@ -99,7 +108,7 @@ namespace StealthRoguelike
                     return false;
                 if (map[curX, curY].isVisionBlocking)
                     return false;
-            } while (!Line.Step());
+            }
 
             return true;
         }
@@ -109,28 +118,27 @@ namespace StealthRoguelike
             for (int i = -radius; i < radius+1; i++)
                 for (int j = -radius; j < radius+1; j++)
                 {
-                    //if (i*i + j*j <= radius*radius)
-                    //{
+                    if (i * i + j * j <= radius * radius)
+                    {
                         int curx = centerx + i;
                         int cury = centery + j;
                         if (VisibleLineExist(centerx, centery, curx, cury))
                             Redraw(curx, cury);
-                    //}
+                    }
                 }
         }
 
         public void Loop()
         {
             ConsoleKeyInfo keyPressed;
-            drawInCircleFOV(player.coordX, player.coordY, 9);
             //drawWorld();
             while (true)
             {
+                drawWorld(0);
                 keyPressed = Console.ReadKey(true);
                 if (keyPressed.Key == ConsoleKey.Escape)
                     break;
                 player.handleKeys(keyPressed);
-                drawUnits();
             }
 
         }

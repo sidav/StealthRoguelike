@@ -52,6 +52,7 @@ namespace StealthRoguelike
                 IsPassable = true;
                 Appearance = World.upstairChar;
                 IsUpstair = true;
+                isVisionBlocking = false;
                 Color = ConsoleColor.Gray;
             }
         }

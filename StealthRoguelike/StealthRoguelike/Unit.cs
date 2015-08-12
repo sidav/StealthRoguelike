@@ -10,6 +10,7 @@ namespace StealthRoguelike
     {
         public int coordX, coordY; //global coords
         public int lookX = 0, lookY = -1;   //heading vector
+        public int visibilityRaduis = 5; //basic visibility distance
         public char appearance;
         public bool hasFOV;
         public ConsoleColor color;
