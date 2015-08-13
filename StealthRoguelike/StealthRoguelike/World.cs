@@ -114,7 +114,8 @@ namespace StealthRoguelike
 
         public void drawInCircleFOV(int centerx, int centery, int radius)
         { // will draw in "fair" circle with vision ray tracing
-            Console.SetCursorPosition(0, 0);
+            ///!DEAL WITH THIS SHIT!!1 FIRST PRIORITY!!!
+            //Console.SetCursorPosition(0, 0);
             for (int i = 0; i < Program.mapWidth; i++)
                 for (int j = 0; j < Program.mapHeight; j++)
                 {
@@ -129,22 +130,29 @@ namespace StealthRoguelike
                             Console.Write(map[i, j].Appearance);
                             map[i, j].WasSeen = true;
                         }
-                        else if (map[i, j].WasSeen)
+                        else 
+                        {
+                            if (map[i, j].WasSeen)
+                            {
+                                Console.ForegroundColor = ConsoleColor.DarkGray;
+                                Console.Write(map[i, j].Appearance);
+                            }
+                            if (!map[i, j].WasSeen)
+                            {
+                                Console.Write(' ');
+                            }
+                        }
+                    }
+                    else 
+                    {
+                        if (map[i, j].WasSeen)
                         {
                             Console.ForegroundColor = ConsoleColor.DarkGray;
                             Console.Write(map[i, j].Appearance);
                         }
-                        else
-                        {
+                        if (!map[i, j].WasSeen)
                             Console.Write(' ');
-                        }
                     }
-                    else if (map[i, j].WasSeen)
-                    {
-                        Console.ForegroundColor = ConsoleColor.DarkGray;
-                        Console.Write(map[i, j].Appearance);
-                    }
-                    else Console.Write(' ');
                 }
         }
 
