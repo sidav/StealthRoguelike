@@ -10,10 +10,12 @@ namespace StealthRoguelike
     {
         public char Appearance;
         public ConsoleColor Color;
+        public bool WasSeen;
         public bool IsPassable, isVisionBlocking, IsDoor, IsOpened, IsLocked, IsUpstair, IsDownstair;
 
         public Tile(int code)
         {
+            WasSeen = false;
             Appearance = '&';
             IsPassable = false;
             IsDoor = false;

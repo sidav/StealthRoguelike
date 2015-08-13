@@ -74,19 +74,18 @@ namespace StealthRoguelike
 
         public static void Redraw(int x, int y)
         {
-            if (x < 0 || x >= mapWidth || y < 0 || y >= mapHeight)
-                return;
-            Console.SetCursorPosition(x, y);
-            Console.ForegroundColor = map[x, y].Color;
-            Console.Write(map[x, y].Appearance);
-            drawUnits();
+            //if (x < 0 || x >= mapWidth || y < 0 || y >= mapHeight)
+            //    return;
+            //Console.SetCursorPosition(x, y);
+            //Console.ForegroundColor = map[x, y].Color;
+            //Console.Write(map[x, y].Appearance);
+            //drawUnits();
         }
 
         public void drawWorld(int mode)
         {
             if (mode == 0) //draw from player
             {
-                Console.Clear();
                 drawInCircleFOV(player.coordX, player.coordY, player.visibilityRaduis);
                 drawUnits();
             }
@@ -115,16 +114,37 @@ namespace StealthRoguelike
 
         public void drawInCircleFOV(int centerx, int centery, int radius)
         { // will draw in "fair" circle with vision ray tracing
-            for (int i = -radius; i < radius+1; i++)
-                for (int j = -radius; j < radius+1; j++)
+            Console.SetCursorPosition(0, 0);
+            for (int i = 0; i < Program.mapWidth; i++)
+                for (int j = 0; j < Program.mapHeight; j++)
                 {
-                    if (i * i + j * j <= radius * radius)
+                    Console.SetCursorPosition(i, j);
+                    int xdiff = centerx - i;
+                    int ydiff = centery - j;
+                    if (xdiff * xdiff + ydiff * ydiff <= radius * radius)
                     {
-                        int curx = centerx + i;
-                        int cury = centery + j;
-                        if (VisibleLineExist(centerx, centery, curx, cury))
-                            Redraw(curx, cury);
+                        if (VisibleLineExist(centerx, centery, i, j))
+                        {
+                            Console.ForegroundColor = map[i, j].Color;
+                            Console.Write(map[i, j].Appearance);
+                            map[i, j].WasSeen = true;
+                        }
+                        else if (map[i, j].WasSeen)
+                        {
+                            Console.ForegroundColor = ConsoleColor.DarkGray;
+                            Console.Write(map[i, j].Appearance);
+                        }
+                        else
+                        {
+                            Console.Write(' ');
+                        }
                     }
+                    else if (map[i, j].WasSeen)
+                    {
+                        Console.ForegroundColor = ConsoleColor.DarkGray;
+                        Console.Write(map[i, j].Appearance);
+                    }
+                    else Console.Write(' ');
                 }
         }
 

@@ -23,7 +23,7 @@ namespace StealthRoguelike
         public const char downstairChar = '>';
         //IMPORTANT(!!!) CONSTANTS
         const int minRoomSize = 2;
-        const int maxRoomSize = 15;
+        const int maxRoomSize = 12;
         const int minCorridorLength = 3;
         const int maxCorridorLength = 75;
         const int maxRooms = 35;
