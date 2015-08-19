@@ -41,6 +41,17 @@ namespace StealthRoguelike
             Console.Write(this.appearance);
             if (hasFOV) //draw a thingy that shows this unit's direction
             {
+                char thingy = '?';
+                if (lookX == 0)
+                    thingy = '|';
+                if (lookY == 0)
+                    thingy = '-';
+                if (lookX * lookY == 1)
+                    thingy = '\\';
+                if (lookX * lookY == -1)
+                    thingy = '/';
+                Console.SetCursorPosition(coordX + lookX, coordY + lookY);
+                Console.Write(thingy);
                 //TODO!
             }
             Console.ForegroundColor = temp;
@@ -52,19 +63,27 @@ namespace StealthRoguelike
             coordY += lookY;
         }
 
-        public void MoveOrOpen(int x, int y) //-1 or 0 or 1 for x and y
+        //AI!
+        void turnToPassable() //turn to random direction which is passable
         {
-            if (World.tryOpenDoor(coordX + x, coordY + y))
+            do
             {
-                World.Redraw(coordX + x, coordY + y);
-                return;
-            }
-            if (World.isPassable(coordX + x, coordY + y))
+                lookX = Algorithms.getRandomInt(-1, 2);
+                lookY = Algorithms.getRandomInt(-1, 2);
+            } while ((lookX == 0 && lookY == 0) || !World.IsPassable(coordX + lookX, coordY + lookY));
+        }
+
+        public void DoSomething()
+        {
+            if (Algorithms.getRandomInt(10) == 0)
+                turnToPassable();
+            if (World.IsPassable(coordX + lookX, coordY + lookY))
+                MoveForward();
+            else
             {
-                coordX += x;
-                coordY += y;
+                    if (!World.tryOpenDoor(coordX + lookX, coordY + lookY))
+                        turnToPassable();
             }
-            World.Redraw(coordX-x, coordY-y);
         }
 
     }

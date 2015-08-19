@@ -9,6 +9,7 @@ namespace StealthRoguelike
     class World
     {
         public static Tile[,] map = new Tile[mapWidth, mapHeight];
+
         public static Unit guard; ///!!!TEMPORARY SOLUTION!!! FOR AI DEVELOPMENT ONLY!
         static Player player;
 
@@ -30,6 +31,14 @@ namespace StealthRoguelike
                 for (int j = 0; j < mapHeight; j++)
                     if (map[i, j].IsUpstair)
                         player = new Player(i, j);
+            int x, y;
+            do
+            {
+                x = Algorithms.getRandomInt(mapWidth);
+                y = Algorithms.getRandomInt(mapHeight);
+                if (IsPassable(x,y))
+                    guard = new Unit(x, y, 'G', true, ConsoleColor.Red);
+            } while (!IsPassable(x,y));
         }
 
         static void makeMap() //generate int-based map 
@@ -43,7 +52,7 @@ namespace StealthRoguelike
         }
 
 
-        public static bool isPassable(int x, int y)
+        public static bool IsPassable(int x, int y)
         {
             if (x < 0 || x >= mapWidth || y < 0 || y >= mapHeight)
                 return false;
@@ -60,6 +69,8 @@ namespace StealthRoguelike
         public static void drawUnits()
         {
             player.Draw();
+            if (VisibleLineExist(player.coordX, player.coordY, guard.coordX, guard.coordY))
+                guard.Draw();
         }
 
         public static void drawMap() //TEMPORARY SOLUTION.
@@ -73,15 +84,15 @@ namespace StealthRoguelike
                 }
         }
 
-        public static void Redraw(int x, int y)
-        {
-            //if (x < 0 || x >= mapWidth || y < 0 || y >= mapHeight)
-            //    return;
-            //Console.SetCursorPosition(x, y);
-            //Console.ForegroundColor = map[x, y].Color;
-            //Console.Write(map[x, y].Appearance);
-            //drawUnits();
-        }
+        //public static void Redraw(int x, int y)
+        //{
+        //    if (x < 0 || x >= mapWidth || y < 0 || y >= mapHeight)
+        //        return;
+        //    Console.SetCursorPosition(x, y);
+        //    Console.ForegroundColor = map[x, y].Color;
+        //    Console.Write(map[x, y].Appearance);
+        //    drawUnits();
+        //}
 
         public static void drawWorld(int mode)
         {
@@ -157,6 +168,7 @@ namespace StealthRoguelike
                 if (keyPressed.Key == ConsoleKey.Escape)
                     break;
                 player.handleKeys(keyPressed);
+                guard.DoSomething();
             }
 
         }
