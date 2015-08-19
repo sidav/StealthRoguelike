@@ -121,29 +121,12 @@ namespace StealthRoguelike
                     //Console.SetCursorPosition(i, j);
                     int xdiff = centerx - i;
                     int ydiff = centery - j;
-                    if (xdiff * xdiff + ydiff * ydiff <= radius * radius)
+                    if (xdiff * xdiff + ydiff * ydiff <= radius * radius && VisibleLineExist(centerx, centery, i, j))
                     {
-                        if (VisibleLineExist(centerx, centery, i, j))
-                        {
                             Console.ForegroundColor = map[i, j].Color;
                             Console.Write(map[i, j].Appearance);
                             map[i, j].WasSeen = true;
                             continue;
-                        }
-                        else 
-                        {
-                            if (map[i, j].WasSeen)
-                            {
-                                Console.ForegroundColor = ConsoleColor.DarkGray;
-                                Console.Write(map[i, j].Appearance);
-                                continue;
-                            }
-                            if (!map[i, j].WasSeen)
-                            {
-                                Console.Write(' ');
-                                continue;
-                            }
-                        }
                     }
                     else 
                     {

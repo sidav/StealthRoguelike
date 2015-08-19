@@ -10,7 +10,7 @@ namespace StealthRoguelike
     {
         public Player(int x, int y):base(x,y,'@',false,ConsoleColor.Blue)
         {
-            visibilityRaduis = 7;
+            visibilityRaduis = 10;
         }
 
         public void handleKeys(ConsoleKeyInfo keyPressed)
