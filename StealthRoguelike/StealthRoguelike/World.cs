@@ -9,6 +9,7 @@ namespace StealthRoguelike
     class World
     {
         public static Tile[,] map = new Tile[mapWidth, mapHeight];
+        public static Unit guard; ///!!!TEMPORARY SOLUTION!!! FOR AI DEVELOPMENT ONLY!
         static Player player;
 
         public const int mapWidth = Program.mapWidth;
@@ -61,7 +62,7 @@ namespace StealthRoguelike
             player.Draw();
         }
 
-        public void drawMap() //TEMPORARY SOLUTION.
+        public static void drawMap() //TEMPORARY SOLUTION.
         { 
             Console.SetCursorPosition(0, 0);
             for (int j = 0; j < Program.mapHeight; j++)
@@ -82,7 +83,7 @@ namespace StealthRoguelike
             //drawUnits();
         }
 
-        public void drawWorld(int mode)
+        public static void drawWorld(int mode)
         {
             if (mode == 0) //draw from player
             {
@@ -96,7 +97,7 @@ namespace StealthRoguelike
             }
         }
 
-        public bool VisibleLineExist(int fromx, int fromy, int tox, int toy)
+        public static bool VisibleLineExist(int fromx, int fromy, int tox, int toy)
         {
             Line.Init(fromx, fromy, tox, toy);
             while (!Line.Step())
@@ -112,7 +113,7 @@ namespace StealthRoguelike
             return true;
         }
 
-        public void drawInCircleFOV(int centerx, int centery, int radius)
+        public static void drawInCircleFOV(int centerx, int centery, int radius)
         { // will draw in "fair" circle with vision ray tracing
             Console.SetCursorPosition(0, 0);
             for (int j = 0; j < Program.mapHeight; j++)

@@ -39,9 +39,9 @@ namespace StealthRoguelike
             Console.ForegroundColor = color;
             Console.SetCursorPosition(this.coordX, this.coordY);
             Console.Write(this.appearance);
-            if (hasFOV)
+            if (hasFOV) //draw a thingy that shows this unit's direction
             {
-
+                //TODO!
             }
             Console.ForegroundColor = temp;
         }
