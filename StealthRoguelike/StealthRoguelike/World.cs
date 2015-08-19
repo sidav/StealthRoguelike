@@ -114,12 +114,11 @@ namespace StealthRoguelike
 
         public void drawInCircleFOV(int centerx, int centery, int radius)
         { // will draw in "fair" circle with vision ray tracing
-            ///!DEAL WITH THIS SHIT!!1 FIRST PRIORITY!!!
-            //Console.SetCursorPosition(0, 0);
-            for (int i = 0; i < Program.mapWidth; i++)
-                for (int j = 0; j < Program.mapHeight; j++)
+            Console.SetCursorPosition(0, 0);
+            for (int j = 0; j < Program.mapHeight; j++)
+                for (int i = 0; i < Program.mapWidth; i++)
                 {
-                    Console.SetCursorPosition(i, j);
+                    //Console.SetCursorPosition(i, j);
                     int xdiff = centerx - i;
                     int ydiff = centery - j;
                     if (xdiff * xdiff + ydiff * ydiff <= radius * radius)
@@ -129,6 +128,7 @@ namespace StealthRoguelike
                             Console.ForegroundColor = map[i, j].Color;
                             Console.Write(map[i, j].Appearance);
                             map[i, j].WasSeen = true;
+                            continue;
                         }
                         else 
                         {
@@ -136,10 +136,12 @@ namespace StealthRoguelike
                             {
                                 Console.ForegroundColor = ConsoleColor.DarkGray;
                                 Console.Write(map[i, j].Appearance);
+                                continue;
                             }
                             if (!map[i, j].WasSeen)
                             {
                                 Console.Write(' ');
+                                continue;
                             }
                         }
                     }
@@ -149,9 +151,13 @@ namespace StealthRoguelike
                         {
                             Console.ForegroundColor = ConsoleColor.DarkGray;
                             Console.Write(map[i, j].Appearance);
+                            continue;
                         }
                         if (!map[i, j].WasSeen)
+                        {
                             Console.Write(' ');
+                            continue;
+                        }
                     }
                 }
         }
