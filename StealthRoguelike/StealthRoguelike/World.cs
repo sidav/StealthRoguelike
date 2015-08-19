@@ -66,11 +66,19 @@ namespace StealthRoguelike
             return map[x,y].TryOpenDoor();
         }
 
-        public static void drawUnits()
+        public static void drawUnits(int mode)
         {
-            player.Draw();
-            if (VisibleLineExist(player.coordX, player.coordY, guard.coordX, guard.coordY))
+            if (mode == 0) // draw from player
+            {
+                player.Draw();
+                if (VisibleLineExist(player.coordX, player.coordY, guard.coordX, guard.coordY))
+                    guard.Draw();
+            }
+            if (mode == -1) //developer mode
+            {
+                player.Draw();
                 guard.Draw();
+            }
         }
 
         public static void drawMap() //TEMPORARY SOLUTION.
@@ -99,12 +107,12 @@ namespace StealthRoguelike
             if (mode == 0) //draw from player
             {
                 drawInCircleFOV(player.coordX, player.coordY, player.visibilityRaduis);
-                drawUnits();
+                drawUnits(mode);
             }
             if (mode == -1) //developer mode
             {
                 drawMap();
-                drawUnits();
+                drawUnits(mode);
             }
         }
 

@@ -54,6 +54,7 @@ namespace StealthRoguelike
             if (keyPressed.Key == ConsoleKey.F1)
             {
                 World.drawWorld(-1);
+                World.drawUnits(-1);
                 Console.ReadKey(true);
             }
         }
