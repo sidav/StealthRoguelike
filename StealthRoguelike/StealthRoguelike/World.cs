@@ -18,7 +18,7 @@ namespace StealthRoguelike
 
         public const char wallChar = '#';
         public const char closedDoorChar = '+';
-        public const char openedDoorChar = '\'';
+        public const char openedDoorChar = '\\';
         public const char floorChar = '.';
         public const char upstairChar = '<';
         public const char downstairChar = '>';
@@ -65,12 +65,12 @@ namespace StealthRoguelike
                 return false;
             return map[x,y].TryOpenDoor();
         }
-        public static bool tryCloseDoor(int x, int y)
-        {
-            if (x < 0 || x >= mapWidth || y < 0 || y >= mapHeight)
-                return false;
-            return map[x, y].TryCloseDoor();
-        }
+        //public static bool tryCloseDoor(int x, int y)
+        //{
+        //    if (x < 0 || x >= mapWidth || y < 0 || y >= mapHeight)
+        //        return false;
+        //    return map[x, y].TryCloseDoor();
+        //}
 
         public static void drawUnits(int mode)
         {
