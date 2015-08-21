@@ -72,5 +72,18 @@ namespace StealthRoguelike
             }
             return false;
         }
+
+        public bool TryCloseDoor()
+        {
+            if (IsDoor && IsOpened)
+            {
+                IsOpened = false;
+                IsPassable = false;
+                isVisionBlocking = true;
+                Appearance = AllChars.closedDoorChar;
+                return true;
+            }
+            return false;
+        }
     }
 }

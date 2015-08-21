@@ -15,7 +15,7 @@ namespace StealthRoguelike
 
         public void MoveOrOpen(int x, int y) //-1 or 0 or 1 for x and y
         {
-            if (World.tryOpenDoor(coordX + x, coordY + y))
+            if (World.TryOpenDoor(coordX + x, coordY + y))
             {
                 //World.Redraw(coordX + x, coordY + y);
                 return;
@@ -26,6 +26,46 @@ namespace StealthRoguelike
                 coordY += y;
             }
             //World.Redraw(coordX-x, coordY-y);
+        }
+
+        void closeDoorDialogue()
+        {
+            Console.SetCursorPosition(0, Program.mapHeight);
+            Console.Write("In which direction?");
+            ConsoleKeyInfo keyPressed;
+            int doorX = coordX, doorY = coordY;
+            keyPressed = Console.ReadKey(true);
+            if (keyPressed.Key == ConsoleKey.NumPad8) //close up
+                doorY += -1;
+            if (keyPressed.Key == ConsoleKey.NumPad9) //close upper right
+            {
+                doorX += 1;
+                doorY += -1;
+            }
+            if (keyPressed.Key == ConsoleKey.NumPad6) //close right
+                doorX += 1;
+            if (keyPressed.Key == ConsoleKey.NumPad3) //close lower right
+            {
+                doorX += 1;
+                doorY += 1;
+            }
+            if (keyPressed.Key == ConsoleKey.NumPad2) //close down
+                doorY += 1;
+            if (keyPressed.Key == ConsoleKey.NumPad1) //close lower left
+            {
+                doorX += -1;
+                doorY += 1;
+            }
+            if (keyPressed.Key == ConsoleKey.NumPad4) //close left
+                doorX += -1;
+            if (keyPressed.Key == ConsoleKey.NumPad7) //close upper left
+            {
+                doorX += -1;
+                doorY += -1;
+            }
+            World.TryCloseDoor(doorX, doorY);
+            Console.SetCursorPosition(0, Program.mapHeight);
+            Console.Write("                         ");
         }
 
         public void handleKeys(ConsoleKeyInfo keyPressed)
@@ -51,9 +91,10 @@ namespace StealthRoguelike
                 //nothing (yet?)
             }
             //ACTIONS
-
+            if (keyPressed.Key == ConsoleKey.C) //close door 
+                closeDoorDialogue();
             //TODO!
-            
+
             //development purposes
             if (keyPressed.Key == ConsoleKey.F1)
             {

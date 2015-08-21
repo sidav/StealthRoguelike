@@ -81,7 +81,7 @@ namespace StealthRoguelike
                 MoveForward();
             else
             {
-                    if (!World.tryOpenDoor(coordX + lookX, coordY + lookY))
+                    if (!World.TryOpenDoor(coordX + lookX, coordY + lookY))
                         turnToPassable();
             }
         }

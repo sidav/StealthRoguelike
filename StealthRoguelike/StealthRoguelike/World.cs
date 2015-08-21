@@ -52,18 +52,19 @@ namespace StealthRoguelike
             return map[x,y].IsPassable;
         }
 
-        public static bool tryOpenDoor(int x, int y)
+        public static bool TryOpenDoor(int x, int y)
         {
             if (x < 0 || x >= mapWidth || y < 0 || y >= mapHeight)
                 return false;
             return map[x,y].TryOpenDoor();
         }
-        //public static bool tryCloseDoor(int x, int y)
-        //{
-        //    if (x < 0 || x >= mapWidth || y < 0 || y >= mapHeight)
-        //        return false;
-        //    return map[x, y].TryCloseDoor();
-        //}
+
+        public static bool TryCloseDoor(int x, int y)
+        {
+            if (x < 0 || x >= mapWidth || y < 0 || y >= mapHeight)
+                return false;
+            return map[x, y].TryCloseDoor();
+        }
 
         public static void drawUnits(int mode)
         {
