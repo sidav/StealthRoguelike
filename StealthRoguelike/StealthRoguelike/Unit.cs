@@ -75,15 +75,24 @@ namespace StealthRoguelike
 
         public void DoSomething()
         {
+            if (World.TryCloseDoor(coordX-lookX, coordY-lookY))
+                return;
             if (Algorithms.getRandomInt(10) == 0)
+            {
                 turnToPassable();
+                return;
+            }
             if (World.IsPassable(coordX + lookX, coordY + lookY))
+            {
                 MoveForward();
+                return;
+            }
             else
             {
-                    if (!World.TryOpenDoor(coordX + lookX, coordY + lookY))
-                        turnToPassable();
+                if (!World.TryOpenDoor(coordX + lookX, coordY + lookY))
+                    turnToPassable();
             }
+
         }
 
     }
