@@ -6,13 +6,15 @@ using System.Threading.Tasks;
 
 namespace StealthRoguelike
 {
-    class WorldChars //just holds the tile char constants. 
+    class AllChars //just holds all the char constants, for their quick remplacement if needed 
     {
+        //Tiles
         public const char wallChar = '#';
         public const char closedDoorChar = '+';
         public const char openedDoorChar = '\\';
         public const char floorChar = '.';
         public const char upstairChar = '<';
         public const char downstairChar = '>';
+        //
     }
 }

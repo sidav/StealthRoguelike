@@ -52,7 +52,7 @@
     <Compile Include="Algorithms.cs" />
     <Compile Include="Unit.cs" />
     <Compile Include="World.cs" />
-    <Compile Include="WorldChars.cs" />
+    <Compile Include="AllChars.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
