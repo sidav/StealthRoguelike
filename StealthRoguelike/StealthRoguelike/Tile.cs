@@ -32,19 +32,19 @@ namespace StealthRoguelike
         {
             if (code == MapGenerator.wallCode)
             {
-                Appearance = World.wallChar;
+                Appearance = WorldChars.wallChar;
                 Color = ConsoleColor.Gray;
             }
             if (code == MapGenerator.floorCode)
             {
-                Appearance = World.floorChar;
+                Appearance = WorldChars.floorChar;
                 IsPassable = true;
                 Color = ConsoleColor.Gray;
                 isVisionBlocking = false;
             }
             if (code == MapGenerator.doorCode)
             {
-                Appearance = World.closedDoorChar;
+                Appearance = WorldChars.closedDoorChar;
                 IsDoor = true;
                 IsOpened = false;
                 Color = ConsoleColor.DarkMagenta;
@@ -52,7 +52,7 @@ namespace StealthRoguelike
             if (code == MapGenerator.upstairCode)
             {
                 IsPassable = true;
-                Appearance = World.upstairChar;
+                Appearance = WorldChars.upstairChar;
                 IsUpstair = true;
                 isVisionBlocking = false;
                 Color = ConsoleColor.Gray;
@@ -67,7 +67,7 @@ namespace StealthRoguelike
                 IsOpened = true;
                 IsPassable = true;
                 isVisionBlocking = false;
-                Appearance = World.openedDoorChar;
+                Appearance = WorldChars.openedDoorChar;
                 return true;
             }
             return false;

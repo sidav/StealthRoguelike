@@ -16,13 +16,6 @@ namespace StealthRoguelike
         public const int mapWidth = Program.mapWidth;
         public const int mapHeight = Program.mapHeight;
 
-        public const char wallChar = '#';
-        public const char closedDoorChar = '+';
-        public const char openedDoorChar = '\\';
-        public const char floorChar = '.';
-        public const char upstairChar = '<';
-        public const char downstairChar = '>';
-
         public World()
         {
             makeMap();
