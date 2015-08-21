@@ -28,10 +28,12 @@ namespace StealthRoguelike
             //World.Redraw(coordX-x, coordY-y);
         }
 
+        //INTERACTION WITH GAMER.
+
         void closeDoorDialogue()
         {
             Console.SetCursorPosition(0, Program.mapHeight);
-            Console.Write("In which direction?");
+            Console.Write("Close door in which direction?");
             ConsoleKeyInfo keyPressed;
             int doorX = coordX, doorY = coordY;
             keyPressed = Console.ReadKey(true);
@@ -65,7 +67,47 @@ namespace StealthRoguelike
             }
             World.TryCloseDoor(doorX, doorY);
             Console.SetCursorPosition(0, Program.mapHeight);
-            Console.Write("                         ");
+            Console.Write("                                       ");
+        }
+
+        void PeepDialogue()
+        {
+            Console.SetCursorPosition(0, Program.mapHeight);
+            Console.Write("Peep in which direction?");
+            ConsoleKeyInfo keyPressed;
+            int doorX = coordX, doorY = coordY;
+            keyPressed = Console.ReadKey(true);
+            if (keyPressed.Key == ConsoleKey.NumPad8) //peep up
+                doorY += -1;
+            if (keyPressed.Key == ConsoleKey.NumPad9) //peep upper right
+            {
+                doorX += 1;
+                doorY += -1;
+            }
+            if (keyPressed.Key == ConsoleKey.NumPad6) //peep right
+                doorX += 1;
+            if (keyPressed.Key == ConsoleKey.NumPad3) //peep lower right
+            {
+                doorX += 1;
+                doorY += 1;
+            }
+            if (keyPressed.Key == ConsoleKey.NumPad2) //peep down
+                doorY += 1;
+            if (keyPressed.Key == ConsoleKey.NumPad1) //peep lower left
+            {
+                doorX += -1;
+                doorY += 1;
+            }
+            if (keyPressed.Key == ConsoleKey.NumPad4) //peep left
+                doorX += -1;
+            if (keyPressed.Key == ConsoleKey.NumPad7) //peep upper left
+            {
+                doorX += -1;
+                doorY += -1;
+            }
+            World.TryCloseDoor(doorX, doorY);
+            Console.SetCursorPosition(0, Program.mapHeight);
+            Console.Write("                             ");
         }
 
         public void handleKeys(ConsoleKeyInfo keyPressed)
