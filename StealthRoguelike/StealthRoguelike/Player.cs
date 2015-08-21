@@ -50,6 +50,10 @@ namespace StealthRoguelike
             {
                 //nothing (yet?)
             }
+            //ACTIONS
+
+            //TODO!
+            
             //development purposes
             if (keyPressed.Key == ConsoleKey.F1)
             {
