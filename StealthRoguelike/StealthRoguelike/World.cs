@@ -70,15 +70,25 @@ namespace StealthRoguelike
         {
             if (mode == 0) // draw from player
             {
-                player.Draw();
                 if (VisibleLineExist(player.coordX, player.coordY, guard.coordX, guard.coordY))
                     guard.Draw();
+                player.Draw();
             }
             if (mode == -1) //developer mode
             {
-                player.Draw();
                 guard.Draw();
+                player.Draw();
             }
+        }
+
+        public static void drawUnitsInCircle(int x, int y, int radius)
+        {
+            int dx = guard.coordX - x;
+            int dy = guard.coordY - y;
+            if (dx * dx + dy * dy > radius * radius)
+                return;
+            if (VisibleLineExist(x, y, guard.coordX, guard.coordY))
+                guard.Draw();
         }
 
         public static void drawMap() //TEMPORARY SOLUTION.
@@ -106,7 +116,7 @@ namespace StealthRoguelike
         {
             if (mode == 0) //draw from player
             {
-                drawInCircleFOV(player.coordX, player.coordY, player.visibilityRaduis);
+                drawInCircleFOV(player.coordX, player.coordY, player.visibilityRadius);
                 drawUnits(mode);
             }
             if (mode == -1) //developer mode
