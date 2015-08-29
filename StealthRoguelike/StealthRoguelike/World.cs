@@ -52,6 +52,13 @@ namespace StealthRoguelike
             return map[x,y].IsPassable;
         }
 
+        public static bool IsDoor(int x, int y)
+        {
+            if (x < 0 || x >= mapWidth || y < 0 || y >= mapHeight)
+                return false;
+            return map[x, y].IsDoor;
+        }
+
         public static bool TryOpenDoor(int x, int y)
         {
             if (x < 0 || x >= mapWidth || y < 0 || y >= mapHeight)

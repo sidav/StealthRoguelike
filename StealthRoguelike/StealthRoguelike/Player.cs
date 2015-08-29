@@ -105,14 +105,23 @@ namespace StealthRoguelike
                 peepX += -1;
                 peepY += -1;
             }
-            World.drawInCircleFOV(peepX, peepY, visibilityRadius);
-            World.drawUnitsInCircle(peepX, peepY, visibilityRadius);
-            this.Draw();
-            Console.SetCursorPosition(0, Program.mapHeight);
-            Console.Write("Press any key to continue...     ");
-            Console.ReadKey(true);
-            Console.SetCursorPosition(0, Program.mapHeight);
-            Console.Write("                                 ");
+            //don't peep through walls anymore! :D
+            if (World.IsPassable(peepX, peepY) || World.IsDoor(peepX, peepY))
+            {
+                World.drawInCircleFOV(peepX, peepY, visibilityRadius);
+                World.drawUnitsInCircle(peepX, peepY, visibilityRadius);
+                this.Draw();
+                Console.SetCursorPosition(0, Program.mapHeight);
+                Console.Write("Press any key to continue...     ");
+                Console.ReadKey(true);
+                Console.SetCursorPosition(0, Program.mapHeight);
+                Console.Write("                                 ");
+            }
+            else
+            {
+                Console.SetCursorPosition(0, Program.mapHeight);
+                Console.Write("Cannot peep through this!");
+            }
         }
 
         public void handleKeys(ConsoleKeyInfo keyPressed)
