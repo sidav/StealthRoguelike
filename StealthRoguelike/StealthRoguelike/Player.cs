@@ -72,6 +72,7 @@ namespace StealthRoguelike
 
         void peepDialogue()
         {
+            Console.ForegroundColor = ConsoleColor.Gray;
             Console.SetCursorPosition(0, Program.mapHeight);
             Console.Write("Peep in which direction?");
             ConsoleKeyInfo keyPressed;
@@ -111,6 +112,7 @@ namespace StealthRoguelike
                 World.drawInCircleFOV(peepX, peepY, visibilityRadius);
                 World.drawUnitsInCircle(peepX, peepY, visibilityRadius);
                 this.Draw();
+                Console.ForegroundColor = ConsoleColor.Gray;
                 Console.SetCursorPosition(0, Program.mapHeight);
                 Console.Write("Press any key to continue...     ");
                 Console.ReadKey(true);
@@ -119,8 +121,9 @@ namespace StealthRoguelike
             }
             else
             {
+                Console.ForegroundColor = ConsoleColor.Gray;
                 Console.SetCursorPosition(0, Program.mapHeight);
-                Console.Write("Cannot peep through this!");
+                Console.Write("You try to peep through this, but in vain.");
             }
         }
 
