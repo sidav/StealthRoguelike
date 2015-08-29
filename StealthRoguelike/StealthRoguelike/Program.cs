@@ -61,11 +61,9 @@ namespace StealthRoguelike
             Console.SetBufferSize(consoleWidth, consoleHeight);
             Console.CursorVisible = false;
             MapGenerator.setParams(mapWidth, mapHeight);
-
             //drawCrap();
             //char[,] map = MapGenerator.generateDungeon();
             //drawTestMap(map);
-
             World w = new World();
             w.Loop();
         }
