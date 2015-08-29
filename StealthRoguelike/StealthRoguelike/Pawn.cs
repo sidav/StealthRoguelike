@@ -6,12 +6,19 @@ using System.Threading.Tasks;
 
 namespace StealthRoguelike
 {
-    class Pawn:Unit //it's just like unit, but with AI
+    class Pawn:Unit //it's just like an unit, but with AI
     {
+
+        public enum State {waiting,patrolling} //to be expanded...
+
+        public State currentState;
+
         public Pawn(int x, int y, char appear):base(x,y,appear,true,ConsoleColor.Red)
         {
-
+            currentState = State.patrolling;
         }
+
+
 
         ///////
         //AI!//
@@ -29,6 +36,9 @@ namespace StealthRoguelike
 
         public void DoSomething() //AI itself
         {
+            //if is waiting for something then do nothing, huh
+            if (currentState == State.waiting)
+                return; //BUT IT'S NOT WHAT WE NEED TO!
             //close door if neccessary
             if (World.TryCloseDoor(coordX - lookX, coordY - lookY))
                 return;
