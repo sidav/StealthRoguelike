@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Line.cs" />
     <Compile Include="MapGenerator.cs" />
+    <Compile Include="Pawn.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

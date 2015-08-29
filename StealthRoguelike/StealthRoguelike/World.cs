@@ -10,7 +10,7 @@ namespace StealthRoguelike
     {
         public static Tile[,] map = new Tile[mapWidth, mapHeight];
 
-        public static Unit guard; ///!!!TEMPORARY SOLUTION!!! FOR AI DEVELOPMENT ONLY!
+        public static Pawn guard; ///!!!TEMPORARY SOLUTION!!! FOR AI DEVELOPMENT ONLY!
         static Player player;
 
         public const int mapWidth = Program.mapWidth;
@@ -30,7 +30,7 @@ namespace StealthRoguelike
                 x = Algorithms.getRandomInt(mapWidth);
                 y = Algorithms.getRandomInt(mapHeight);
                 if (IsPassable(x,y))
-                    guard = new Unit(x, y, 'G', true, ConsoleColor.Red);
+                    guard = new Pawn(x, y, 'G');
             } while (!IsPassable(x,y));
         }
 
