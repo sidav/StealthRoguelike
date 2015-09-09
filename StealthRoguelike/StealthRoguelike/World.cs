@@ -99,7 +99,7 @@ namespace StealthRoguelike
         }
 
         public static void drawMap() //TEMPORARY SOLUTION.
-        { 
+        {
             Console.SetCursorPosition(0, 0);
             for (int j = 0; j < Program.mapHeight; j++)
                 for (int i = 0; i < Program.mapWidth; i++)
@@ -151,6 +151,10 @@ namespace StealthRoguelike
 
         public static void drawInCircleFOV(int centerx, int centery, int radius)
         { // will draw in "fair" circle with vision ray tracing
+            Console.SetCursorPosition(0, Program.mapHeight); //!!!!!!!!!!!!!
+            Console.WriteLine("This is the log");               ///!!!!!!!
+            Console.WriteLine("You have scratched your butt.");///!!!!!!
+            Console.WriteLine("You sneezed."); ///!!!!!!!!!!!!!!!!!!!!!
             Console.SetCursorPosition(0, 0);
             for (int j = 0; j < Program.mapHeight; j++)
                 for (int i = 0; i < Program.mapWidth; i++)

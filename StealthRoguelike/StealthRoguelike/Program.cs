@@ -12,6 +12,7 @@ namespace StealthRoguelike
         public const int mapHeight = 20;
         public const int consoleWidth = 80;
         public const int consoleHeight = 25;
+        public const int LogHeight = 3;
 
         static void drawTestMap(char[,] map)
         {

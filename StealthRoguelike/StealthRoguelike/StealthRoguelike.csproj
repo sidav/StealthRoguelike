@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Line.cs" />
+    <Compile Include="Log.cs" />
     <Compile Include="MapGenerator.cs" />
     <Compile Include="Pawn.cs" />
     <Compile Include="Player.cs" />
