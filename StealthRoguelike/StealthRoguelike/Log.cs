@@ -8,19 +8,42 @@ namespace StealthRoguelike
 {
     class Log //Game log lines would be there!
     {
-        static string[] miniLog = new string[Program.LogSize]; //log on display
 
-        public static void clearLog()
+        const int LogSize = Program.LogSize;
+        static string[] miniLog = new string[LogSize]; //log on display
+
+        public static void ClearLog()
         {
-            for (int i = 0; i < Program.LogSize; i++)
-                miniLog[i] = " ";
+            for (int i = 0; i < LogSize; i++)
+                miniLog[i] = "123";
         }
 
         public static void AddLine(string line)
         {
-            for (int i = 0; i < Program.LogSize - 1; i++)
+            for (int i = 0; i < LogSize - 1; i++)
                 miniLog[i] = miniLog[i + 1];
-            miniLog[Program.LogSize - 1] = line;
+            miniLog[LogSize - 1] = line;
+            DrawMiniLog();
         }
+
+        public static void ReplaceLastLine(string line)
+        {
+            miniLog[LogSize - 1] = line;
+            DrawMiniLog();
+        }
+
+        public static void DrawMiniLog()
+        {
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.SetCursorPosition(0, Program.mapHeight);
+            for (int i = 0; i < LogSize; i++)
+            {
+                string spaces = " ";
+                for (int j = miniLog[i].Length; j < Program.consoleWidth - 2; j++)
+                    spaces += " ";
+                Console.WriteLine(miniLog[i] + spaces);
+            }
+        }
+
     }
 }

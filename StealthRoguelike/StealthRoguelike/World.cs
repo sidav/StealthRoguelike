@@ -19,6 +19,7 @@ namespace StealthRoguelike
         public World()
         {
             makeMap();
+            Log.AddLine("Map generation... ok");
             //find an entrance and place player
             for (int i = 0; i < mapWidth; i++)
                 for (int j = 0; j < mapHeight; j++)
@@ -32,6 +33,8 @@ namespace StealthRoguelike
                 if (IsPassable(x,y))
                     guard = new Pawn(x, y, 'G');
             } while (!IsPassable(x,y));
+            Log.AddLine("Pawns placement... ok");
+            Log.AddLine("All systems nominal.");
         }
 
         static void makeMap() //generate int-based map 
@@ -151,10 +154,6 @@ namespace StealthRoguelike
 
         public static void drawInCircleFOV(int centerx, int centery, int radius)
         { // will draw in "fair" circle with vision ray tracing
-            Console.SetCursorPosition(0, Program.mapHeight); //!!!!!!!!!!!!!
-            Console.WriteLine("This is the log");               ///!!!!!!!
-            Console.WriteLine("You have scratched your butt.");///!!!!!!
-            Console.WriteLine("You sneezed."); ///!!!!!!!!!!!!!!!!!!!!!
             Console.SetCursorPosition(0, 0);
             for (int j = 0; j < Program.mapHeight; j++)
                 for (int i = 0; i < Program.mapWidth; i++)

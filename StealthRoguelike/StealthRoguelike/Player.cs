@@ -17,7 +17,7 @@ namespace StealthRoguelike
         {
             if (World.TryOpenDoor(coordX + x, coordY + y))
             {
-                //World.Redraw(coordX + x, coordY + y);
+                Log.AddLine("You opened the door.");
                 return;
             }
             if (World.IsPassable(coordX + x, coordY + y))
@@ -32,8 +32,7 @@ namespace StealthRoguelike
 
         void closeDoorDialogue()
         {
-            Console.SetCursorPosition(0, Program.mapHeight);
-            Console.Write("Close door in which direction?");
+            Log.AddLine("Close door in which direction?");
             ConsoleKeyInfo keyPressed;
             int doorX = coordX, doorY = coordY;
             keyPressed = Console.ReadKey(true);
@@ -65,16 +64,15 @@ namespace StealthRoguelike
                 doorX += -1;
                 doorY += -1;
             }
-            World.TryCloseDoor(doorX, doorY);
-            Console.SetCursorPosition(0, Program.mapHeight);
-            Console.Write("                                       ");
+            if (World.TryCloseDoor(doorX, doorY))
+                Log.ReplaceLastLine("You carefully closed the door.");
+            else
+                Log.ReplaceLastLine("You tried to close this, but something went wrong...");
         }
 
         void peepDialogue()
         {
-            Console.ForegroundColor = ConsoleColor.Gray;
-            Console.SetCursorPosition(0, Program.mapHeight);
-            Console.Write("Peep in which direction?");
+            Log.AddLine("Peep in which direction?");
             ConsoleKeyInfo keyPressed;
             int peepX = coordX, peepY = coordY;
             keyPressed = Console.ReadKey(true);
@@ -113,17 +111,13 @@ namespace StealthRoguelike
                 World.drawUnitsInCircle(peepX, peepY, visibilityRadius);
                 this.Draw();
                 Console.ForegroundColor = ConsoleColor.Gray;
-                Console.SetCursorPosition(0, Program.mapHeight);
-                Console.Write("Press any key to continue...     ");
+                Log.ReplaceLastLine("You carefully peep in that direction... Press any key");
                 Console.ReadKey(true);
-                Console.SetCursorPosition(0, Program.mapHeight);
-                Console.Write("                                 ");
+                Log.ReplaceLastLine("You carefully peep in that direction...");
             }
             else
             {
-                Console.ForegroundColor = ConsoleColor.Gray;
-                Console.SetCursorPosition(0, Program.mapHeight);
-                Console.Write("You try to peep through this, but in vain.");
+                Log.ReplaceLastLine("You try to peep through this, but in vain.");
             }
         }
 
