@@ -149,14 +149,6 @@ namespace StealthRoguelike
             if (keyPressed.Key == ConsoleKey.P) //peep 
                 peepDialogue();
             //TODO!
-
-            //development purposes
-            if (keyPressed.Key == ConsoleKey.F1)
-            {
-                WorldRendering.drawWorld(-1);
-                WorldRendering.drawUnits(-1);
-                Console.ReadKey(true);
-            }
         }
 
     }

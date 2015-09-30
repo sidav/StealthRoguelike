@@ -102,6 +102,13 @@ namespace StealthRoguelike
                 keyPressed = Console.ReadKey(true);
                 if (keyPressed.Key == ConsoleKey.Escape)
                     break;
+                if (keyPressed.Key == ConsoleKey.F1) //development purposes
+                {
+                    WorldRendering.drawWorld(-1);
+                    WorldRendering.drawUnits(-1);
+                    Console.ReadKey(true);
+                    continue;
+                }
                 player.handleKeys(keyPressed);
                 guard.DoSomething();
             }
