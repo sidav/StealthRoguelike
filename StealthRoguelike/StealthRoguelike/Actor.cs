@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace StealthRoguelike
 {
-    class Pawn:Unit //it's just like an unit, but with AI
+    class Actor:Unit //it's just like an unit, but with AI
     {
 
         public enum State {waiting,patrolling} //to be expanded...
 
         public State currentState;
 
-        public Pawn(int x, int y, char appear):base(x,y,appear,true,ConsoleColor.Red)
+        public Actor(string name,int x, int y, char appear):base(name, x,y,appear,true,ConsoleColor.Red)
         {
             currentState = State.patrolling;
         }

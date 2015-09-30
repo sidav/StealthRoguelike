@@ -46,7 +46,7 @@
     <Compile Include="Line.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="MapGenerator.cs" />
-    <Compile Include="Pawn.cs" />
+    <Compile Include="Actor.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -55,6 +55,7 @@
     <Compile Include="Unit.cs" />
     <Compile Include="World.cs" />
     <Compile Include="AllChars.cs" />
+    <Compile Include="WorldRendering.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

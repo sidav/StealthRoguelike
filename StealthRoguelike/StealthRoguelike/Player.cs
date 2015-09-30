@@ -8,7 +8,7 @@ namespace StealthRoguelike
 {
     class Player:Unit
     {
-        public Player(int x, int y):base(x,y,'@',false,ConsoleColor.Green)
+        public Player(int x, int y):base("You",x,y,'@',false,ConsoleColor.Green)
         {
             visibilityRadius = 10;
         }
@@ -107,8 +107,8 @@ namespace StealthRoguelike
             //don't peep through walls anymore! :D
             if (World.IsPassable(peepX, peepY) || World.IsDoor(peepX, peepY))
             {
-                World.drawInCircleFOV(peepX, peepY, visibilityRadius);
-                World.drawUnitsInCircle(peepX, peepY, visibilityRadius);
+                WorldRendering.drawInCircleFOV(peepX, peepY, visibilityRadius);
+                WorldRendering.drawUnitsInCircle(peepX, peepY, visibilityRadius);
                 this.Draw();
                 Console.ForegroundColor = ConsoleColor.Gray;
                 Log.ReplaceLastLine("You carefully peep in that direction... Press any key");
@@ -153,8 +153,8 @@ namespace StealthRoguelike
             //development purposes
             if (keyPressed.Key == ConsoleKey.F1)
             {
-                World.drawWorld(-1);
-                World.drawUnits(-1);
+                WorldRendering.drawWorld(-1);
+                WorldRendering.drawUnits(-1);
                 Console.ReadKey(true);
             }
         }
