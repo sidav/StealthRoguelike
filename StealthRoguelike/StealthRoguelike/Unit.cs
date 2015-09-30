@@ -8,6 +8,7 @@ namespace StealthRoguelike
 {
     class Unit
     {
+        public string UnitName;
         public int coordX, coordY; //global coords
         public int lookX = 0, lookY = -1;   //heading vector
         public int visibilityRadius = 5; //basic visibility distance
@@ -15,8 +16,9 @@ namespace StealthRoguelike
         public bool hasFOV;
         public ConsoleColor color;
 
-        public Unit(int x, int y, char appear, bool fov, ConsoleColor thiscolor)
+        public Unit(string name, int x, int y, char appear, bool fov, ConsoleColor thiscolor)
         {
+            UnitName = name;
             coordX = x;
             coordY = y;
             appearance = appear;
@@ -24,8 +26,9 @@ namespace StealthRoguelike
             color = thiscolor;
         }
 
-        public Unit(int x, int y, char appear)
+        public Unit(string name, int x, int y, char appear)
         {
+            UnitName = name;
             coordX = x;
             coordY = y;
             appearance = appear;
