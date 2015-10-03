@@ -11,8 +11,8 @@ namespace StealthRoguelike
         public string Name;
         public int coordX, coordY; //global coords
         public int lookX = 0, lookY = -1;   //heading vector
-        public int ViewingAngle = 90; //in degrees.
-        public int visibilityRadius = 5; //basic visibility distance
+        public int ViewAngle = 90; //in degrees.
+        public int visibilityRadius = 7; //basic visibility distance
         public char appearance;
         public bool hasFOV;
         public ConsoleColor color;

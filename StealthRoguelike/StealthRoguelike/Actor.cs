@@ -67,7 +67,7 @@ namespace StealthRoguelike
             double distance = Math.Sqrt(vectorX * vectorX + vectorY * vectorY);
             if (distance <= visibilityRadius)
             {
-                if (ViewSector.PointIsInSector(coordX, coordY, targetX, targetY, lookX, lookY, ViewingAngle))
+                if (ViewSector.PointIsInSector(coordX, coordY, targetX, targetY, lookX, lookY, ViewAngle))
                     if (World.VisibleLineExist(coordX, coordY, targetX, targetY))
                     {
                         //MORE CODE EXPECTING
@@ -80,6 +80,7 @@ namespace StealthRoguelike
 
         public void DoSomething() //AI itself
         {
+            currentState = State.patrolling; //DELETE THIS
             Check();
             //if is waiting for something then do nothing, huh
             if (currentState == State.waiting)

@@ -58,7 +58,7 @@ namespace StealthRoguelike
 
         static void sectorTest()
         {
-            if (ViewSector.PointIsInSector(0, 0, -2, 2, 1, 0, 90))
+            if (ViewSector.PointIsInSector(0, 0, 5, 0, 1, 0, 90))
                 Console.Write("yep");
             else Console.Write("nope");
             Console.ReadKey();
@@ -66,6 +66,7 @@ namespace StealthRoguelike
 
         static void Main(string[] args)
         {
+            sectorTest();
             Console.SetWindowSize(consoleWidth, consoleHeight);
             Console.SetBufferSize(consoleWidth, consoleHeight);
             Console.CursorVisible = false;
