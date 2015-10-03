@@ -42,7 +42,7 @@ namespace StealthRoguelike
             while (!Line.Step());
         }
 
-        static void drawCrap() //just for visual algorithm testing
+        static void lineTest() //just for visual algorithm testing
         {
             //LINE DRAWING TEST
             for (int i = -consoleWidth; i < consoleWidth; i++)
@@ -56,14 +56,16 @@ namespace StealthRoguelike
             //END OF TEST
         }
 
-        static void Main(string[] args)
+        static void sectorTest()
         {
-            ///TEST
             if (ViewSector.PointIsInSector(0, 0, -2, 2, 1, 0, 90))
                 Console.Write("yep");
             else Console.Write("nope");
             Console.ReadKey();
-            ///END OF TEST
+        }
+
+        static void Main(string[] args)
+        {
             Console.SetWindowSize(consoleWidth, consoleHeight);
             Console.SetBufferSize(consoleWidth, consoleHeight);
             Console.CursorVisible = false;
