@@ -58,6 +58,12 @@ namespace StealthRoguelike
 
         static void Main(string[] args)
         {
+            ///TEST
+            if (ViewSector.PointIsInSector(0, 0, -2, 2, 1, 0, 90))
+                Console.Write("yep");
+            else Console.Write("nope");
+            Console.ReadKey();
+            ///END OF TEST
             Console.SetWindowSize(consoleWidth, consoleHeight);
             Console.SetBufferSize(consoleWidth, consoleHeight);
             Console.CursorVisible = false;

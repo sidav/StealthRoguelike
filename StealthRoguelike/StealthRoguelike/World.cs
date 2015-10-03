@@ -31,7 +31,7 @@ namespace StealthRoguelike
                 x = Algorithms.getRandomInt(mapWidth);
                 y = Algorithms.getRandomInt(mapHeight);
                 if (IsPassable(x,y))
-                    guard = new Actor("Our subject", x, y, 'G');
+                    guard = new Actor("Our test subject", x, y, 'G');
             } while (!IsPassable(x,y));
             Log.AddLine("Actors placement... ok");
             Log.AddLine("All systems nominal.");

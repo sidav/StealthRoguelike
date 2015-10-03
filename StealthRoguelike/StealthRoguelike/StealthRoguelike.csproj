@@ -53,6 +53,7 @@
     <Compile Include="Tile.cs" />
     <Compile Include="Algorithms.cs" />
     <Compile Include="Unit.cs" />
+    <Compile Include="ViewSector.cs" />
     <Compile Include="World.cs" />
     <Compile Include="AllChars.cs" />
     <Compile Include="WorldRendering.cs" />
