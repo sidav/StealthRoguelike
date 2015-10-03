@@ -58,15 +58,97 @@ namespace StealthRoguelike
 
         static void sectorTest()
         {
-            if (ViewSector.PointIsInSector(0, 0, 5, 0, 1, 0, 90))
+            if (ViewSector.PointIsInSector(0, 0, 5, 1, 0, 0, 90))
                 Console.Write("yep");
             else Console.Write("nope");
             Console.ReadKey();
         }
 
+        static void sectorTest2()
+        {
+            int angle = 180;
+            for (int i = 0; i < consoleWidth; i++)
+                for (int j = 0; j < consoleHeight; j++)
+                {
+                    Console.SetCursorPosition(i, j);
+                    if (ViewSector.PointIsInSector(40, 12, i, j, 1, 0, angle))
+                        Console.Write('#');
+                }
+            Console.ReadKey();
+            Console.Clear();
+            for (int i = 0; i < consoleWidth; i++)
+                for (int j = 0; j < consoleHeight; j++)
+                {
+                    Console.SetCursorPosition(i, j);
+                    if (ViewSector.PointIsInSector(40, 12, i, j, 1, 1, angle))
+                        Console.Write('#');
+                }
+            Console.ReadKey();
+            Console.Clear();
+            for (int i = 0; i < consoleWidth; i++)
+                for (int j = 0; j < consoleHeight; j++)
+                {
+                    Console.SetCursorPosition(i, j);
+                    if (ViewSector.PointIsInSector(40, 12, i, j, 0, 1, angle))
+                        Console.Write('#');
+                }
+            Console.ReadKey();
+            Console.Clear();
+            for (int i = 0; i < consoleWidth; i++)
+                for (int j = 0; j < consoleHeight; j++)
+                {
+                    Console.SetCursorPosition(i, j);
+                    if (ViewSector.PointIsInSector(40, 12, i, j, -1, 1, angle))
+                        Console.Write('#');
+                }
+            Console.ReadKey();
+            Console.Clear();
+            for (int i = 0; i < consoleWidth; i++)
+                for (int j = 0; j < consoleHeight; j++)
+                {
+                    Console.SetCursorPosition(i, j);
+                    if (ViewSector.PointIsInSector(40, 12, i, j, -1, 0, angle))
+                        Console.Write('#');
+                }
+            Console.ReadKey();
+            Console.Clear();
+            for (int i = 0; i < consoleWidth; i++)
+                for (int j = 0; j < consoleHeight; j++)
+                {
+                    Console.SetCursorPosition(i, j);
+                    if (ViewSector.PointIsInSector(40, 12, i, j, -1, -1, angle))
+                        Console.Write('#');
+                }
+            Console.ReadKey();
+            Console.Clear();
+            for (int i = 0; i < consoleWidth; i++)
+                for (int j = 0; j < consoleHeight; j++)
+                {
+                    Console.SetCursorPosition(i, j);
+                    if (ViewSector.PointIsInSector(40, 12, i, j, 0, -1, angle))
+                        Console.Write('#');
+                }
+            Console.ReadKey();
+            Console.Clear();
+            for (int i = 0; i < consoleWidth; i++)
+                for (int j = 0; j < consoleHeight; j++)
+                {
+                    Console.SetCursorPosition(i, j);
+                    if (ViewSector.PointIsInSector(40, 12, i, j, 1, -1, angle))
+                        Console.Write('#');
+                }
+            Console.ReadKey();
+        }
+
+
+
+
         static void Main(string[] args)
         {
-            sectorTest();
+            //sectorTest();
+            sectorTest2();
+
+            //GAME BEGINS HERE.
             Console.SetWindowSize(consoleWidth, consoleHeight);
             Console.SetBufferSize(consoleWidth, consoleHeight);
             Console.CursorVisible = false;

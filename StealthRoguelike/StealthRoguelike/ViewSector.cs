@@ -8,11 +8,6 @@ namespace StealthRoguelike
 {
     class ViewSector
     {
-        static double VectorToAngle(int x, int y)
-        {
-            double angle = Math.Atan2(y, x);
-            return angle;
-        }
         public static bool PointIsInSector(int x0, int y0, int x1, int y1, int viewX, int viewY, int viewAngle)
         {
             double halfViewAngle = (viewAngle / 2) * Math.PI / 180; //Translates this into radians!
