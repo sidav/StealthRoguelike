@@ -58,7 +58,7 @@ namespace StealthRoguelike
 
         static void sectorTest()
         {
-            if (ViewSector.PointIsInSector(0, 0, 5, 1, 0, 0, 90))
+            if (ViewSector._PointIsInSectorTEST(0, 0, 5, -1, 0, 0, 90))
                 Console.Write("yep");
             else Console.Write("nope");
             Console.ReadKey();
@@ -145,12 +145,15 @@ namespace StealthRoguelike
 
         static void Main(string[] args)
         {
-            //sectorTest();
+            //TESTS.
+            sectorTest();
             sectorTest2();
+            //TESTS ENDED
 
             //GAME BEGINS HERE.
             Console.SetWindowSize(consoleWidth, consoleHeight);
             Console.SetBufferSize(consoleWidth, consoleHeight);
+            Console.Clear();
             Console.CursorVisible = false;
             MapGenerator.setParams(mapWidth, mapHeight);
             Log.ClearLog();
