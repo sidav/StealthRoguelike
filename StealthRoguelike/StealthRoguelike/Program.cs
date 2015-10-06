@@ -58,7 +58,7 @@ namespace StealthRoguelike
 
         static void sectorTest()
         {
-            if (ViewSector._PointIsInSectorTEST(0, 0, 5, -1, 0, 0, 90))
+            if (ViewSector._PointIsInSectorTEST(0, 0, -5, -1, 1, -1, 90))
                 Console.Write("yep");
             else Console.Write("nope");
             Console.ReadKey();
@@ -66,7 +66,7 @@ namespace StealthRoguelike
 
         static void sectorTest2()
         {
-            int angle = 180;
+            int angle = 90;
             for (int i = 0; i < consoleWidth; i++)
                 for (int j = 0; j < consoleHeight; j++)
                 {
@@ -146,8 +146,8 @@ namespace StealthRoguelike
         static void Main(string[] args)
         {
             //TESTS.
-            sectorTest();
-            sectorTest2();
+            //sectorTest();
+            //sectorTest2();
             //TESTS ENDED
 
             //GAME BEGINS HERE.

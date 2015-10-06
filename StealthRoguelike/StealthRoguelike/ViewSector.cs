@@ -18,6 +18,7 @@ namespace StealthRoguelike
             double lookingAngle = Math.Atan2(viewY, viewX);
             Console.WriteLine("Looking angles: from " + ((lookingAngle-halfViewAngle) * 180 / Math.PI).ToString() + " through " + (lookingAngle * 180 / Math.PI).ToString() + " to " + ((lookingAngle + halfViewAngle) * 180 / Math.PI).ToString());
             double targetAngle = Math.Atan2(y, x);
+            if (x < 0 && y < 0 && viewY >= 0) targetAngle += 2 * Math.PI;
             Console.WriteLine("Target angle = " + (targetAngle* 180 / Math.PI).ToString());
             if (targetAngle >= lookingAngle - halfViewAngle && targetAngle <= lookingAngle + halfViewAngle)
                 return true;
@@ -31,6 +32,7 @@ namespace StealthRoguelike
             int y = y1 - y0;
             double lookingAngle = Math.Atan2(viewY, viewX);
             double targetAngle = Math.Atan2(y, x);
+            if (x < 0 && y < 0 && viewY >= 0) targetAngle += 2 * Math.PI;
             if (targetAngle >= lookingAngle - halfViewAngle && targetAngle <= lookingAngle + halfViewAngle)
                 return true;
             return false;
