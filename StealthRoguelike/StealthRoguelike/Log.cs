@@ -11,6 +11,8 @@ namespace StealthRoguelike
 
         const int LogSize = Program.LogSize;
         static string[] miniLog = new string[LogSize]; //log on display
+        static string lastLogInput;
+        static int equalMessagesCount = 1;
 
         public static void ClearLog()
         {
@@ -20,10 +22,20 @@ namespace StealthRoguelike
 
         public static void AddLine(string line)
         {
-            for (int i = 0; i < LogSize - 1; i++)
-                miniLog[i] = miniLog[i + 1];
-            miniLog[LogSize - 1] = line;
-            DrawMiniLog();
+            if (line == lastLogInput)
+            {
+                equalMessagesCount++;
+                ReplaceLastLine(line + " (x" + equalMessagesCount.ToString() + ")");
+            }
+            else
+            {
+                equalMessagesCount = 1;
+                lastLogInput = line;
+                for (int i = 0; i < LogSize - 1; i++)
+                    miniLog[i] = miniLog[i + 1];
+                miniLog[LogSize - 1] = line;
+                DrawMiniLog();
+            }
         }
 
         public static void ReplaceLastLine(string line)
