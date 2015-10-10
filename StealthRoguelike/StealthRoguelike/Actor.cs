@@ -13,7 +13,7 @@ namespace StealthRoguelike
 
         public State currentState;
         public Unit Target; //attack whom? 
-        public int TargetCoordX, TargetCoordY; //where to go for investigation?
+        public int MoveToCoordX, MoveToCoordY; //where to go for investigation?
 
 
         public Actor(string name,int x, int y, char appear):base(name, x,y,appear,true,ConsoleColor.Red)
@@ -75,41 +75,60 @@ namespace StealthRoguelike
                         //MORE CODE EXPECTING
                         Log.AddLine(Name + " notices you!");
                         currentState = State.alerted;
+                        Target = World.player;
+                        MoveToCoordX = Target.coordX;
+                        MoveToCoordY = Target.coordY;
                         return;
                     }
             }
         }
 
-        public void DoSomething() //AI itself
+        void DoPatrolling()
         {
-            currentState = State.patrolling; //DELETE THIS
+            //close door if neccessary
+            if (World.TryCloseDoor(coordX - lookX, coordY - lookY))
+                return;
+            //let's SUDDENLY turn to the random direction, maybe? :D
+            if (Algorithms.getRandomInt(suddenTurningFrequency) == 0)
+            {
+                turnToPassable();
+                return;
+            }
+            //Move forward if there is nothing to do...
+            if (World.IsPassable(coordX + lookX, coordY + lookY))
+            {
+                MoveForward();
+                return;
+            }
+            else //or open door if there is. Otherwise turn to random direction
+            {
+                if (!World.TryOpenDoor(coordX + lookX, coordY + lookY))
+                    turnToPassable();
+            }
+        }
+
+        void DoAttacking()
+        {
+
+        }
+
+        public void DoSomething() //main AI method
+        {
+            if (currentState != State.patrolling && currentState != State.waiting)
+                currentState = State.patrolling;
             Check();
             //if is waiting for something then do nothing, huh
             if (currentState == State.waiting)
-                return; //BUT IT'S NOT WHAT WE NEED TO!
+                return;
             if (currentState == State.patrolling)
             {
-                //close door if neccessary
-                if (World.TryCloseDoor(coordX - lookX, coordY - lookY))
-                    return;
-                //let's SUDDENLY turn to the random direction, maybe? :D
-                if (Algorithms.getRandomInt(suddenTurningFrequency) == 0)
-                {
-                    turnToPassable();
-                    return;
-                }
-                //Move forward if there is nothing to do...
-                if (World.IsPassable(coordX + lookX, coordY + lookY))
-                {
-                    MoveForward();
-                    return;
-                }
-                else //or open door if there is. Otherwise turn to random direction
-                {
-                    if (!World.TryOpenDoor(coordX + lookX, coordY + lookY))
-                        turnToPassable();
-                }
+                DoPatrolling();
             }
+            if (currentState == State.attacking)
+            {
+                DoAttacking();
+            }
+
 
         }
     }
