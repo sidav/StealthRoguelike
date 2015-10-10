@@ -23,7 +23,7 @@ namespace StealthRoguelike
 
         public void Draw()
         {
-            if (currentState != State.alerted)
+            if (currentState != State.alerted && currentState != State.attacking)
                 base.Draw();
             else
             {
@@ -74,7 +74,7 @@ namespace StealthRoguelike
                     {
                         //MORE CODE EXPECTING
                         Log.AddLine(Name + " notices you!");
-                        currentState = State.alerted;
+                        currentState = State.attacking;
                         Target = World.player;
                         MoveToCoordX = Target.coordX;
                         MoveToCoordY = Target.coordY;
@@ -107,9 +107,17 @@ namespace StealthRoguelike
             }
         }
 
-        void DoAttacking()
+        void DoAttacking() //not only hit enemy, but also walk toward him first!
         {
-
+            int targetX = MoveToCoordX - coordX;
+            int targetY = MoveToCoordY - coordY;
+            int lookToX = targetX;
+            int lookToY = targetY;
+            if (targetX != 0)
+                lookToX = targetX / Math.Abs(targetX);
+            if (targetY != 0)
+                lookToY = targetY / Math.Abs(targetY);
+            turnToDirection(lookToX, lookToY);
         }
 
         public void DoSomething() //main AI method

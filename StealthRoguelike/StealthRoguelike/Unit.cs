@@ -68,6 +68,12 @@ namespace StealthRoguelike
             //TODO!
         }
 
+        protected void turnToDirection(int x, int y)
+        {
+            lookX = x;
+            lookY = y;
+        }
+
         public void MoveForward() //move where this unit looks
         {
             coordX += lookX;
