@@ -13,7 +13,7 @@ namespace StealthRoguelike
 
         public State currentState;
         public Unit Target; //attack whom? 
-        public int TargetCoordX, TargetCoordY; //where to investigate?
+        public int TargetCoordX, TargetCoordY; //where to go for investigation?
 
 
         public Actor(string name,int x, int y, char appear):base(name, x,y,appear,true,ConsoleColor.Red)

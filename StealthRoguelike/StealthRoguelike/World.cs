@@ -30,9 +30,9 @@ namespace StealthRoguelike
             {
                 x = Algorithms.getRandomInt(mapWidth);
                 y = Algorithms.getRandomInt(mapHeight);
-                if (IsPassable(x,y))
+                if (map[x,y].IsPassable)
                     guard = new Actor("Our test subject", x, y, 'G');
-            } while (!IsPassable(x,y));
+            } while (!map[x, y].IsPassable);
             Log.AddLine("Actors placement... ok");
             Log.AddLine("All systems nominal.");
         }
@@ -51,6 +51,10 @@ namespace StealthRoguelike
         public static bool IsPassable(int x, int y)
         {
             if (x < 0 || x >= mapWidth || y < 0 || y >= mapHeight)
+                return false;
+            if (player.coordX == x && player.coordY == y)
+                return false;
+            if (guard.coordX == x && guard.coordY == y)
                 return false;
             return map[x,y].IsPassable;
         }
