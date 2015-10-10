@@ -95,11 +95,8 @@ namespace StealthRoguelike
                 return;
             }
             //Move forward if there is nothing to do...
-            if (World.IsPassable(coordX + lookX, coordY + lookY))
-            {
-                MoveForward();
+            if (TryMoveForward())
                 return;
-            }
             else //or open door if there is. Otherwise turn to random direction
             {
                 if (!World.TryOpenDoor(coordX + lookX, coordY + lookY))
@@ -118,6 +115,7 @@ namespace StealthRoguelike
             if (targetY != 0)
                 lookToY = targetY / Math.Abs(targetY);
             turnToDirection(lookToX, lookToY);
+            TryMoveForward();
         }
 
         public void DoSomething() //main AI method

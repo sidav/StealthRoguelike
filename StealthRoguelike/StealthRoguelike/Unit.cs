@@ -13,7 +13,7 @@ namespace StealthRoguelike
         public int MaxHitpoints;
         public int coordX, coordY; //global coords
         public int lookX = 0, lookY = -1;   //heading vector
-        public int ViewAngle = 110; //in degrees.
+        public int ViewAngle = 120; //in degrees.
         public int visibilityRadius = 9; //basic visibility distance
         public char appearance;
         public bool hasFOV;
@@ -74,10 +74,15 @@ namespace StealthRoguelike
             lookY = y;
         }
 
-        public void MoveForward() //move where this unit looks
+        public bool TryMoveForward() //move where this unit looks
         {
-            coordX += lookX;
-            coordY += lookY;
+            if (World.IsPassable(coordX + lookX, coordY + lookY))
+            {
+                coordX += lookX;
+                coordY += lookY;
+                return true;
+            }
+            return false;
         }
 
     }
