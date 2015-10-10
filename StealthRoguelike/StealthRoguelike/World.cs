@@ -99,6 +99,7 @@ namespace StealthRoguelike
             while (true)
             {
                 WorldRendering.drawWorld(0);
+                player.DrawStatusbar();
                 keyPressed = Console.ReadKey(true);
                 if (keyPressed.Key == ConsoleKey.Escape)
                     break;

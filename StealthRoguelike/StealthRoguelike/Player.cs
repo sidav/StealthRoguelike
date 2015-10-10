@@ -151,5 +151,13 @@ namespace StealthRoguelike
             //TODO!
         }
 
+        public void DrawStatusbar()
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.SetCursorPosition(0, Program.consoleHeight-2);
+            Console.Write("HP: " + Hitpoints.ToString()+"/"+MaxHitpoints.ToString());
+        }
+
+
     }
 }

@@ -10,6 +10,7 @@ namespace StealthRoguelike
     {
         public string Name;
         public int Hitpoints;
+        public int MaxHitpoints;
         public int coordX, coordY; //global coords
         public int lookX = 0, lookY = -1;   //heading vector
         public int ViewAngle = 110; //in degrees.
@@ -22,6 +23,7 @@ namespace StealthRoguelike
         {
             Name = name;
             Hitpoints = 2;
+            MaxHitpoints = Hitpoints;
             coordX = x;
             coordY = y;
             appearance = appear;

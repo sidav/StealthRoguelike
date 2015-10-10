@@ -9,9 +9,11 @@ namespace StealthRoguelike
     class Actor:Unit //it's just like an unit, but with AI
     {
 
-        public enum State {waiting,patrolling, alerted} //to be expanded...
+        public enum State {waiting, patrolling, alerted, attacking} //to be expanded...
 
         public State currentState;
+        public Unit Target; //attack whom? 
+        public int TargetCoordX, TargetCoordY; //where to investigate?
 
 
         public Actor(string name,int x, int y, char appear):base(name, x,y,appear,true,ConsoleColor.Red)
