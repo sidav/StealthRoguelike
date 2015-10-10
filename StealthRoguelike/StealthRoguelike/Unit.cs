@@ -9,6 +9,7 @@ namespace StealthRoguelike
     class Unit
     {
         public string Name;
+        public int Hitpoints;
         public int coordX, coordY; //global coords
         public int lookX = 0, lookY = -1;   //heading vector
         public int ViewAngle = 110; //in degrees.
@@ -20,6 +21,7 @@ namespace StealthRoguelike
         public Unit(string name, int x, int y, char appear, bool fov, ConsoleColor thiscolor)
         {
             Name = name;
+            Hitpoints = 2;
             coordX = x;
             coordY = y;
             appearance = appear;
