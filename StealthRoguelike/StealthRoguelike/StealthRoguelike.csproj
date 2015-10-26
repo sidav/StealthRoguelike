@@ -57,7 +57,7 @@
     <Compile Include="World.cs" />
     <Compile Include="AllChars.cs" />
     <Compile Include="WorldRendering.cs" />
-    <Compile Include="WorldTiming.cs" />
+    <Compile Include="TurnTiming.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

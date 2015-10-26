@@ -8,6 +8,7 @@ namespace StealthRoguelike
 {
     class Unit
     {
+        public TurnTiming Timing = new TurnTiming();
         public string Name;
         public int Hitpoints;
         public int MaxHitpoints;
@@ -72,12 +73,14 @@ namespace StealthRoguelike
         {
             lookX = x;
             lookY = y;
+            Timing.AddActionTime(3);
         }
 
         public bool TryMoveForward() //move where this unit looks. returns true if the unit has moved.
         {
             if (World.IsPassable(coordX + lookX, coordY + lookY))
             {
+                Timing.AddActionTime(10);
                 coordX += lookX;
                 coordY += lookY;
                 return true;

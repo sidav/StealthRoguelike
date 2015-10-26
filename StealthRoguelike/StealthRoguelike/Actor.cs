@@ -61,6 +61,7 @@ namespace StealthRoguelike
                 lookX = Algorithms.getRandomInt(-1, 2);
                 lookY = Algorithms.getRandomInt(-1, 2);
             } while ((lookX == 0 && lookY == 0) || !World.IsPassable(coordX + lookX, coordY + lookY));
+            Timing.AddActionTime(5);
         }
 
         void Check() //Well, does this actor see anything interesting?

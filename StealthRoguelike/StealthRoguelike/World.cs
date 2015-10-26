@@ -102,20 +102,25 @@ namespace StealthRoguelike
             //drawWorld();
             while (true)
             {
-                WorldRendering.drawWorld(0);
-                player.DrawStatusbar();
-                keyPressed = Console.ReadKey(true);
-                if (keyPressed.Key == ConsoleKey.Escape)
-                    break;
-                if (keyPressed.Key == ConsoleKey.F1) //development purposes
+                if (player.Timing.IsTimeToAct())
                 {
-                    WorldRendering.drawWorld(-1);
-                    WorldRendering.drawUnits(-1);
-                    Console.ReadKey(true);
-                    continue;
+                    WorldRendering.drawWorld(0);
+                    player.DrawStatusbar();
+                    keyPressed = Console.ReadKey(true);
+                    if (keyPressed.Key == ConsoleKey.Escape)
+                        break;
+                    if (keyPressed.Key == ConsoleKey.F1) //development purposes
+                    {
+                        WorldRendering.drawWorld(-1);
+                        WorldRendering.drawUnits(-1);
+                        Console.ReadKey(true);
+                        continue;
+                    }
+                    player.handleKeys(keyPressed);
                 }
-                player.handleKeys(keyPressed);
-                guard.DoSomething();
+                if (guard.Timing.IsTimeToAct())
+                    guard.DoSomething();
+                TurnTiming.Tick();
             }
 
         }

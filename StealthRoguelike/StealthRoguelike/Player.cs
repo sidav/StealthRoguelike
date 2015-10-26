@@ -17,6 +17,7 @@ namespace StealthRoguelike
         {
             if (World.TryOpenDoor(coordX + x, coordY + y))
             {
+                Timing.AddActionTime(10);
                 Log.AddLine("You opened the door.");
                 return;
             }
@@ -24,6 +25,7 @@ namespace StealthRoguelike
             {
                 coordX += x;
                 coordY += y;
+                Timing.AddActionTime(9);
             }
             //World.Redraw(coordX-x, coordY-y);
         }
@@ -65,7 +67,10 @@ namespace StealthRoguelike
                 doorY += -1;
             }
             if (World.TryCloseDoor(doorX, doorY))
+            {
+                Timing.AddActionTime(10);
                 Log.ReplaceLastLine("You carefully closed the door.");
+            }
             else
                 Log.ReplaceLastLine("You tried to close this, but something went wrong...");
         }
@@ -111,6 +116,7 @@ namespace StealthRoguelike
                 WorldRendering.drawUnitsInCircle(peepX, peepY, visibilityRadius);
                 this.Draw();
                 Console.ForegroundColor = ConsoleColor.Gray;
+                Timing.AddActionTime(15);
                 Log.ReplaceLastLine("You carefully peep in that direction... Press any key");
                 Console.ReadKey(true);
                 Log.ReplaceLastLine("You carefully peep in that direction...");
@@ -156,6 +162,7 @@ namespace StealthRoguelike
             Console.ForegroundColor = ConsoleColor.Red;
             Console.SetCursorPosition(0, Program.consoleHeight-2);
             Console.Write("HP: " + Hitpoints.ToString()+"/"+MaxHitpoints.ToString());
+            Console.Write(" Time: " + Timing.GetCurrentTurn());
         }
 
 
