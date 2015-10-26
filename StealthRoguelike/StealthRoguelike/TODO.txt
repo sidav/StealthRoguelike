@@ -1,1 +1,16 @@
-﻿
+﻿Prefixes: 
+!this means the major high priority task
+-this means the usual task
+?this means the unneccessary task
+
+
+#NEED TO BE IMPLEMENTED:
+-Unificate the timing costs (maybe, formulas?)
+-Battle system
+-Stat system
+
+#NEED TO BE REPAIRED:
+?Repair map generator room placement
+
+#NEED TO BE REPLACED:
+-
