@@ -74,7 +74,7 @@ namespace StealthRoguelike
             lookY = y;
         }
 
-        public bool TryMoveForward() //move where this unit looks. returns true if this unit has moved.
+        public bool TryMoveForward() //move where this unit looks. returns true if the unit has moved.
         {
             if (World.IsPassable(coordX + lookX, coordY + lookY))
             {

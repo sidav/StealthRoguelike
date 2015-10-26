@@ -11,19 +11,24 @@ namespace StealthRoguelike
 
         public enum State {waiting, patrolling, alerted, attacking} //to be expanded...
 
-        public State currentState;
+        public State CurrentState;
+        public int StateTimeout;
+
         public Unit Target; //attack whom? 
-        public int MoveToCoordX, MoveToCoordY; //where to go for investigation?
+        public int WayTargetX, WayTargetY; //where to go for investigation?
 
 
         public Actor(string name,int x, int y, char appear):base(name, x,y,appear,true,ConsoleColor.Red)
         {
-            currentState = State.patrolling;
+            CurrentState = State.patrolling;
+            StateTimeout = 0;
+            WayTargetX = 0;
+            WayTargetY = 0;
         }
 
         public void Draw()
         {
-            if (currentState != State.alerted && currentState != State.attacking)
+            if (CurrentState != State.alerted && CurrentState != State.attacking)
                 base.Draw();
             else
             {
@@ -74,10 +79,10 @@ namespace StealthRoguelike
                     {
                         //MORE CODE EXPECTING
                         Log.AddLine(Name + " notices you!");
-                        currentState = State.attacking;
+                        CurrentState = State.attacking;
                         Target = World.player;
-                        MoveToCoordX = Target.coordX;
-                        MoveToCoordY = Target.coordY;
+                        WayTargetX = Target.coordX;
+                        WayTargetY = Target.coordY;
                         return;
                     }
             }
@@ -106,8 +111,8 @@ namespace StealthRoguelike
 
         void DoAttacking() //not only hit enemy, but also walk toward him first!
         {
-            int targetX = MoveToCoordX - coordX;
-            int targetY = MoveToCoordY - coordY;
+            int targetX = WayTargetX - coordX;
+            int targetY = WayTargetY - coordY;
             int lookToX = targetX;
             int lookToY = targetY;
             if (targetX != 0)
@@ -120,17 +125,17 @@ namespace StealthRoguelike
 
         public void DoSomething() //main AI method
         {
-            if (currentState != State.patrolling && currentState != State.waiting)
-                currentState = State.patrolling;
+            if (CurrentState != State.patrolling && CurrentState != State.waiting)
+                CurrentState = State.patrolling;
             Check();
             //if is waiting for something then do nothing, huh
-            if (currentState == State.waiting)
+            if (CurrentState == State.waiting)
                 return;
-            if (currentState == State.patrolling)
+            if (CurrentState == State.patrolling)
             {
                 DoPatrolling();
             }
-            if (currentState == State.attacking)
+            if (CurrentState == State.attacking)
             {
                 DoAttacking();
             }
