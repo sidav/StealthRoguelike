@@ -17,6 +17,13 @@ namespace StealthRoguelike
         public Unit Target; //attack whom? 
         public int WayTargetX, WayTargetY; //where to go for investigation?
 
+        protected char getAppearance()
+        {
+            if (CurrentState != State.alerted && CurrentState != State.attacking)
+                return this.appearance;
+            else
+                return '!';
+        }
 
         public Actor(string name,int x, int y, char appear):base(name, x,y,appear,true,ConsoleColor.Red)
         {
@@ -37,7 +44,7 @@ namespace StealthRoguelike
                 Console.ForegroundColor = ConsoleColor.Black;
                 Console.BackgroundColor = color;
                 Console.SetCursorPosition(this.coordX, this.coordY);
-                Console.Write('!');
+                Console.Write(getAppearance());
                 Console.ForegroundColor = color;
                 Console.BackgroundColor = tempBack;
                 if (hasFOV) //draw a thingy that shows this unit's direction

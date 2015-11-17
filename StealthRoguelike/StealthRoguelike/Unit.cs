@@ -42,15 +42,9 @@ namespace StealthRoguelike
             color = ConsoleColor.White;
         }
 
-        public void Draw()
+        protected char getAppearance()
         {
-            ConsoleColor temp = Console.ForegroundColor;
-            Console.ForegroundColor = color;
-            Console.SetCursorPosition(this.coordX, this.coordY);
-            Console.Write(this.appearance);
-            if (hasFOV)
-                drawLookingThingy();
-            Console.ForegroundColor = temp;
+            return this.appearance;
         }
 
         protected void drawLookingThingy() //draw a thingy that shows this unit's direction
@@ -68,6 +62,19 @@ namespace StealthRoguelike
             Console.Write(thingy);
             //TODO!
         }
+
+        public void Draw()
+        {
+            ConsoleColor temp = Console.ForegroundColor;
+            Console.ForegroundColor = color;
+            Console.SetCursorPosition(this.coordX, this.coordY);
+            Console.Write(getAppearance());
+            if (hasFOV)
+                drawLookingThingy();
+            Console.ForegroundColor = temp;
+        }
+
+
 
         protected void turnToDirection(int x, int y)
         {

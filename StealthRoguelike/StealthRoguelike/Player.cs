@@ -147,7 +147,7 @@ namespace StealthRoguelike
                 MoveOrOpen(-1, -1);
             if (keyPressed.Key == ConsoleKey.NumPad5) //skip turn
             {
-                //nothing (yet?)
+                Timing.AddActionTime(10);
             }
             //ACTIONS
             if (keyPressed.Key == ConsoleKey.C) //close door 
