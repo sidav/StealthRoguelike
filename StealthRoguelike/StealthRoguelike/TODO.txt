@@ -5,6 +5,7 @@
 
 
 #NEED TO BE IMPLEMENTED:
+!make guards to investigate suspicious places
 -Unificate the timing costs (maybe, formulas?)
 -Battle system
 -Stat system
