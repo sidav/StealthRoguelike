@@ -1,7 +1,7 @@
 ﻿Prefixes: 
 !this means the major high priority task
 -this means the usual task
-?this means the unneccessary task
+?this means the unneccessary or long time task
 
 
 #NEED TO BE IMPLEMENTED:
@@ -9,6 +9,7 @@
 -Unificate the timing costs (maybe, formulas?)
 -Battle system
 -Stat system
+?Make actors react to any enemies in addition to player
 
 #NEED TO BE REPAIRED:
 ?Repair map generator room placement

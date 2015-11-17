@@ -9,7 +9,7 @@ namespace StealthRoguelike
     class Actor:Unit //it's just like an unit, but with AI
     {
 
-        public enum State {waiting, patrolling, alerted, attacking} //to be expanded...
+        public enum State {waiting, patrolling, investigating, alerted, attacking} //to be expanded...
 
         public State CurrentState;
         public int StateTimeout;
@@ -17,13 +17,6 @@ namespace StealthRoguelike
         public Unit Target; //attack whom? 
         public int WayTargetX, WayTargetY; //where to go for investigation?
 
-        protected char getAppearance()
-        {
-            if (CurrentState != State.alerted && CurrentState != State.attacking)
-                return this.appearance;
-            else
-                return '!';
-        }
 
         public Actor(string name,int x, int y, char appear):base(name, x,y,appear,true,ConsoleColor.Red)
         {
@@ -33,9 +26,26 @@ namespace StealthRoguelike
             WayTargetY = 0;
         }
 
-        public void Draw()
+        protected char getAppearance()
         {
-            if (CurrentState != State.alerted && CurrentState != State.attacking)
+            if (CurrentState == State.alerted)
+            {
+                return '!';
+            }
+            if (CurrentState == State.attacking)
+            {
+                return '!';
+            }
+            if (CurrentState == State.investigating)
+            {
+                return '?';
+            }
+            return this.appearance;
+        }
+
+        public new void Draw()
+        {
+            if (getAppearance() == appearance) //i.e. actor isn't threatened
                 base.Draw();
             else
             {
@@ -71,10 +81,9 @@ namespace StealthRoguelike
             Timing.AddActionTime(5);
         }
 
-        void Check() //Well, does this actor see anything interesting?
-        {
+        bool ActorSeesThePlayer()  //do we see the player?
+        {                          
             int targetX, targetY;
-            //do we see the player?
             targetX = World.player.coordX;
             targetY = World.player.coordY;
             int vectorX = World.player.coordX - coordX;
@@ -84,7 +93,15 @@ namespace StealthRoguelike
             {
                 if (ViewSector.PointIsInSector(coordX, coordY, targetX, targetY, lookX, lookY, ViewAngle))
                     if (World.VisibleLineExist(coordX, coordY, targetX, targetY))
-                    {
+                        return true;
+            }
+            return false;
+        }
+
+        void Check() //Well, does this actor see anything interesting?
+        {
+            if (ActorSeesThePlayer())
+            { 
                         //MORE CODE EXPECTING
                         Log.AddLine(Name + " notices you!");
                         CurrentState = State.attacking;
@@ -92,7 +109,6 @@ namespace StealthRoguelike
                         WayTargetX = Target.coordX;
                         WayTargetY = Target.coordY;
                         return;
-                    }
             }
         }
 
