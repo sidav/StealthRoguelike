@@ -53,7 +53,7 @@ namespace StealthRoguelike
                 }
                 Console.ForegroundColor = tempFore;
             }
-            
+
         }
 
         ///////

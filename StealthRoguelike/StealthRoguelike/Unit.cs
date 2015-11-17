@@ -42,11 +42,6 @@ namespace StealthRoguelike
             color = ConsoleColor.White;
         }
 
-        protected char getAppearance()
-        {
-            return this.appearance;
-        }
-
         protected void drawLookingThingy() //draw a thingy that shows this unit's direction
         {
             char thingy = '?';
@@ -68,7 +63,7 @@ namespace StealthRoguelike
             ConsoleColor temp = Console.ForegroundColor;
             Console.ForegroundColor = color;
             Console.SetCursorPosition(this.coordX, this.coordY);
-            Console.Write(getAppearance());
+            Console.Write(appearance);
             if (hasFOV)
                 drawLookingThingy();
             Console.ForegroundColor = temp;
