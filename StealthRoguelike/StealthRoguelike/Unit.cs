@@ -69,7 +69,13 @@ namespace StealthRoguelike
             Console.ForegroundColor = temp;
         }
 
-
+        protected void moveForwardOrOpen()
+        {
+            if (!World.TryOpenDoor(coordX + lookX, coordY + lookY))
+                TryMoveForward();
+            else
+                Timing.AddActionTime(7);
+        }
 
         protected void turnToDirection(int x, int y)
         {

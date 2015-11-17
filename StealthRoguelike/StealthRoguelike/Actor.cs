@@ -15,15 +15,15 @@ namespace StealthRoguelike
         public int StateTimeout;
 
         public Unit Target; //attack whom? 
-        public int WayTargetX, WayTargetY; //where to go for investigation?
+        public int DestinationX, DestinationY; //where to go for investigation?
 
 
         public Actor(string name,int x, int y, char appear):base(name, x,y,appear,true,ConsoleColor.Red)
         {
             CurrentState = State.patrolling;
             StateTimeout = 0;
-            WayTargetX = 0;
-            WayTargetY = 0;
+            DestinationX = 0;
+            DestinationY = 0;
         }
 
         protected char getAppearance()
@@ -65,13 +65,38 @@ namespace StealthRoguelike
             }
 
         }
-
+        ///////////////////////////////////////////////////////////
         ///////
         //AI!//
         ///////
         const int suddenTurningFrequency = 10;
 
-        void turnToPassable() //turn to random direction which is passable
+        void addStateTimeout(int value)
+        {
+            StateTimeout = Timing.GetCurrentTurn() + value;
+        }
+
+        bool moveToDestination() //returns true if this actor is already at his destination
+        {
+            if (coordX == DestinationX && coordY == DestinationY)
+                return true;
+            else
+            {
+                int targetX = DestinationX - coordX;
+                int targetY = DestinationY - coordY;
+                int lookToX = targetX;
+                int lookToY = targetY;
+                if (targetX != 0)
+                    lookToX = targetX / Math.Abs(targetX);
+                if (targetY != 0)
+                    lookToY = targetY / Math.Abs(targetY);
+                turnToDirection(lookToX, lookToY);
+                moveForwardOrOpen();
+                return false;
+            }
+        }
+
+        void turnToRandomPassableDirection() //turn to random direction which is passable
         {
             do
             {
@@ -81,13 +106,14 @@ namespace StealthRoguelike
             Timing.AddActionTime(5);
         }
 
-        bool ActorSeesThePlayer()  //do we see the player?
-        {                          
+        bool ActorSeesTheTarget()  //do we see the player?
+        {
+            Target = World.player;
             int targetX, targetY;
-            targetX = World.player.coordX;
-            targetY = World.player.coordY;
-            int vectorX = World.player.coordX - coordX;
-            int vectorY = World.player.coordY - coordY;
+            targetX = Target.coordX;
+            targetY = Target.coordY;
+            int vectorX = Target.coordX - coordX;
+            int vectorY = Target.coordY - coordY;
             double distance = Math.Sqrt(vectorX * vectorX + vectorY * vectorY);
             if (distance <= visibilityRadius)
             {
@@ -100,15 +126,23 @@ namespace StealthRoguelike
 
         void Check() //Well, does this actor see anything interesting?
         {
-            if (ActorSeesThePlayer())
+            if (ActorSeesTheTarget())
             { 
-                        //MORE CODE EXPECTING
-                        Log.AddLine(Name + " notices you!");
-                        CurrentState = State.attacking;
-                        Target = World.player;
-                        WayTargetX = Target.coordX;
-                        WayTargetY = Target.coordY;
-                        return;
+                //MORE CODE EXPECTING
+                Log.AddLine(Name + " notices you!");
+                CurrentState = State.attacking;
+                DestinationX = Target.coordX;
+                DestinationY = Target.coordY;
+                addStateTimeout(1);
+                return;
+            }
+            else if (CurrentState == State.attacking)
+            {
+                CurrentState = State.investigating;
+                DestinationX = Target.coordX;
+                DestinationY = Target.coordY;
+                addStateTimeout(150);
+                return;
             }
         }
 
@@ -120,7 +154,7 @@ namespace StealthRoguelike
             //let's SUDDENLY turn to the random direction, maybe? :D
             if (Algorithms.getRandomInt(suddenTurningFrequency) == 0)
             {
-                turnToPassable();
+                turnToRandomPassableDirection();
                 return;
             }
             //Move forward if there is nothing to do...
@@ -129,29 +163,29 @@ namespace StealthRoguelike
             else //or open door if there is. Otherwise turn to random direction
             {
                 if (!World.TryOpenDoor(coordX + lookX, coordY + lookY))
-                    turnToPassable();
+                    turnToRandomPassableDirection();
             }
         }
 
         void DoAttacking() //not only hit enemy, but also walk toward him first!
         {
-            int targetX = WayTargetX - coordX;
-            int targetY = WayTargetY - coordY;
-            int lookToX = targetX;
-            int lookToY = targetY;
-            if (targetX != 0)
-                lookToX = targetX / Math.Abs(targetX);
-            if (targetY != 0)
-                lookToY = targetY / Math.Abs(targetY);
-            turnToDirection(lookToX, lookToY);
-            TryMoveForward();
+            moveToDestination();
+        }
+
+        void DoInvestigating() //move to "last seen position"
+        {
+            if (moveToDestination())
+            {
+                turnToRandomPassableDirection();
+                Log.AddLine("Where are you? Don't hide, it's useless!");
+            }
         }
 
         public void DoSomething() //main AI method
         {
-            if (CurrentState != State.patrolling && CurrentState != State.waiting)
-                CurrentState = State.patrolling;
             Check();
+            if (Timing.GetCurrentTurn() > StateTimeout)
+                CurrentState = State.patrolling;
             //if is waiting for something then do nothing, huh
             if (CurrentState == State.waiting)
                 return;
@@ -163,7 +197,10 @@ namespace StealthRoguelike
             {
                 DoAttacking();
             }
-
+            if (CurrentState == State.investigating)
+            {
+                DoInvestigating();
+            }
 
         }
     }
