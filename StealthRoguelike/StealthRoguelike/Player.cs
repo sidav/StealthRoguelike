@@ -162,7 +162,7 @@ namespace StealthRoguelike
             Console.ForegroundColor = ConsoleColor.Red;
             Console.SetCursorPosition(0, Program.consoleHeight-2);
             Console.Write("HP: " + Hitpoints.ToString()+"/"+MaxHitpoints.ToString());
-            Console.Write(" Time: " + Timing.GetCurrentTurn());
+            Console.Write(" Time: " + Timing.GetCurrentTurn()/10); ///THIS might be not cool...
         }
 
 
