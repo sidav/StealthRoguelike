@@ -1,4 +1,5 @@
 ﻿#CURRENTLY WORKING AT:
+Damage system.
 Items and weapons
 -----------------------------------------------------------
 #NEED TO BE IMPLEMENTED:

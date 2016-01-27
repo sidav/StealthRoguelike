@@ -169,7 +169,13 @@ namespace StealthRoguelike
 
         void DoAttacking() //not only hit enemy, but also walk toward him first!
         {
-            moveToDestination();
+            if (wielded.targetInRange(coordX, coordY, DestinationX, DestinationY))
+            {
+                Damage.dealDamage(this, Target);
+                Timing.AddActionTime(10);
+            }            
+            else
+                moveToDestination();
         }
 
         void DoInvestigating() //move to "last seen position"

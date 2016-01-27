@@ -25,13 +25,14 @@ namespace StealthRoguelike
                 for (int j = 0; j < mapHeight; j++)
                     if (map[i, j].IsUpstair)
                         player = new Player(i, j);
+            //place enemies
             int x, y;
             do
             {
                 x = Algorithms.getRandomInt(mapWidth);
                 y = Algorithms.getRandomInt(mapHeight);
-                if (map[x,y].IsPassable)
-                    guard = new Actor("Our test subject", x, y, 'G');
+                if (map[x, y].IsPassable)
+                    guard = UnitCreator.createActor("Guard", x,y);
             } while (!map[x, y].IsPassable);
             Log.AddLine("Actors placement... ok");
             Log.AddLine("All systems nominal.");

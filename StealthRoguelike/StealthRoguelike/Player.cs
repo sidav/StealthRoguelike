@@ -8,7 +8,7 @@ namespace StealthRoguelike
 {
     class Player:Unit
     {
-        public Player(int x, int y):base("You",x,y,'@',false,ConsoleColor.Green)
+        public Player(int x, int y):base("you",x,y,'@',false,ConsoleColor.Green)
         {
             visibilityRadius = 10;
         }
