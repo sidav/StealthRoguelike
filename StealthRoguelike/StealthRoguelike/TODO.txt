@@ -1,8 +1,5 @@
-﻿Prefixes: 
-!this means the major high priority task
--this means the usual task
-?this means the unneccessary or long time task
-.this means partially finished (yet working) task
+﻿#CURRENTLY WORKING AT:
+
 -----------------------------------------------------------
 #NEED TO BE IMPLEMENTED:
 .make guards to investigate suspicious places (almost done)
@@ -16,3 +13,9 @@
 
 #NEED TO BE REPLACED:
 -
+-------------------------------------
+Prefixes: 
+!this means the major high priority task
+-this means the usual task
+?this means the unneccessary or long time task
+.this means partially finished (yet working) task
