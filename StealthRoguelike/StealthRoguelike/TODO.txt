@@ -1,5 +1,5 @@
 ﻿#CURRENTLY WORKING AT:
-
+Items and weapons
 -----------------------------------------------------------
 #NEED TO BE IMPLEMENTED:
 .make guards to investigate suspicious places (almost done)

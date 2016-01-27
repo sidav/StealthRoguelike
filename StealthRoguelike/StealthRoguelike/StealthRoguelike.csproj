@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Item.cs" />
     <Compile Include="Line.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="MapGenerator.cs" />
@@ -54,6 +55,7 @@
     <Compile Include="Algorithms.cs" />
     <Compile Include="Unit.cs" />
     <Compile Include="ViewSector.cs" />
+    <Compile Include="Weapon.cs" />
     <Compile Include="World.cs" />
     <Compile Include="AllChars.cs" />
     <Compile Include="WorldRendering.cs" />
