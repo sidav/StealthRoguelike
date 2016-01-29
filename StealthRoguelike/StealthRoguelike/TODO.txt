@@ -1,5 +1,6 @@
 ﻿#CURRENTLY WORKING AT:
-Damage system.
+Player hit enemies. 
+Enemies should leave corpses.
 Items and weapons
 -----------------------------------------------------------
 #NEED TO BE IMPLEMENTED:
