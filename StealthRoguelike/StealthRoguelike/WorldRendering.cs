@@ -14,9 +14,7 @@ namespace StealthRoguelike
         {
             if (mode == 0) // draw from player
             {
-                foreach (Actor currActor in World.AllActors)
-                    if (World.VisibleLineExist(World.player.coordX, World.player.coordY, currActor.coordX, currActor.coordY))
-                        currActor.Draw();
+                drawUnitsInCircle(World.player.coordX, World.player.coordY, World.player.visibilityRadius);
                 World.player.Draw();
             }
             if (mode == -1) //developer mode
@@ -34,12 +32,17 @@ namespace StealthRoguelike
 
         public static void drawUnitsInCircle(int x, int y, int radius)
         {
+            int dx, dy; /*actorx, actory;*/
             foreach (Actor currActor in World.AllActors)
             {
-                int dx = currActor.coordX - x;
-                int dy = currActor.coordY - y;
+                //actorx = currActor.coordX;
+                //actory = currActor.coordY;
+                dx = currActor.coordX - x;
+                dy = currActor.coordY - y;
+                //Log.AddLine("DEBUG x=" + x.ToString() + " y=" + y.ToString() + " dx = " + dx.ToString() + " dy = " + dy.ToString());
+                //Log.AddLine("DEBUG ACTx=" + actorx.ToString() + " ACTy=" + actory.ToString());
                 if (dx * dx + dy * dy > radius * radius)
-                    return;
+                    continue;
                 if (World.VisibleLineExist(x, y, currActor.coordX, currActor.coordY))
                     currActor.Draw();
             }
