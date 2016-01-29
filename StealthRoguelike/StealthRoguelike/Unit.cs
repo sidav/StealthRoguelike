@@ -19,7 +19,7 @@ namespace StealthRoguelike
         public char appearance;
         public bool hasFOV;
         public ConsoleColor color;
-        public Weapon wielded;
+        public Weapon Wielded;
 
         public Unit(string name, int x, int y, char appear, bool fov, ConsoleColor thiscolor)
         {

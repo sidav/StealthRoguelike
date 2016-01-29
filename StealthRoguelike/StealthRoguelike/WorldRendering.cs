@@ -14,25 +14,35 @@ namespace StealthRoguelike
         {
             if (mode == 0) // draw from player
             {
-                if (World.VisibleLineExist(World.player.coordX, World.player.coordY, World.guard.coordX, World.guard.coordY))
-                    World.guard.Draw();
+                foreach (Actor currActor in World.AllActors)
+                    if (World.VisibleLineExist(World.player.coordX, World.player.coordY, currActor.coordX, currActor.coordY))
+                        currActor.Draw();
                 World.player.Draw();
             }
             if (mode == -1) //developer mode
             {
-                World.guard.Draw();
+                foreach (Actor currActor in World.AllActors)
+                {
+                    bool t = currActor.hasFOV;
+                    currActor.hasFOV = false;
+                    currActor.Draw();
+                    currActor.hasFOV = t;
+                }
                 World.player.Draw();
             }
         }
 
         public static void drawUnitsInCircle(int x, int y, int radius)
         {
-            int dx = World.guard.coordX - x;
-            int dy = World.guard.coordY - y;
-            if (dx * dx + dy * dy > radius * radius)
-                return;
-            if (World.VisibleLineExist(x, y, World.guard.coordX, World.guard.coordY))
-                World.guard.Draw();
+            foreach (Actor currActor in World.AllActors)
+            {
+                int dx = currActor.coordX - x;
+                int dy = currActor.coordY - y;
+                if (dx * dx + dy * dy > radius * radius)
+                    return;
+                if (World.VisibleLineExist(x, y, currActor.coordX, currActor.coordY))
+                    currActor.Draw();
+            }
         }
 
         public static void drawMap() //TEMPORARY SOLUTION.

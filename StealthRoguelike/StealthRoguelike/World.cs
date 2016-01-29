@@ -10,7 +10,7 @@ namespace StealthRoguelike
     {
         public static Tile[,] map = new Tile[mapWidth, mapHeight];
 
-        public static Actor guard; ///!!!TEMPORARY SOLUTION!!! FOR AI DEVELOPMENT ONLY!
+        public static List<Actor> AllActors = new List<Actor>(); ///!!!STILL TEMPORARY SOLUTION!!!
         public static Player player;
 
         public const int mapWidth = Program.mapWidth;
@@ -24,15 +24,16 @@ namespace StealthRoguelike
             for (int i = 0; i < mapWidth; i++)
                 for (int j = 0; j < mapHeight; j++)
                     if (map[i, j].IsUpstair)
-                        player = new Player(i, j);
+                        player = UnitCreator.createPlayer(i, j);
             //place enemies
             int x, y;
+            for (int i = 0; i < 20; i++)
             do
             {
                 x = Algorithms.getRandomInt(mapWidth);
                 y = Algorithms.getRandomInt(mapHeight);
                 if (map[x, y].IsPassable)
-                    guard = UnitCreator.createActor("Guard", x,y);
+                    AllActors.Add(UnitCreator.createActor("Guard", x,y));
             } while (!map[x, y].IsPassable);
             Log.AddLine("Actors placement... ok");
             Log.AddLine("All systems nominal.");
@@ -48,6 +49,15 @@ namespace StealthRoguelike
                     map[i, j] = new Tile(codemap[i, j]);
         }
 
+        public static bool isFreeOfActors(int x, int y)
+        {
+            //if (x < 0 || x >= mapWidth || y < 0 || y >= mapHeight)
+            //    return false;
+            foreach (Actor currActor in AllActors)
+                if (currActor.coordX == x && currActor.coordY == y)
+                    return false;
+            return true;
+        }
 
         public static bool IsPassable(int x, int y)
         {
@@ -55,7 +65,7 @@ namespace StealthRoguelike
                 return false;
             if (player.coordX == x && player.coordY == y)
                 return false;
-            if (guard.coordX == x && guard.coordY == y)
+            if (!isFreeOfActors(x, y))
                 return false;
             return map[x,y].IsPassable;
         }
@@ -119,8 +129,9 @@ namespace StealthRoguelike
                     }
                     player.handleKeys(keyPressed);
                 }
-                if (guard.Timing.IsTimeToAct())
-                    guard.DoSomething();
+                foreach (Actor currActor in AllActors)
+                    if (currActor.Timing.IsTimeToAct())
+                        currActor.DoSomething();
                 TurnTiming.Tick();
             }
 

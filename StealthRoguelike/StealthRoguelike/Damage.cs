@@ -11,13 +11,13 @@ namespace StealthRoguelike
 
         public static void dealDamage(Unit attacker, Unit target)
         {
-            if (attacker.wielded != null)
+            if (attacker.Wielded != null)
             {
-                int mindamage = attacker.wielded.mindamage;
-                int maxdamage = attacker.wielded.maxdamage;
+                int mindamage = attacker.Wielded.mindamage;
+                int maxdamage = attacker.Wielded.maxdamage;
                 int finalDamage = Algorithms.getRandomInt(mindamage, maxdamage);
                 target.Hitpoints -= finalDamage;
-                Log.AddLine(attacker.Name + " hits " + target.Name + " with the " +attacker.wielded.name+"!");
+                Log.AddLine(attacker.Name + " hits " + target.Name + " with the " +attacker.Wielded.name+"!");
             }
         }
 

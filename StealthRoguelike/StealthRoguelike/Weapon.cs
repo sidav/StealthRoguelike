@@ -28,17 +28,24 @@ namespace StealthRoguelike
         public Weapon(string WeaponName)
         {
             name = WeaponName;
-            if (name == "dagger")
+            switch (name)
             {
-                type = weaponTypes.melee;
-                mindamage = 1;
-                maxdamage = 2;
-            }
-            if (name == "baton")
-            {
-                type = weaponTypes.melee;
-                mindamage = 1;
-                maxdamage = 1;
+                case "dagger":
+                    type = weaponTypes.melee;
+                    mindamage = 1;
+                    maxdamage = 2;
+                    break;
+                case "baton":
+                    type = weaponTypes.melee;
+                    mindamage = 1;
+                    maxdamage = 1;
+                    break;
+                default:
+                    name = "Default_Weapon";
+                    type = weaponTypes.melee;
+                    mindamage = 1;
+                    maxdamage = 1;
+                    break;
             }
         }
 
