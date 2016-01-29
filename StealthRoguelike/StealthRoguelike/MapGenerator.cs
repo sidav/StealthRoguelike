@@ -27,7 +27,7 @@ namespace StealthRoguelike
         const int minCorridorLength = 3;
         const int maxCorridorLength = 75;
         const int maxRooms = 35;// AFTER AI TESTING CHANGE THIS TO 35; 
-        const int maxCorridors = 15;// AFTER AI TESTING CHANGE THIS TO 15;
+        const int maxCorridors = 25;// AFTER AI TESTING CHANGE THIS TO 15;
         const int maxTries = 1000; //maximum amount of tries for structure placing
 
         public static void setParams(int mapw, int maph)
