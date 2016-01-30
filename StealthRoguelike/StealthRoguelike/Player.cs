@@ -13,7 +13,7 @@ namespace StealthRoguelike
             visibilityRadius = 10;
         }
 
-        public void MoveOrOpen(int x, int y) //-1 or 0 or 1 for x and y
+        public void MoveOrOpenOrAttack(int x, int y) //-1 or 0 or 1 for x and y
         {
             if (World.TryOpenDoor(coordX + x, coordY + y))
             {
@@ -26,6 +26,15 @@ namespace StealthRoguelike
                 coordX += x;
                 coordY += y;
                 Timing.AddActionTime(9);
+                if (World.isItemPresent(coordX, coordY))
+                    Log.AddLine("You see here: "+World.getItemAt(coordX, coordY).Name);
+                return;
+            }
+            if (World.isActorPresent(coordX + x, coordY + y))
+            {
+                Actor attacked = World.getActorAt(coordX + x, coordY + y);
+                Damage.dealDamage(this, attacked);
+                Timing.AddActionTime(7);
             }
             //World.Redraw(coordX-x, coordY-y);
         }
@@ -130,21 +139,21 @@ namespace StealthRoguelike
         public void handleKeys(ConsoleKeyInfo keyPressed)
         {
             if (keyPressed.Key == ConsoleKey.NumPad8) //move up
-                MoveOrOpen(0, -1);
+                MoveOrOpenOrAttack(0, -1);
             if (keyPressed.Key == ConsoleKey.NumPad9) //move upper right
-                MoveOrOpen(1, -1);
+                MoveOrOpenOrAttack(1, -1);
             if (keyPressed.Key == ConsoleKey.NumPad6) //move right
-                MoveOrOpen(1, 0);
+                MoveOrOpenOrAttack(1, 0);
             if (keyPressed.Key == ConsoleKey.NumPad3) //move lower right
-                MoveOrOpen(1, 1);
+                MoveOrOpenOrAttack(1, 1);
             if (keyPressed.Key == ConsoleKey.NumPad2) //move down
-                MoveOrOpen(0, 1);
+                MoveOrOpenOrAttack(0, 1);
             if (keyPressed.Key == ConsoleKey.NumPad1) //move lower left
-                MoveOrOpen(-1, 1);
+                MoveOrOpenOrAttack(-1, 1);
             if (keyPressed.Key == ConsoleKey.NumPad4) //move left
-                MoveOrOpen(-1, 0);
+                MoveOrOpenOrAttack(-1, 0);
             if (keyPressed.Key == ConsoleKey.NumPad7) //move upper left
-                MoveOrOpen(-1, -1);
+                MoveOrOpenOrAttack(-1, -1);
             if (keyPressed.Key == ConsoleKey.NumPad5) //skip turn
             {
                 Timing.AddActionTime(10);

@@ -17,7 +17,10 @@ namespace StealthRoguelike
                 int maxdamage = attacker.Wielded.maxdamage;
                 int finalDamage = Algorithms.getRandomInt(mindamage, maxdamage);
                 target.Hitpoints -= finalDamage;
-                Log.AddLine(attacker.Name + " hits " + target.Name + " with the " +attacker.Wielded.name+"!");
+                if (attacker is Player)
+                    Log.AddLine("You hit " + target.Name + " with your " + attacker.Wielded.Name + "!");
+                else 
+                    Log.AddLine(attacker.Name + " hits " + target.Name + " with the " +attacker.Wielded.Name+"!");
             }
         }
 

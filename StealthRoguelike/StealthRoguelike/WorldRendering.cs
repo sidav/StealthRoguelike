@@ -32,19 +32,29 @@ namespace StealthRoguelike
 
         public static void drawUnitsInCircle(int x, int y, int radius)
         {
-            int dx, dy; /*actorx, actory;*/
+            int dx, dy;
             foreach (Actor currActor in World.AllActors)
             {
-                //actorx = currActor.coordX;
-                //actory = currActor.coordY;
                 dx = currActor.coordX - x;
                 dy = currActor.coordY - y;
-                //Log.AddLine("DEBUG x=" + x.ToString() + " y=" + y.ToString() + " dx = " + dx.ToString() + " dy = " + dy.ToString());
-                //Log.AddLine("DEBUG ACTx=" + actorx.ToString() + " ACTy=" + actory.ToString());
                 if (dx * dx + dy * dy > radius * radius)
                     continue;
                 if (World.VisibleLineExist(x, y, currActor.coordX, currActor.coordY))
                     currActor.Draw();
+            }
+        }
+
+        public static void drawItemsInCircle(int x, int y, int radius)
+        {
+            int dx, dy;
+            foreach (Item currItem in World.AllItemsOnFloor)
+            {
+                dx = currItem.CoordX - x;
+                dy = currItem.CoordY - y;
+                if (dx * dx + dy * dy > radius * radius)
+                    continue;
+                if (World.VisibleLineExist(x, y, currItem.CoordX, currItem.CoordY))
+                    currItem.Draw();
             }
         }
 
@@ -74,6 +84,7 @@ namespace StealthRoguelike
             if (mode == 0) //draw from player
             {
                 drawInCircleFOV(World.player.coordX, World.player.coordY, World.player.visibilityRadius);
+                drawItemsInCircle(World.player.coordX, World.player.coordY, World.player.visibilityRadius);
                 drawUnits(mode);
             }
             if (mode == -1) //developer mode

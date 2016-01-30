@@ -11,7 +11,6 @@ namespace StealthRoguelike
         public enum weaponTypes { melee }
         public enum damageTypes { stab, smash }
 
-        public string name;
         public weaponTypes type;
         public int mindamage, maxdamage;
 
@@ -27,8 +26,8 @@ namespace StealthRoguelike
 
         public Weapon(string WeaponName)
         {
-            name = WeaponName;
-            switch (name)
+            Name = WeaponName;
+            switch (Name)
             {
                 case "dagger":
                     type = weaponTypes.melee;
@@ -41,12 +40,18 @@ namespace StealthRoguelike
                     maxdamage = 1;
                     break;
                 default:
-                    name = "Default_Weapon";
+                    Name = "Default_Weapon";
                     type = weaponTypes.melee;
                     mindamage = 1;
                     maxdamage = 1;
                     break;
             }
+            if (type == weaponTypes.melee)
+            {
+                Appearance = ')';
+                Color = ConsoleColor.White;
+            }
+
         }
 
     }

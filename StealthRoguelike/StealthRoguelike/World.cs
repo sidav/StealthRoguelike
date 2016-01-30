@@ -11,6 +11,7 @@ namespace StealthRoguelike
         public static Tile[,] map = new Tile[mapWidth, mapHeight];
 
         public static List<Actor> AllActors = new List<Actor>(); ///!!!STILL TEMPORARY SOLUTION!!!
+        public static List<Item> AllItemsOnFloor = new List<Item>();
         public static Player player;
 
         public const int mapWidth = Program.mapWidth;
@@ -49,14 +50,38 @@ namespace StealthRoguelike
                     map[i, j] = new Tile(codemap[i, j]);
         }
 
-        public static bool isFreeOfActors(int x, int y)
+        public static bool isItemPresent(int x, int y)
+        {
+            foreach (Item currItem in AllItemsOnFloor)
+                if (currItem.CoordX == x && currItem.CoordY == y)
+                    return true;
+            return false;
+        }
+
+        public static Item getItemAt(int x, int y)
+        {
+            foreach (Item currItem in AllItemsOnFloor)
+                if (currItem.CoordX == x && currItem.CoordY == y)
+                    return currItem;
+            return null;
+        }
+
+        public static bool isActorPresent(int x, int y)
         {
             //if (x < 0 || x >= mapWidth || y < 0 || y >= mapHeight)
             //    return false;
             foreach (Actor currActor in AllActors)
                 if (currActor.coordX == x && currActor.coordY == y)
-                    return false;
-            return true;
+                    return true;
+            return false;
+        }
+
+        public static Actor getActorAt(int x, int y)
+        {
+            foreach (Actor currActor in AllActors)
+                if (currActor.coordX == x && currActor.coordY == y)
+                    return currActor;
+            return null;
         }
 
         public static bool IsPassable(int x, int y)
@@ -65,7 +90,7 @@ namespace StealthRoguelike
                 return false;
             if (player.coordX == x && player.coordY == y)
                 return false;
-            if (!isFreeOfActors(x, y))
+            if (isActorPresent(x, y))
                 return false;
             return map[x,y].IsPassable;
         }
@@ -129,9 +154,20 @@ namespace StealthRoguelike
                     }
                     player.handleKeys(keyPressed);
                 }
-                foreach (Actor currActor in AllActors)
+                for (int i = 0; i < AllActors.Count; i++)
+                {
+                    Actor currActor = AllActors[i];
+                    if (currActor.Hitpoints <= 0)
+                    {
+                        AllItemsOnFloor.Add(new Corpse(currActor));
+                        Log.AddLine(currActor.Name + " drops dead!");
+                        AllActors.Remove(currActor);
+                        i--;
+                        continue;
+                    }
                     if (currActor.Timing.IsTimeToAct())
                         currActor.DoSomething();
+                }
                 TurnTiming.Tick();
             }
 
