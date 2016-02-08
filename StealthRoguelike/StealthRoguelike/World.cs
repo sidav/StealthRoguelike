@@ -27,15 +27,7 @@ namespace StealthRoguelike
                     if (map[i, j].IsUpstair)
                         player = UnitCreator.createPlayer(i, j);
             //place enemies
-            int x, y;
-            for (int i = 0; i < 12; i++)
-            do
-            {
-                x = Algorithms.getRandomInt(mapWidth);
-                y = Algorithms.getRandomInt(mapHeight);
-                if (map[x, y].IsPassable)
-                    AllActors.Add(UnitCreator.createActor("Guard", x,y));
-            } while (!map[x, y].IsPassable);
+            placeActors();
             Log.AddLine("Actors placement... ok");
             Log.AddLine("All systems nominal.");
         }
@@ -48,6 +40,22 @@ namespace StealthRoguelike
             for (int i = 0; i < mapWidth; i++)
                 for (int j = 0; j < mapHeight; j++)
                     map[i, j] = new Tile(codemap[i, j]);
+        }
+
+        static void placeActors()
+        {
+            int plx, ply;
+            plx = player.coordX;
+            ply = player.coordY;
+            int x, y;
+            for (int i = 0; i < 10; i++)
+                do
+                {
+                    x = Algorithms.getRandomInt(mapWidth);
+                    y = Algorithms.getRandomInt(mapHeight);
+                    if (map[x, y].IsPassable && !VisibleLineExist(x,y,plx,ply))
+                        AllActors.Add(UnitCreator.createActor("Guard", x, y));
+                } while (!map[x, y].IsPassable);
         }
 
         public static bool isItemPresent(int x, int y)

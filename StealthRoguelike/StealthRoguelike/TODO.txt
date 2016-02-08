@@ -1,13 +1,15 @@
 ﻿#CURRENTLY WORKING AT:
-Player hit enemies. 
-Enemies should leave corpses.
+Player hit enemies: 
+	-add an ability to stab unaware enemies.
 Items and weapons
 -----------------------------------------------------------
 #NEED TO BE IMPLEMENTED:
 .make guards to investigate suspicious places (almost done)
--Unificate the timing costs (maybe, formulae?)
+-Unificate the timing costs (TimeCosts class)
 -Battle system
 -Stat system
+-Pathfinding
+-Better LOS algorithm
 ?Make actors react to any enemies in addition to player
 
 #NEED TO BE REPAIRED:
