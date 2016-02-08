@@ -8,10 +8,10 @@ namespace StealthRoguelike
 {
     class Line
     {
-        public static int CurX = 0, CurY = 0;
+        public static int CurX = 0, CurY = 0, deltax, deltay, xmod, ymod;
         static bool lineEnded = true;
-        static int fromX, fromY, toX, toY, deltax, deltay, err, deltaerr, 
-            xmod, ymod, stepsMade, lineLengthSquare;
+        static int fromX, fromY, toX, toY, /*deltax, deltay,*/ err, deltaerr, 
+            /*xmod, ymod,*/ stepsMade, lineLengthSquare;
 
         public static void Init(int startX, int startY, int endX, int endY)
         {

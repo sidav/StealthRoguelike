@@ -134,7 +134,13 @@ namespace StealthRoguelike
                 if (curX >= mapWidth || curY >= mapHeight || curX < 0 || curY < 0)
                     return false;
                 if (map[curX, curY].isVisionBlocking)
+                {
+                    //if (Math.Abs(curX - fromx) < 2 || Math.Abs(curY - fromy) < 2)
+                    //    if (!map[curX-Line.xmod, curY-Line.ymod].isVisionBlocking)
+                    //        continue;
                     return false;
+                }
+
             }
 
             return true;
