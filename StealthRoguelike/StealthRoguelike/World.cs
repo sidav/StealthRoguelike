@@ -125,8 +125,9 @@ namespace StealthRoguelike
         }
 
         public static bool VisibleLineExist(int fromx, int fromy, int tox, int toy)
-        {
+        {           //Checks visible Line of Sight between two points
             Line.Init(fromx, fromy, tox, toy);
+            bool prevWasBlocking = false;
             while (!Line.Step())
             {
                 int curX = Line.CurX;
@@ -135,12 +136,18 @@ namespace StealthRoguelike
                     return false;
                 if (map[curX, curY].isVisionBlocking)
                 {
-                    //if (Math.Abs(curX - fromx) < 2 || Math.Abs(curY - fromy) < 2)
-                    //    if (!map[curX-Line.xmod, curY-Line.ymod].isVisionBlocking)
-                    //        continue;
+                    if (Math.Abs(curX - fromx) < 2 && Math.Abs(curY - fromy) < 2)
+                    {
+                        prevWasBlocking = true;
+                        if (!map[curX/* - Line.xmod*/, curY - Line.ymod].isVisionBlocking && Line.deltax > Line.deltay)
+                            continue;
+                        if (!map[curX - Line.xmod, curY].isVisionBlocking && Line.deltay > Line.deltax)
+                            continue;
+                    }
                     return false;
                 }
-
+                if (prevWasBlocking)
+                    return false;
             }
 
             return true;
