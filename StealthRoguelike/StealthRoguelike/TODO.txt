@@ -9,7 +9,7 @@ Items and weapons
 -Battle system
 -Stat system
 -Pathfinding
--Better LOS algorithm
+- STILL NEED better LOS algorithm
 ?Make actors react to any enemies in addition to player
 
 #NEED TO BE REPAIRED:
