@@ -12,6 +12,7 @@ namespace StealthRoguelike
         public enum damageTypes { stab, smash }
 
         public weaponTypes type;
+        public damageTypes TypeOfDamage;
         public int mindamage, maxdamage;
 
         public bool targetInRange(int fx, int fy, int tx, int ty)
@@ -31,17 +32,20 @@ namespace StealthRoguelike
             {
                 case "dagger":
                     type = weaponTypes.melee;
+                    TypeOfDamage = damageTypes.stab;
                     mindamage = 1;
                     maxdamage = 2;
                     break;
                 case "baton":
                     type = weaponTypes.melee;
+                    TypeOfDamage = damageTypes.smash;
                     mindamage = 1;
                     maxdamage = 1;
                     break;
                 default:
                     Name = "Default_Weapon";
                     type = weaponTypes.melee;
+                    TypeOfDamage = damageTypes.smash;
                     mindamage = 1;
                     maxdamage = 1;
                     break;

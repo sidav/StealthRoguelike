@@ -33,7 +33,7 @@ namespace StealthRoguelike
             if (World.isActorPresent(coordX + x, coordY + y))
             {
                 Actor attacked = World.getActorAt(coordX + x, coordY + y);
-                Damage.dealDamage(this, attacked);
+                Attack.dealDamage(this, attacked);
                 Timing.AddActionTime(7);
             }
             //World.Redraw(coordX-x, coordY-y);

@@ -65,6 +65,14 @@ namespace StealthRoguelike
             }
 
         }
+
+        public override bool IsUnaware()
+        {
+            if (CurrentState == State.attacking)
+                return false;
+            return true;
+        }
+
         ///////////////////////////////////////////////////////////
         ///////
         //AI!//
@@ -171,7 +179,7 @@ namespace StealthRoguelike
         {
             if (Wielded.targetInRange(coordX, coordY, DestinationX, DestinationY))
             {
-                Damage.dealDamage(this, Target);
+                Attack.dealDamage(this, Target);
                 Timing.AddActionTime(10);
             }            
             else

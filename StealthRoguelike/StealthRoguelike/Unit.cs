@@ -97,5 +97,10 @@ namespace StealthRoguelike
             return false;
         }
 
+        public virtual bool IsUnaware()
+        {
+            return true;
+        }
+
     }
 }
