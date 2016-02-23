@@ -1,6 +1,4 @@
 ﻿#CURRENTLY WORKING AT:
-Player hit enemies: 
-	-add an ability to stab unaware enemies.
 Items and weapons
 -----------------------------------------------------------
 #NEED TO BE IMPLEMENTED:
@@ -16,7 +14,7 @@ Items and weapons
 ?Repair map generator room placement
 
 #NEED TO BE REPLACED:
--
+-Rework key routines in Player class. Vectorize it.
 -------------------------------------
 Prefixes: 
 !this means the major high priority task

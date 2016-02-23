@@ -35,5 +35,16 @@ namespace StealthRoguelike
             }
         }
 
+        public static void KnockOut(Unit attacker, Unit victim)
+        {
+            if (victim.IsUnaware())
+            {
+                int kotime = Algorithms.getRandomInt(50, 150);
+                victim.KnockedOutTime += 150;
+                if (attacker is Player)
+                    Log.AddLine("You strangle " + victim.Name + "!");
+            }
+        }
+
     }
 }

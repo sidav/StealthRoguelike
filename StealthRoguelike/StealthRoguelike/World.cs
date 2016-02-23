@@ -173,6 +173,15 @@ namespace StealthRoguelike
                         Console.ReadKey(true);
                         continue;
                     }
+                    if (keyPressed.Key == ConsoleKey.F2) //development purposes
+                    {
+                        for (int j = 0; j < Program.mapHeight; j++)
+                            for (int i = 0; i < Program.mapWidth; i++)
+                            {
+                                map[i, j].WasSeen = true;
+                            }
+                        continue;
+                    }
                     player.handleKeys(keyPressed);
                 }
                 for (int i = 0; i < AllActors.Count; i++)
@@ -186,8 +195,31 @@ namespace StealthRoguelike
                         i--;
                         continue;
                     }
+                    if (currActor.KnockedOutTime > 0)
+                    {
+                        AllItemsOnFloor.Add(new KnockedOutBody(currActor));
+                        Log.AddLine(currActor.Name + " falls unconscious!");
+                        AllActors.Remove(currActor);
+                        i--;
+                        continue;
+                    }
                     if (currActor.Timing.IsTimeToAct())
                         currActor.DoSomething();
+                }
+                for (int i = 0; i < AllItemsOnFloor.Count; i++)
+                {
+                    if (AllItemsOnFloor[i] is KnockedOutBody)
+                    {
+                        KnockedOutBody curr = ((KnockedOutBody)AllItemsOnFloor[i]);
+                        if (curr.TimeToWakeUp())
+                        {
+                            AllActors.Add((Actor)curr.Knocked);
+                            Log.AddLine(((Actor)curr.Knocked).Name + " wakes up!");
+                            AllItemsOnFloor.Remove(curr);
+                            i--;
+                            continue;
+                        }
+                    }
                 }
                 TurnTiming.Tick();
             }

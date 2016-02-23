@@ -20,6 +20,7 @@ namespace StealthRoguelike
         public bool hasFOV;
         public ConsoleColor color;
         public Weapon Wielded;
+        public int KnockedOutTime = 0; //amount of sleepy turns for knocked out unit
 
         public Unit(string name, int x, int y, char appear, bool fov, ConsoleColor thiscolor)
         {

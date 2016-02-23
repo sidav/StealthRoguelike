@@ -136,6 +136,44 @@ namespace StealthRoguelike
             }
         }
 
+        void strangleDialogue()
+        {
+            Log.AddLine("Hold in which direction?");
+            ConsoleKeyInfo keyPressed;
+            int strangleX = CoordX, strangleY = CoordY;
+            keyPressed = Console.ReadKey(true);
+            if (keyPressed.Key == ConsoleKey.NumPad8) //strangle up
+                strangleY += -1;
+            if (keyPressed.Key == ConsoleKey.NumPad9) //strangle upper right
+            {
+                strangleX += 1;
+                strangleY += -1;
+            }
+            if (keyPressed.Key == ConsoleKey.NumPad6) //strangle right
+                strangleX += 1;
+            if (keyPressed.Key == ConsoleKey.NumPad3) //strangle lower right
+            {
+                strangleX += 1;
+                strangleY += 1;
+            }
+            if (keyPressed.Key == ConsoleKey.NumPad2) //strangle down
+                strangleY += 1;
+            if (keyPressed.Key == ConsoleKey.NumPad1) //strangle lower left
+            {
+                strangleX += -1;
+                strangleY += 1;
+            }
+            if (keyPressed.Key == ConsoleKey.NumPad4) //strangle left
+                strangleX += -1;
+            if (keyPressed.Key == ConsoleKey.NumPad7) //strangle upper left
+            {
+                strangleX += -1;
+                strangleY += -1;
+            }
+            if (World.isActorPresent(strangleX, strangleY))
+                Attack.KnockOut(this, World.getActorAt(strangleX, strangleY));
+        }
+
         public void handleKeys(ConsoleKeyInfo keyPressed)
         {
             if (keyPressed.Key == ConsoleKey.NumPad8) //move up
@@ -163,6 +201,8 @@ namespace StealthRoguelike
                 closeDoorDialogue();
             if (keyPressed.Key == ConsoleKey.P) //peep 
                 peepDialogue();
+            if (keyPressed.Key == ConsoleKey.S) //strangle
+                strangleDialogue();
             //TODO!
         }
 

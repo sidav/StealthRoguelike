@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Corpse.cs" />
     <Compile Include="Attack.cs" />
+    <Compile Include="KnockedOutBody.cs" />
     <Compile Include="UnitCreator.cs" />
     <Compile Include="Item.cs" />
     <Compile Include="Line.cs" />
