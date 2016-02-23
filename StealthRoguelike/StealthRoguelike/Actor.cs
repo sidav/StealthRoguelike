@@ -53,7 +53,7 @@ namespace StealthRoguelike
                 ConsoleColor tempBack = Console.BackgroundColor;
                 Console.ForegroundColor = ConsoleColor.Black;
                 Console.BackgroundColor = color;
-                Console.SetCursorPosition(this.coordX, this.coordY);
+                Console.SetCursorPosition(this.CoordX, this.CoordY);
                 Console.Write(getAppearance());
                 Console.ForegroundColor = color;
                 Console.BackgroundColor = tempBack;
@@ -86,12 +86,12 @@ namespace StealthRoguelike
 
         bool moveToDestination() //returns true if this actor is already at his destination
         {
-            if (coordX == DestinationX && coordY == DestinationY)
+            if (CoordX == DestinationX && CoordY == DestinationY)
                 return true;
             else
             {
-                int targetX = DestinationX - coordX;
-                int targetY = DestinationY - coordY;
+                int targetX = DestinationX - CoordX;
+                int targetY = DestinationY - CoordY;
                 int lookToX = targetX;
                 int lookToY = targetY;
                 if (targetX != 0)
@@ -110,7 +110,7 @@ namespace StealthRoguelike
             {
                 lookX = Algorithms.getRandomInt(-1, 2);
                 lookY = Algorithms.getRandomInt(-1, 2);
-            } while ((lookX == 0 && lookY == 0) || !World.IsPassable(coordX + lookX, coordY + lookY));
+            } while ((lookX == 0 && lookY == 0) || !World.IsPassable(CoordX + lookX, CoordY + lookY));
             Timing.AddActionTime(5);
         }
 
@@ -118,15 +118,15 @@ namespace StealthRoguelike
         {
             Target = World.player;
             int targetX, targetY;
-            targetX = Target.coordX;
-            targetY = Target.coordY;
-            int vectorX = Target.coordX - coordX;
-            int vectorY = Target.coordY - coordY;
+            targetX = Target.CoordX;
+            targetY = Target.CoordY;
+            int vectorX = Target.CoordX - CoordX;
+            int vectorY = Target.CoordY - CoordY;
             double distance = Math.Sqrt(vectorX * vectorX + vectorY * vectorY);
             if (distance <= visibilityRadius)
             {
-                if (ViewSector.PointIsInSector(coordX, coordY, targetX, targetY, lookX, lookY, ViewAngle))
-                    if (World.VisibleLineExist(coordX, coordY, targetX, targetY))
+                if (ViewSector.PointIsInSector(CoordX, CoordY, targetX, targetY, lookX, lookY, ViewAngle))
+                    if (World.VisibleLineExist(CoordX, CoordY, targetX, targetY))
                         return true;
             }
             return false;
@@ -139,16 +139,16 @@ namespace StealthRoguelike
                 //MORE CODE EXPECTING
                 Log.AddLine(Name + " notices you!");
                 CurrentState = State.attacking;
-                DestinationX = Target.coordX;
-                DestinationY = Target.coordY;
+                DestinationX = Target.CoordX;
+                DestinationY = Target.CoordY;
                 addStateTimeout(1);
                 return;
             }
             else if (CurrentState == State.attacking)
             {
                 CurrentState = State.investigating;
-                DestinationX = Target.coordX;
-                DestinationY = Target.coordY;
+                DestinationX = Target.CoordX;
+                DestinationY = Target.CoordY;
                 addStateTimeout(150);
                 return;
             }
@@ -157,7 +157,7 @@ namespace StealthRoguelike
         void DoPatrolling()
         {
             //close door if neccessary
-            if (World.TryCloseDoor(coordX - lookX, coordY - lookY))
+            if (World.TryCloseDoor(CoordX - lookX, CoordY - lookY))
                 return;
             //let's SUDDENLY turn to the random direction, maybe? :D
             if (Algorithms.getRandomInt(suddenTurningFrequency) == 0)
@@ -170,14 +170,14 @@ namespace StealthRoguelike
                 return;
             else //or open door if there is. Otherwise turn to random direction
             {
-                if (!World.TryOpenDoor(coordX + lookX, coordY + lookY))
+                if (!World.TryOpenDoor(CoordX + lookX, CoordY + lookY))
                     turnToRandomPassableDirection();
             }
         }
 
         void DoAttacking() //not only hit enemy, but also walk toward him first!
         {
-            if (Wielded.targetInRange(coordX, coordY, DestinationX, DestinationY))
+            if (Wielded.targetInRange(CoordX, CoordY, DestinationX, DestinationY))
             {
                 Attack.dealDamage(this, Target);
                 Timing.AddActionTime(10);

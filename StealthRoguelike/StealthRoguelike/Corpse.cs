@@ -12,8 +12,8 @@ namespace StealthRoguelike
         {
             Appearance = '&';
             Weight = 25;
-            CoordX = deadman.coordX;
-            CoordY = deadman.coordY;
+            CoordX = deadman.CoordX;
+            CoordY = deadman.CoordY;
             Name = deadman.Name + " corpse";
             Color = ConsoleColor.Red;
         }

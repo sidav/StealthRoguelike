@@ -45,8 +45,8 @@ namespace StealthRoguelike
         static void placeActors()
         {
             int plx, ply;
-            plx = player.coordX;
-            ply = player.coordY;
+            plx = player.CoordX;
+            ply = player.CoordY;
             int x, y;
             for (int i = 0; i < 10; i++)
                 do
@@ -79,7 +79,7 @@ namespace StealthRoguelike
             //if (x < 0 || x >= mapWidth || y < 0 || y >= mapHeight)
             //    return false;
             foreach (Actor currActor in AllActors)
-                if (currActor.coordX == x && currActor.coordY == y)
+                if (currActor.CoordX == x && currActor.CoordY == y)
                     return true;
             return false;
         }
@@ -87,7 +87,7 @@ namespace StealthRoguelike
         public static Actor getActorAt(int x, int y)
         {
             foreach (Actor currActor in AllActors)
-                if (currActor.coordX == x && currActor.coordY == y)
+                if (currActor.CoordX == x && currActor.CoordY == y)
                     return currActor;
             return null;
         }
@@ -96,7 +96,7 @@ namespace StealthRoguelike
         {
             if (x < 0 || x >= mapWidth || y < 0 || y >= mapHeight)
                 return false;
-            if (player.coordX == x && player.coordY == y)
+            if (player.CoordX == x && player.CoordY == y)
                 return false;
             if (isActorPresent(x, y))
                 return false;
@@ -125,7 +125,7 @@ namespace StealthRoguelike
         }
 
         public static bool VisibleLineExist(int fromx, int fromy, int tox, int toy)
-        {           //Checks visible Line of Sight between two points
+        {   //Checks visible Line of Sight between two tiles
             Line.Init(fromx, fromy, tox, toy);
             bool prevWasBlocking = false;
             while (!Line.Step())

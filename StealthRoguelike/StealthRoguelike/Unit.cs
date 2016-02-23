@@ -12,10 +12,10 @@ namespace StealthRoguelike
         public string Name;
         public int Hitpoints;
         public int MaxHitpoints;
-        public int coordX, coordY; //global coords
+        public int CoordX, CoordY; //global coords
         public int lookX = 0, lookY = -1;   //heading vector
         public int ViewAngle = 120; //in degrees.
-        public int visibilityRadius = 9; //basic visibility distance
+        public int visibilityRadius = 8; //basic visibility distance
         public char appearance;
         public bool hasFOV;
         public ConsoleColor color;
@@ -26,8 +26,8 @@ namespace StealthRoguelike
             Name = name;
             Hitpoints = 2;
             MaxHitpoints = Hitpoints;
-            coordX = x;
-            coordY = y;
+            CoordX = x;
+            CoordY = y;
             appearance = appear;
             hasFOV = fov;
             color = thiscolor;
@@ -36,8 +36,8 @@ namespace StealthRoguelike
         public Unit(string name, int x, int y, char appear)
         {
             Name = name;
-            coordX = x;
-            coordY = y;
+            CoordX = x;
+            CoordY = y;
             appearance = appear;
             hasFOV = false;
             color = ConsoleColor.White;
@@ -54,7 +54,7 @@ namespace StealthRoguelike
                 thingy = '\\';
             if (lookX * lookY == -1)
                 thingy = '/';
-            Console.SetCursorPosition(coordX + lookX, coordY + lookY);
+            Console.SetCursorPosition(CoordX + lookX, CoordY + lookY);
             Console.Write(thingy);
             //TODO!
         }
@@ -63,7 +63,7 @@ namespace StealthRoguelike
         {
             ConsoleColor temp = Console.ForegroundColor;
             Console.ForegroundColor = color;
-            Console.SetCursorPosition(this.coordX, this.coordY);
+            Console.SetCursorPosition(this.CoordX, this.CoordY);
             Console.Write(appearance);
             if (hasFOV)
                 drawLookingThingy();
@@ -72,7 +72,7 @@ namespace StealthRoguelike
 
         protected void moveForwardOrOpen()
         {
-            if (!World.TryOpenDoor(coordX + lookX, coordY + lookY))
+            if (!World.TryOpenDoor(CoordX + lookX, CoordY + lookY))
                 TryMoveForward();
             else
                 Timing.AddActionTime(7);
@@ -87,11 +87,11 @@ namespace StealthRoguelike
 
         public bool TryMoveForward() //move where this unit looks. returns true if the unit has moved.
         {
-            if (World.IsPassable(coordX + lookX, coordY + lookY))
+            if (World.IsPassable(CoordX + lookX, CoordY + lookY))
             {
                 Timing.AddActionTime(10);
-                coordX += lookX;
-                coordY += lookY;
+                CoordX += lookX;
+                CoordY += lookY;
                 return true;
             }
             return false;

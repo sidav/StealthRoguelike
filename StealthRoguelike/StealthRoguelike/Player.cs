@@ -15,28 +15,28 @@ namespace StealthRoguelike
 
         public void MoveOrOpenOrAttack(int x, int y) //-1 or 0 or 1 for x and y
         {
-            if (World.TryOpenDoor(coordX + x, coordY + y))
+            if (World.TryOpenDoor(CoordX + x, CoordY + y))
             {
                 Timing.AddActionTime(10);
                 Log.AddLine("You opened the door.");
                 return;
             }
-            if (World.IsPassable(coordX + x, coordY + y))
+            if (World.IsPassable(CoordX + x, CoordY + y))
             {
-                coordX += x;
-                coordY += y;
+                CoordX += x;
+                CoordY += y;
                 Timing.AddActionTime(9);
-                if (World.isItemPresent(coordX, coordY))
-                    Log.AddLine("You see here: "+World.getItemAt(coordX, coordY).Name);
+                if (World.isItemPresent(CoordX, CoordY))
+                    Log.AddLine("You see here: "+World.getItemAt(CoordX, CoordY).Name);
                 return;
             }
-            if (World.isActorPresent(coordX + x, coordY + y))
+            if (World.isActorPresent(CoordX + x, CoordY + y))
             {
-                Actor attacked = World.getActorAt(coordX + x, coordY + y);
+                Actor attacked = World.getActorAt(CoordX + x, CoordY + y);
                 Attack.dealDamage(this, attacked);
                 Timing.AddActionTime(7);
             }
-            //World.Redraw(coordX-x, coordY-y);
+            //World.Redraw(CoordX-x, CoordY-y);
         }
 
         //INTERACTION WITH GAMER.
@@ -45,7 +45,7 @@ namespace StealthRoguelike
         {
             Log.AddLine("Close door in which direction?");
             ConsoleKeyInfo keyPressed;
-            int doorX = coordX, doorY = coordY;
+            int doorX = CoordX, doorY = CoordY;
             keyPressed = Console.ReadKey(true);
             if (keyPressed.Key == ConsoleKey.NumPad8) //close up
                 doorY += -1;
@@ -88,7 +88,7 @@ namespace StealthRoguelike
         {
             Log.AddLine("Peep in which direction?");
             ConsoleKeyInfo keyPressed;
-            int peepX = coordX, peepY = coordY;
+            int peepX = CoordX, peepY = CoordY;
             keyPressed = Console.ReadKey(true);
             if (keyPressed.Key == ConsoleKey.NumPad8) //peep up
                 peepY += -1;

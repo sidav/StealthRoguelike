@@ -14,7 +14,7 @@ namespace StealthRoguelike
         {
             if (mode == 0) // draw from player
             {
-                drawUnitsInCircle(World.player.coordX, World.player.coordY, World.player.visibilityRadius);
+                drawUnitsInCircle(World.player.CoordX, World.player.CoordY, World.player.visibilityRadius);
                 World.player.Draw();
             }
             if (mode == -1) //developer mode
@@ -35,11 +35,11 @@ namespace StealthRoguelike
             int dx, dy;
             foreach (Actor currActor in World.AllActors)
             {
-                dx = currActor.coordX - x;
-                dy = currActor.coordY - y;
+                dx = currActor.CoordX - x;
+                dy = currActor.CoordY - y;
                 if (dx * dx + dy * dy > radius * radius)
                     continue;
-                if (World.VisibleLineExist(x, y, currActor.coordX, currActor.coordY))
+                if (World.VisibleLineExist(x, y, currActor.CoordX, currActor.CoordY))
                     currActor.Draw();
             }
         }
@@ -83,8 +83,8 @@ namespace StealthRoguelike
         {
             if (mode == 0) //draw from player
             {
-                drawInCircleFOV(World.player.coordX, World.player.coordY, World.player.visibilityRadius);
-                drawItemsInCircle(World.player.coordX, World.player.coordY, World.player.visibilityRadius);
+                drawInCircleFOV(World.player.CoordX, World.player.CoordY, World.player.visibilityRadius);
+                drawItemsInCircle(World.player.CoordX, World.player.CoordY, World.player.visibilityRadius);
                 drawUnits(mode);
             }
             if (mode == -1) //developer mode
