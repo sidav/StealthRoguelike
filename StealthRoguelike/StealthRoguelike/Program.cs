@@ -8,11 +8,11 @@ namespace StealthRoguelike
 {
     class Program
     {
-        public const int mapWidth = 80;
-        public const int mapHeight = 20;
         public const int consoleWidth = 80;
         public const int consoleHeight = 25;
-        public const int LogSize = 3;
+        public const int mapWidth = consoleWidth;
+        public const int mapHeight = consoleHeight-LogSize-2;
+        public const int LogSize = 4;
 
         static void drawTestMap(char[,] map)
         {

@@ -137,7 +137,8 @@ namespace StealthRoguelike
             if (ActorSeesTheTarget())
             { 
                 //MORE CODE EXPECTING
-                Log.AddLine(Name + " notices you!");
+                if (CurrentState != State.attacking)
+                    Log.AddLine(Name + " notices you!");
                 CurrentState = State.attacking;
                 DestinationX = Target.CoordX;
                 DestinationY = Target.CoordY;

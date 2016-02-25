@@ -44,6 +44,8 @@ namespace StealthRoguelike
                 if (attacker is Player)
                     Log.AddLine("You strangle " + victim.Name + "!");
             }
+            else
+                Log.AddLine(attacker.Name + " tried to grab and strangle " + victim.Name + ", but the victim was aware of it!");
         }
 
     }

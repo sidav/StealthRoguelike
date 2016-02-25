@@ -44,36 +44,25 @@ namespace StealthRoguelike
         void closeDoorDialogue()
         {
             Log.AddLine("Close door in which direction?");
-            ConsoleKeyInfo keyPressed;
-            int doorX = CoordX, doorY = CoordY;
-            keyPressed = Console.ReadKey(true);
-            if (keyPressed.Key == ConsoleKey.NumPad8) //close up
-                doorY += -1;
-            if (keyPressed.Key == ConsoleKey.NumPad9) //close upper right
+            ConsoleKeyInfo keyPressed = Console.ReadKey(true);
+            KeyToVector.ProcessInput(keyPressed);
+            int doorX = CoordX+KeyToVector.x, doorY = CoordY + KeyToVector.y;
+            if (doorX == CoordX && doorY == CoordY)
             {
-                doorX += 1;
-                doorY += -1;
-            }
-            if (keyPressed.Key == ConsoleKey.NumPad6) //close right
-                doorX += 1;
-            if (keyPressed.Key == ConsoleKey.NumPad3) //close lower right
-            {
-                doorX += 1;
-                doorY += 1;
-            }
-            if (keyPressed.Key == ConsoleKey.NumPad2) //close down
-                doorY += 1;
-            if (keyPressed.Key == ConsoleKey.NumPad1) //close lower left
-            {
-                doorX += -1;
-                doorY += 1;
-            }
-            if (keyPressed.Key == ConsoleKey.NumPad4) //close left
-                doorX += -1;
-            if (keyPressed.Key == ConsoleKey.NumPad7) //close upper left
-            {
-                doorX += -1;
-                doorY += -1;
+                int randomMessageNumber = Algorithms.getRandomInt(3);
+                switch (randomMessageNumber)
+                {
+                    case 0:
+                        Log.AddLine("Wow. You costumed like a door this Halloween?");
+                        break;
+                    case 1:
+                        Log.AddLine("You have almost closed yourself, but suddenly remembered that you're not a door.");
+                        break;
+                    case 2:
+                        Log.AddLine("Okay... Try another time");
+                        break;
+                }
+                return;
             }
             if (World.TryCloseDoor(doorX, doorY))
             {
@@ -87,36 +76,25 @@ namespace StealthRoguelike
         void peepDialogue()
         {
             Log.AddLine("Peep in which direction?");
-            ConsoleKeyInfo keyPressed;
-            int peepX = CoordX, peepY = CoordY;
-            keyPressed = Console.ReadKey(true);
-            if (keyPressed.Key == ConsoleKey.NumPad8) //peep up
-                peepY += -1;
-            if (keyPressed.Key == ConsoleKey.NumPad9) //peep upper right
+            ConsoleKeyInfo keyPressed = Console.ReadKey(true);
+            KeyToVector.ProcessInput(keyPressed);
+            int peepX = CoordX + KeyToVector.x, peepY = CoordY + KeyToVector.y;
+            if (peepX == CoordX && peepY == CoordY)
             {
-                peepX += 1;
-                peepY += -1;
-            }
-            if (keyPressed.Key == ConsoleKey.NumPad6) //peep right
-                peepX += 1;
-            if (keyPressed.Key == ConsoleKey.NumPad3) //peep lower right
-            {
-                peepX += 1;
-                peepY += 1;
-            }
-            if (keyPressed.Key == ConsoleKey.NumPad2) //peep down
-                peepY += 1;
-            if (keyPressed.Key == ConsoleKey.NumPad1) //peep lower left
-            {
-                peepX += -1;
-                peepY += 1;
-            }
-            if (keyPressed.Key == ConsoleKey.NumPad4) //peep left
-                peepX += -1;
-            if (keyPressed.Key == ConsoleKey.NumPad7) //peep upper left
-            {
-                peepX += -1;
-                peepY += -1;
+                int randomMessageNumber = Algorithms.getRandomInt(3);
+                switch (randomMessageNumber)
+                {
+                    case 0:
+                        Log.AddLine("You feel SO introversive for a moment");
+                        break;
+                    case 1:
+                        Log.AddLine("You peep yourself. So interesting");
+                        break;
+                    case 2:
+                        Log.AddLine("If you wanna, hm, look at yourself, get a room, please.");
+                        break;
+                }
+                return;
             }
             //don't peep through walls anymore! :D
             if (World.IsPassable(peepX, peepY) || World.IsDoor(peepX, peepY))
@@ -138,64 +116,47 @@ namespace StealthRoguelike
 
         void strangleDialogue()
         {
-            Log.AddLine("Hold in which direction?");
-            ConsoleKeyInfo keyPressed;
-            int strangleX = CoordX, strangleY = CoordY;
-            keyPressed = Console.ReadKey(true);
-            if (keyPressed.Key == ConsoleKey.NumPad8) //strangle up
-                strangleY += -1;
-            if (keyPressed.Key == ConsoleKey.NumPad9) //strangle upper right
+            Log.AddLine("Grab in which direction?");
+            ConsoleKeyInfo keyPressed = Console.ReadKey(true);
+            KeyToVector.ProcessInput(keyPressed);
+            int strangleX = CoordX + KeyToVector.x, strangleY = CoordY + KeyToVector.y;
+            if (strangleX == CoordX && strangleY == CoordY)
             {
-                strangleX += 1;
-                strangleY += -1;
-            }
-            if (keyPressed.Key == ConsoleKey.NumPad6) //strangle right
-                strangleX += 1;
-            if (keyPressed.Key == ConsoleKey.NumPad3) //strangle lower right
-            {
-                strangleX += 1;
-                strangleY += 1;
-            }
-            if (keyPressed.Key == ConsoleKey.NumPad2) //strangle down
-                strangleY += 1;
-            if (keyPressed.Key == ConsoleKey.NumPad1) //strangle lower left
-            {
-                strangleX += -1;
-                strangleY += 1;
-            }
-            if (keyPressed.Key == ConsoleKey.NumPad4) //strangle left
-                strangleX += -1;
-            if (keyPressed.Key == ConsoleKey.NumPad7) //strangle upper left
-            {
-                strangleX += -1;
-                strangleY += -1;
+                int randomMessageNumber = Algorithms.getRandomInt(3);
+                switch (randomMessageNumber)
+                {
+                    case 0:
+                        Log.AddLine("Wanna strangle yourself huh?");
+                        break;
+                    case 1:
+                        Log.AddLine("Suicide will not help with your mission.");
+                        break;
+                    case 2:
+                        Log.AddLine("If you wanna touch yourself, get a room, please.");
+                        break;
+                }
+                return;
             }
             if (World.isActorPresent(strangleX, strangleY))
+            {
                 Attack.KnockOut(this, World.getActorAt(strangleX, strangleY));
+                Timing.AddActionTime(20);
+            }
+            else
+                Log.AddLine("There's nobody here!");
         }
 
         public void handleKeys(ConsoleKeyInfo keyPressed)
         {
-            if (keyPressed.Key == ConsoleKey.NumPad8) //move up
-                MoveOrOpenOrAttack(0, -1);
-            if (keyPressed.Key == ConsoleKey.NumPad9) //move upper right
-                MoveOrOpenOrAttack(1, -1);
-            if (keyPressed.Key == ConsoleKey.NumPad6) //move right
-                MoveOrOpenOrAttack(1, 0);
-            if (keyPressed.Key == ConsoleKey.NumPad3) //move lower right
-                MoveOrOpenOrAttack(1, 1);
-            if (keyPressed.Key == ConsoleKey.NumPad2) //move down
-                MoveOrOpenOrAttack(0, 1);
-            if (keyPressed.Key == ConsoleKey.NumPad1) //move lower left
-                MoveOrOpenOrAttack(-1, 1);
-            if (keyPressed.Key == ConsoleKey.NumPad4) //move left
-                MoveOrOpenOrAttack(-1, 0);
-            if (keyPressed.Key == ConsoleKey.NumPad7) //move upper left
-                MoveOrOpenOrAttack(-1, -1);
+            //MOVING/WAITING
             if (keyPressed.Key == ConsoleKey.NumPad5) //skip turn
             {
                 Timing.AddActionTime(10);
+                return;
             }
+            KeyToVector.ProcessInput(keyPressed);
+            if (KeyToVector.ProperButtonPressed)
+                MoveOrOpenOrAttack(KeyToVector.x, KeyToVector.y);
             //ACTIONS
             if (keyPressed.Key == ConsoleKey.C) //close door 
                 closeDoorDialogue();
