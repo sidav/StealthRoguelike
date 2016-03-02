@@ -27,6 +27,11 @@ namespace StealthRoguelike
             string pressspacebar = "Press spacebar";
             Console.SetCursorPosition(Program.consoleWidth / 2 - (pressspacebar.Length / 2), Program.consoleHeight-2);
             Console.Write(pressspacebar);
+
+            ConsoleKeyInfo keyPressed;
+            do
+                keyPressed = Console.ReadKey(true);
+            while (keyPressed.Key != ConsoleKey.Spacebar && keyPressed.Key != ConsoleKey.Escape);
         }
     }
 }

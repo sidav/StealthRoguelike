@@ -46,6 +46,7 @@
     <Compile Include="Corpse.cs" />
     <Compile Include="Attack.cs" />
     <Compile Include="Gameover.cs" />
+    <Compile Include="HelpScreen.cs" />
     <Compile Include="KeyToVector.cs" />
     <Compile Include="UnconsciousBody.cs" />
     <Compile Include="UnitCreator.cs" />

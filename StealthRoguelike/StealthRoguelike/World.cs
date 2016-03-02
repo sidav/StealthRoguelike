@@ -166,6 +166,12 @@ namespace StealthRoguelike
                     keyPressed = Console.ReadKey(true);
                     if (keyPressed.Key == ConsoleKey.Escape)
                         break;
+                    if (keyPressed.Key == ConsoleKey.F1) //development purposes
+                    {
+                        HelpScreen.DrawHelpScreen();
+                        Log.DrawMiniLog();
+                        continue;
+                    }
                     if (keyPressed.Key == ConsoleKey.F2) //development purposes
                     {
                         WorldRendering.drawWorld(-1);
@@ -212,12 +218,9 @@ namespace StealthRoguelike
                     if (currActor.Timing.IsTimeToAct())
                         currActor.DoSomething();
                 }
-                if (player.Hitpoints <= 0)
+                if (player.Hitpoints <= 0) //GAME OVER
                 {
                     Gameover.ShowGameoverScreen();
-                    do
-                        keyPressed = Console.ReadKey(true);
-                    while (keyPressed.Key != ConsoleKey.Spacebar && keyPressed.Key != ConsoleKey.Escape);
                     break;
                 }
                 for (int i = 0; i < AllItemsOnFloor.Count; i++)
