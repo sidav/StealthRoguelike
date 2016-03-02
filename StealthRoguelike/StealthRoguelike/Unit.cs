@@ -25,8 +25,8 @@ namespace StealthRoguelike
         public Unit(string name, int x, int y, char appear, bool fov, ConsoleColor thiscolor)
         {
             Name = name;
-            Hitpoints = 2;
-            MaxHitpoints = Hitpoints;
+            MaxHitpoints = 2;
+            Hitpoints = MaxHitpoints;
             CoordX = x;
             CoordY = y;
             appearance = appear;

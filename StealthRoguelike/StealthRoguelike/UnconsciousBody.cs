@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace StealthRoguelike
 {
-    class KnockedOutBody:Item
+    class UnconsciousBody:Item
     {
         public int TurnToWakeUp = 0;
         public Unit Knocked;
-        public KnockedOutBody(Unit victim)
+        public UnconsciousBody(Unit victim)
         {
             Appearance = '&';
             Weight = 25;
             CoordX = victim.CoordX;
             CoordY = victim.CoordY;
-            Name = "knocked out " + victim.Name;
+            Name = "unconscious " + victim.Name;
             Color = victim.color;
             TurnToWakeUp = victim.Timing.GetCurrentTurn() + victim.KnockedOutTime;
             Knocked = victim;

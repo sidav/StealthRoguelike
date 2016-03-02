@@ -197,7 +197,7 @@ namespace StealthRoguelike
                     }
                     if (currActor.KnockedOutTime > 0)
                     {
-                        AllItemsOnFloor.Add(new KnockedOutBody(currActor));
+                        AllItemsOnFloor.Add(new UnconsciousBody(currActor));
                         Log.AddLine(currActor.Name + " falls unconscious!");
                         AllActors.Remove(currActor);
                         i--;
@@ -206,11 +206,19 @@ namespace StealthRoguelike
                     if (currActor.Timing.IsTimeToAct())
                         currActor.DoSomething();
                 }
+                if (player.Hitpoints <= 0)
+                {
+                    Gameover.ShowGameoverScreen();
+                    do
+                        keyPressed = Console.ReadKey(true);
+                    while (keyPressed.Key != ConsoleKey.Spacebar && keyPressed.Key != ConsoleKey.Escape);
+                    break;
+                }
                 for (int i = 0; i < AllItemsOnFloor.Count; i++)
                 {
-                    if (AllItemsOnFloor[i] is KnockedOutBody)
+                    if (AllItemsOnFloor[i] is UnconsciousBody)
                     {
-                        KnockedOutBody curr = ((KnockedOutBody)AllItemsOnFloor[i]);
+                        UnconsciousBody curr = ((UnconsciousBody)AllItemsOnFloor[i]);
                         if (curr.TimeToWakeUp())
                         {
                             AllActors.Add((Actor)curr.Knocked);

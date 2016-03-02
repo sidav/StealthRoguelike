@@ -31,6 +31,8 @@ namespace StealthRoguelike
                     else
                         Log.AddLine(attacker.Name + " hits " + victim.Name + " with the " + attacker.Wielded.Name + "!");
                 }
+                if (victim is Player)
+                    Gameover.KilledBy = attacker.Name;
                 victim.Hitpoints -= finalDamage;
             }
         }
