@@ -17,7 +17,7 @@ namespace StealthRoguelike
         public static void ClearLog()
         {
             for (int i = 0; i < LogSize; i++)
-                miniLog[i] = "123";
+                miniLog[i] = "Debug: Game log operational";
         }
 
         public static void AddLine(string line)

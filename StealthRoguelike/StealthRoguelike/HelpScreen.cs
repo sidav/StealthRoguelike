@@ -44,7 +44,7 @@ namespace StealthRoguelike
             Console.SetCursorPosition(windowStartX + 2, windowStartY + 3);
             Console.Write("Move with numpad");
             Console.SetCursorPosition(windowStartX + 2, windowStartY + 4);
-            Console.Write("Open doors or melee attack enemies by moving towards them");
+            Console.Write("Open doors or melee attack enemies by moving toward them");
             Console.SetCursorPosition(windowStartX + 2, windowStartY + 5);
             Console.Write("c - (c)lose a door");
             Console.SetCursorPosition(windowStartX + 2, windowStartY + 6);
