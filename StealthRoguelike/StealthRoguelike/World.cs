@@ -162,7 +162,8 @@ namespace StealthRoguelike
             {
                 if (player.Timing.IsTimeToAct())
                 {
-                    WorldRendering.drawWorld(0);
+                    if (player.seesAsUsual())
+                        WorldRendering.drawWorld(0);
                     player.DrawStatusbar();
                     keyPressed = Console.ReadKey(true);
                     if (keyPressed.Key == ConsoleKey.Escape)

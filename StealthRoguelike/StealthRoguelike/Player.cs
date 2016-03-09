@@ -8,9 +8,18 @@ namespace StealthRoguelike
 {
     class Player:Unit
     {
+        static bool isPeeping = false;
+        static int lastPeepX;
+        static int lastPeepY;
+
         public Player(int x, int y):base("you",x,y,'@',false,ConsoleColor.Green)
         {
             visibilityRadius = 10;
+        }
+
+        public bool seesAsUsual()
+        {
+            return !isPeeping;
         }
 
         public void MoveOrOpenOrAttack(int x, int y) //-1 or 0 or 1 for x and y
@@ -99,18 +108,38 @@ namespace StealthRoguelike
             //don't peep through walls anymore! :D
             if (World.IsPassable(peepX, peepY) || World.IsDoor(peepX, peepY))
             {
+                isPeeping = true;
+                lastPeepX = peepX;
+                lastPeepY = peepY;
                 WorldRendering.drawInCircleFOV(peepX, peepY, visibilityRadius);
                 WorldRendering.drawUnitsInCircle(peepX, peepY, visibilityRadius);
                 this.Draw();
                 Console.ForegroundColor = ConsoleColor.Gray;
                 Timing.AddActionTime(15);
-                Log.ReplaceLastLine("You carefully peep in that direction... Press any key");
-                Console.ReadKey(true);
-                Log.ReplaceLastLine("You carefully peep in that direction...");
+                Log.ReplaceLastLine("You carefully peep in that direction... Press space or esc to stop");
+                keyPressed = Console.ReadKey(true);
+                if (keyPressed.Key == ConsoleKey.Spacebar || keyPressed.Key == ConsoleKey.Escape)
+                {
+                    isPeeping = false;
+                    Log.ReplaceLastLine("You carefully peep in that direction...");
+                }
             }
             else
             {
                 Log.ReplaceLastLine("You try to peep through this, but in vain.");
+            }
+        }
+
+        void ContinuePeep(ConsoleKeyInfo keyPressed)
+        {
+            Log.AddLine("You continue peeping...");
+            WorldRendering.drawInCircleFOV(lastPeepX, lastPeepY, visibilityRadius);
+            WorldRendering.drawUnitsInCircle(lastPeepX, lastPeepY, visibilityRadius);
+            this.Draw();
+            if (keyPressed.Key == ConsoleKey.Spacebar || keyPressed.Key == ConsoleKey.Escape)
+            {
+                isPeeping = false;
+                Log.ReplaceLastLine("You recoiled and looked around.");
             }
         }
 
@@ -148,6 +177,12 @@ namespace StealthRoguelike
 
         public void handleKeys(ConsoleKeyInfo keyPressed)
         {
+            if (isPeeping)
+            {
+                Timing.AddActionTime(10);
+                ContinuePeep(keyPressed);
+                return;
+            }
             //MOVING/WAITING
             if (keyPressed.Key == ConsoleKey.NumPad5) //skip turn
             {
