@@ -106,12 +106,14 @@ namespace StealthRoguelike
 
         void turnToRandomPassableDirection() //turn to random direction which is passable
         {
+            int newLookX, newLookY;
             do
             {
-                lookX = Algorithms.getRandomInt(-1, 2);
-                lookY = Algorithms.getRandomInt(-1, 2);
-            } while ((lookX == 0 && lookY == 0) || !World.IsPassable(CoordX + lookX, CoordY + lookY));
-            Timing.AddActionTime(5);
+                newLookX = Algorithms.getRandomInt(-1, 2);
+                newLookY = Algorithms.getRandomInt(-1, 2);
+            } while ((newLookX == 0 && newLookY == 0) || !World.IsPassable(CoordX + newLookX, CoordY + newLookY));
+            turnToDirection(newLookX, newLookY);
+            Timing.AddActionTime(TimeCost.GuardWait(this));
         }
 
         bool ActorSeesTheTarget()  //do we see the player?
@@ -181,7 +183,7 @@ namespace StealthRoguelike
             if (Wielded.targetInRange(CoordX, CoordY, DestinationX, DestinationY))
             {
                 Attack.dealDamage(this, Target);
-                Timing.AddActionTime(10);
+                Timing.AddActionTime(TimeCost.AttackCost(this));
             }            
             else
                 moveToDestination();

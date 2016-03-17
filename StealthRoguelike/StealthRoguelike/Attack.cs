@@ -37,7 +37,7 @@ namespace StealthRoguelike
             }
         }
 
-        public static void KnockOut(Unit attacker, Unit victim)
+        public static void Strangle(Unit attacker, Unit victim)
         {
             if (victim.IsUnaware())
             {

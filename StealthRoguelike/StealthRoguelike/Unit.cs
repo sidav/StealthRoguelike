@@ -76,21 +76,21 @@ namespace StealthRoguelike
             if (!World.TryOpenDoor(CoordX + lookX, CoordY + lookY))
                 TryMoveForward();
             else
-                Timing.AddActionTime(7);
+                Timing.AddActionTime(TimeCost.OpenDoorCost(this));
         }
 
         protected void turnToDirection(int x, int y)
         {
             lookX = x;
             lookY = y;
-            Timing.AddActionTime(3);
+            Timing.AddActionTime(TimeCost.TurningCost(this));
         }
 
         public bool TryMoveForward() //move where this unit looks. returns true if the unit has moved.
         {
             if (World.IsPassable(CoordX + lookX, CoordY + lookY))
             {
-                Timing.AddActionTime(10);
+                Timing.AddActionTime(TimeCost.MoveCost(this));
                 CoordX += lookX;
                 CoordY += lookY;
                 return true;

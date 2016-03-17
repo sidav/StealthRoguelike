@@ -26,7 +26,7 @@ namespace StealthRoguelike
         {
             if (World.TryOpenDoor(CoordX + x, CoordY + y))
             {
-                Timing.AddActionTime(10);
+                Timing.AddActionTime(TimeCost.OpenDoorCost(this));
                 Log.AddLine("You opened the door.");
                 return;
             }
@@ -34,7 +34,7 @@ namespace StealthRoguelike
             {
                 CoordX += x;
                 CoordY += y;
-                Timing.AddActionTime(9);
+                Timing.AddActionTime(TimeCost.MoveCost(this));
                 if (World.isItemPresent(CoordX, CoordY))
                     Log.AddLine("You see here: "+World.getItemAt(CoordX, CoordY).Name);
                 return;
@@ -43,7 +43,7 @@ namespace StealthRoguelike
             {
                 Actor attacked = World.getActorAt(CoordX + x, CoordY + y);
                 Attack.dealDamage(this, attacked);
-                Timing.AddActionTime(7);
+                Timing.AddActionTime(TimeCost.AttackCost(this));
             }
             //World.Redraw(CoordX-x, CoordY-y);
         }
@@ -75,7 +75,7 @@ namespace StealthRoguelike
             }
             if (World.TryCloseDoor(doorX, doorY))
             {
-                Timing.AddActionTime(10);
+                Timing.AddActionTime(TimeCost.PeepCost(this));
                 Log.ReplaceLastLine("You carefully closed the door.");
             }
             else
@@ -115,7 +115,7 @@ namespace StealthRoguelike
                 WorldRendering.drawUnitsInCircle(peepX, peepY, visibilityRadius);
                 this.Draw();
                 Console.ForegroundColor = ConsoleColor.Gray;
-                Timing.AddActionTime(15);
+                Timing.AddActionTime(TimeCost.CloseDoorCost(this));
                 Log.ReplaceLastLine("You carefully peep in that direction... Press space or esc to stop");
                 keyPressed = Console.ReadKey(true);
                 if (keyPressed.Key == ConsoleKey.Spacebar || keyPressed.Key == ConsoleKey.Escape)
@@ -168,8 +168,8 @@ namespace StealthRoguelike
             }
             if (World.isActorPresent(strangleX, strangleY))
             {
-                Attack.KnockOut(this, World.getActorAt(strangleX, strangleY));
-                Timing.AddActionTime(20);
+                Attack.Strangle(this, World.getActorAt(strangleX, strangleY));
+                Timing.AddActionTime(TimeCost.StrangleCost(this));
             }
             else
                 Log.AddLine("There's nobody here!");
@@ -179,14 +179,14 @@ namespace StealthRoguelike
         {
             if (isPeeping)
             {
-                Timing.AddActionTime(10);
+                Timing.AddActionTime(TimeCost.ContinuePeepCost(this));
                 ContinuePeep(keyPressed);
                 return;
             }
             //MOVING/WAITING
             if (keyPressed.Key == ConsoleKey.NumPad5) //skip turn
             {
-                Timing.AddActionTime(10);
+                Timing.AddActionTime(TimeCost.SkipTurnCost(this));
                 return;
             }
             KeyToVector.ProcessInput(keyPressed);
@@ -207,7 +207,7 @@ namespace StealthRoguelike
             Console.ForegroundColor = ConsoleColor.Red;
             Console.SetCursorPosition(0, Program.consoleHeight-2);
             Console.Write("HP: " + Hitpoints.ToString()+"/"+MaxHitpoints.ToString());
-            Console.Write(" Time: " + Timing.GetCurrentTurn()/10); ///THIS might be not cool...
+            Console.Write(" Time: " + Timing.GetCurrentTurn()/10 + "." + Timing.GetCurrentTurn() % 10); ///THIS might be not cool...
         }
 
 
