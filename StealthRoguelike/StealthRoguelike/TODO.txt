@@ -1,8 +1,7 @@
 ﻿#CURRENTLY WORKING AT:
-!Unificate the timing costs!!!1
-Strangling (Not everything done)
 Items and weapons
 Shooting enemies
+Strangling (Not everything done)
 Add locked doors with proper keys placing (that would be interesting)
 -----------------------------------------------------------
 #NEED TO BE IMPLEMENTED:

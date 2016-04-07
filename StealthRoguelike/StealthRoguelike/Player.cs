@@ -175,6 +175,35 @@ namespace StealthRoguelike
                 Log.AddLine("There's nobody here!");
         }
 
+        void pickupDialogue() //NEED TO WORK WITH LISTS. !!!
+        {
+            Item picked = World.getItemAt(CoordX, CoordY);
+            if (picked != null)
+            {
+                Inv.AddItemToBackpack(picked);
+                Timing.AddActionTime(TimeCost.PickUpCost(picked));
+                World.AllItemsOnFloor.Remove(picked);
+                Log.AddLine("You picked up the " + picked.Name+".");
+            }
+            else
+            {
+                int randomMessageNumber = Algorithms.getRandomInt(3);
+                switch (randomMessageNumber)
+                {
+                    case 0:
+                        Log.AddLine("There's nothing here to pick up.");
+                        break;
+                    case 1:
+                        Log.AddLine("All that lying here is the dust.");
+                        break;
+                    case 2:
+                        Log.AddLine("Of course you can pick up the air.");
+                        break;
+                }
+                return;
+            }
+        }
+
         public void handleKeys(ConsoleKeyInfo keyPressed)
         {
             if (isPeeping)
@@ -199,6 +228,8 @@ namespace StealthRoguelike
                 peepDialogue();
             if (keyPressed.Key == ConsoleKey.S) //strangle
                 strangleDialogue();
+            if (keyPressed.Key == ConsoleKey.G) //grab (pick up) an item
+                pickupDialogue();
             //TODO!
         }
 

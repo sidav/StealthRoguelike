@@ -8,6 +8,12 @@ namespace StealthRoguelike
 {
     class Inventory
     {
-        List<Item> backpack = new List<Item>();
+        public Weapon Wielded;
+        public List<Item> backpack = new List<Item>();
+
+        public void AddItemToBackpack(Item picked)
+        {
+            backpack.Add(picked);
+        }
     }
 }
