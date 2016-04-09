@@ -9,10 +9,17 @@ namespace StealthRoguelike
     class Item //Any thing that can be picked up.
     {
         public string Name;
-        public int Weight = 1;
+        protected int weight = 1;
+        public int Quantity = 1;
+        public bool isStackable = true;
         public int CoordX, CoordY;
         public char Appearance;
         public ConsoleColor Color;
+
+        public int GetWeight()
+        {
+            return weight * Quantity;
+        }
 
         public void Draw()
         {

@@ -13,7 +13,7 @@ namespace StealthRoguelike
         public UnconsciousBody(Unit victim)
         {
             Appearance = '&';
-            Weight = 25;
+            weight = 25;
             CoordX = victim.CoordX;
             CoordY = victim.CoordY;
             Name = "unconscious " + victim.Name;

@@ -11,7 +11,7 @@ namespace StealthRoguelike
         public Corpse(Unit deadman)
         {
             Appearance = '&';
-            Weight = 25;
+            weight = 25;
             CoordX = deadman.CoordX;
             CoordY = deadman.CoordY;
             Name = deadman.Name + " corpse";

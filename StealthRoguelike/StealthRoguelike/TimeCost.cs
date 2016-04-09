@@ -58,7 +58,7 @@ namespace StealthRoguelike
 
         public static int PickUpCost(Item picking)
         {
-            return picking.Weight + 5;
+            return picking.GetWeight() + 5;
         }
 
         //Next methods are actor-only routines
