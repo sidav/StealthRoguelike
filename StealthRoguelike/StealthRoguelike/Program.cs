@@ -14,6 +14,13 @@ namespace StealthRoguelike
         public const int mapHeight = consoleHeight-LogSize-2;
         public const int LogSize = 4;
 
+        public static void ClearScreen()
+        {
+            Console.SetCursorPosition(0, 0);
+            for (int i = 0; i < consoleWidth * consoleHeight - 1; i++)
+                Console.Write(' ');
+        }
+
         static void drawTestMap(char[,] map)
         {
             for (int j = 0; j < mapHeight; j++)

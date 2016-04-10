@@ -180,10 +180,12 @@ namespace StealthRoguelike
             Item picked = World.getItemAt(CoordX, CoordY);
             if (picked != null)
             {
-                Inv.AddItemToBackpack(picked);
-                Timing.AddActionTime(TimeCost.PickUpCost(picked));
-                World.AllItemsOnFloor.Remove(picked);
-                Log.AddLine("You picked up the " + picked.Name+".");
+                if (Inv.TryPickUpItem(picked))
+                {
+                    Timing.AddActionTime(TimeCost.PickUpCost(picked));
+                    World.AllItemsOnFloor.Remove(picked);
+                    Log.AddLine("You picked up the " + picked.Name + ".");
+                }
             }
             else
             {
@@ -203,6 +205,7 @@ namespace StealthRoguelike
                 return;
             }
         }
+
 
         public void handleKeys(ConsoleKeyInfo keyPressed)
         {
@@ -230,6 +233,8 @@ namespace StealthRoguelike
                 strangleDialogue();
             if (keyPressed.Key == ConsoleKey.G) //grab (pick up) an item
                 pickupDialogue();
+            if (keyPressed.Key == ConsoleKey.D) //grab (pick up) an item
+                Inv.DropDialogue();
             //TODO!
         }
 
@@ -239,6 +244,7 @@ namespace StealthRoguelike
             Console.SetCursorPosition(0, Program.consoleHeight-2);
             Console.Write("HP: " + Hitpoints.ToString()+"/"+MaxHitpoints.ToString());
             Console.Write(" Time: " + Timing.GetCurrentTurn()/10 + "." + Timing.GetCurrentTurn() % 10); ///THIS might be not cool...
+            Console.Write(" Wielding: " + Inv.Wielded.Name);
         }
 
 

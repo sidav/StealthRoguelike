@@ -19,7 +19,7 @@ namespace StealthRoguelike
         public char appearance;
         public bool hasFOV;
         public ConsoleColor color;
-        public Inventory Inv = new Inventory();
+        public Inventory Inv;
         //public Weapon Wielded;
         public int KnockedOutTime = 0; //amount of sleepy turns for knocked out unit
 
@@ -33,6 +33,7 @@ namespace StealthRoguelike
             appearance = appear;
             hasFOV = fov;
             color = thiscolor;
+            Inv = new Inventory(this);
         }
 
         public Unit(string name, int x, int y, char appear)

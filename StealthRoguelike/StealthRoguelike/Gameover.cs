@@ -14,9 +14,7 @@ namespace StealthRoguelike
 
         public static void ShowGameoverScreen()
         {
-            Console.SetCursorPosition(0, 0);
-            for (int i = 0; i < Program.consoleWidth * Program.consoleHeight - 1; i++)
-                Console.Write(' ');
+            Program.ClearScreen();
             string youdeadstring = "------- YOU DIED -------";
             Console.SetCursorPosition(Program.consoleWidth/2-(youdeadstring.Length/2), 3);
             Console.ForegroundColor = ConsoleColor.Red;

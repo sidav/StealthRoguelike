@@ -48,6 +48,16 @@ namespace StealthRoguelike
             DrawMiniLog();
         }
 
+        public static void AddDebugMessage(string line)
+        {
+            equalMessagesCount = 1;
+            lastLogInput = line;
+            for (int i = 0; i < LogSize - 1; i++)
+                miniLog[i] = miniLog[i + 1];
+            miniLog[LogSize - 1] = new LogMessage("DBG:"+line, ConsoleColor.Cyan);
+            DrawMiniLog();
+        }
+
         public static void ReplaceLastLine(string line)
         {
             miniLog[LogSize - 1] = new LogMessage(line);
