@@ -61,6 +61,11 @@ namespace StealthRoguelike
             return picking.GetWeight() + 5;
         }
 
+        public static int DropItemCost(Item dropped)
+        {
+            return dropped.GetWeight() / 2;
+        }
+
         //Next methods are actor-only routines
         public static int GuardWait(Actor acting) //I just can't think of better name for this
         {

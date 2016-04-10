@@ -11,7 +11,7 @@ namespace StealthRoguelike
         Unit owner;
         public Weapon Wielded;
         public Item BodyCarrying = null; //when you carry a body
-        public List<Item> backpack = new List<Item>();
+        public List<Item> Backpack = new List<Item>();
 
         public Inventory(Unit ownr)
         {
@@ -22,16 +22,16 @@ namespace StealthRoguelike
         {
             int dropCoordX = owner.CoordX;
             int dropcoordY = owner.CoordY;
-            Item dropping;
+            Item dropped;
             if (BodyCarrying != null)
             {
                 if (owner is Player)
                     Log.AddLine("You dropped the " + BodyCarrying.Name + " from your shoulder.");
-
-                dropping = BodyCarrying;
-                dropping.CoordX = dropCoordX;
-                dropping.CoordY = dropcoordY;
-                World.AllItemsOnFloor.Add(dropping);
+                dropped = BodyCarrying;
+                dropped.CoordX = dropCoordX;
+                dropped.CoordY = dropcoordY;
+                owner.Timing.AddActionTime(TimeCost.DropItemCost(dropped));
+                World.AllItemsOnFloor.Add(dropped);
                 BodyCarrying = null;
             }
 
@@ -52,7 +52,7 @@ namespace StealthRoguelike
                     BodyCarrying = picked;
             }
             else
-                backpack.Add(picked);
+                Backpack.Add(picked);
             return true;
         }
 
@@ -60,20 +60,55 @@ namespace StealthRoguelike
 
         public void DropDialogue()
         {
+            int dropCoordX = owner.CoordX;
+            int dropcoordY = owner.CoordY;
             if (BodyCarrying != null)
             {
                 DropBody();
                 return;
             }
-            //if ()
+            List<Item> dropped = ItemSelectionMenu("drop", Backpack);
+            for (int i = 0; i < dropped.Count; i++)
+            {
+                if (owner is Player)
+                    Log.AddLine("You dropped the " + dropped[i].Name);
+                dropped[i].CoordX = dropCoordX;
+                dropped[i].CoordY = dropcoordY;
+                owner.Timing.AddActionTime(TimeCost.DropItemCost(dropped[i]));
+                World.AllItemsOnFloor.Add(dropped[i]);
+                Backpack.Remove(dropped[i]);
+                //if (dropped.Count == 1) break;
+            }
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.Gray;
         }
 
-        public void PickupMenu(List<Item> pickuplist)
+        public void ShowInventory()
         {
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.Clear();
+            Console.WriteLine("YOUR ITEMS:");
+            Console.WriteLine("\nWielded: " + Wielded.Name);
+            if (BodyCarrying != null)
+                Console.WriteLine("Carrying body: " + BodyCarrying.Name);
+            Console.WriteLine("\n   Backpack: ");
+            foreach (Item i in Backpack)
+            {
+                Console.WriteLine("" + i.Name);
+            }
+            Console.ReadKey(true);
+        }
+
+        public List<Item> ItemSelectionMenu(string ask, List<Item> itemlist)
+        {
+            if (itemlist.Count <= 1)
+                return itemlist;
             int cursor = 0;
-            List<bool> selected = new List<bool>();
-            for (int i = 0; i < pickuplist.Count; i++)
-                selected.Add(false);
+            List<Item> selectedItems = new List<Item>();
+            List<bool> selectedIndexes = new List<bool>();
+            for (int i = 0; i < itemlist.Count; i++)
+                selectedIndexes.Add(false);
             string selectChar;
             ConsoleKeyInfo keyPressed;
             do
@@ -81,30 +116,39 @@ namespace StealthRoguelike
                 Console.BackgroundColor = ConsoleColor.Black;
                 Console.ForegroundColor = ConsoleColor.Gray;
                 Console.Clear();
-                Console.WriteLine("What do you want to pick up?");
-                for (int i = 0; i < pickuplist.Count; i++)
+                Console.WriteLine("What do you want to " + ask + "?");
+                for (int i = 0; i < itemlist.Count; i++)
                 {
                     if (i == cursor)
                         Console.BackgroundColor = ConsoleColor.DarkRed;
                     else
                         Console.BackgroundColor = ConsoleColor.Black;
-                    if (selected[i] == false) selectChar = "-";
+                    if (selectedIndexes[i] == false) selectChar = "-";
                     else selectChar = " +";
-                    Console.WriteLine(selectChar + " " + pickuplist[i].Name);
+                    Console.WriteLine(selectChar + " " + itemlist[i].Name);
                 }
                 keyPressed = Console.ReadKey(true);
                 switch (keyPressed.Key)
                 {
                     case ConsoleKey.NumPad2: cursor++;  break;
                     case ConsoleKey.NumPad8: cursor--;  break;
-                    case ConsoleKey.Spacebar: selected[cursor] = !selected[cursor]; break;
+                    case ConsoleKey.Spacebar: selectedIndexes[cursor] = !selectedIndexes[cursor]; break;
+                    case ConsoleKey.Escape: Log.AddLine("Okay, then.");  return selectedItems; break;
                     default: break;
                 }
-                if (cursor >= pickuplist.Count)
+                if (cursor >= itemlist.Count)
                     cursor = 0;
                 if (cursor < 0)
-                    cursor = pickuplist.Count-1;
+                    cursor = itemlist.Count-1;
             } while (keyPressed.Key != ConsoleKey.Enter);
+            for (int i = 0; i < itemlist.Count; i++)
+            {
+                if (selectedIndexes[i])
+                    selectedItems.Add(itemlist[i]);
+            }
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.Gray;
+            return selectedItems;
         }
 
 

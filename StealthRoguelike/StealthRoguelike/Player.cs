@@ -43,8 +43,8 @@ namespace StealthRoguelike
                         Log.AddLine("You see here: " + list[0].Name + " and " + (numberOfItemsOnFloor -1).ToString() + " more items");
                     else
                         Log.AddLine("You see here: " + list[0].Name);
-                    return;
                 }
+                return;
             }
             if (World.isActorPresent(CoordX + x, CoordY + y))
             {
@@ -187,15 +187,15 @@ namespace StealthRoguelike
             List<Item> picked = World.getItemListAt(CoordX, CoordY);
             if (picked.Count > 0)
             {
-                if (picked.Count == 1)
-                    if (Inv.TryPickUpItem(picked[0]))
+                picked = Inv.ItemSelectionMenu("pick up", picked);
+                if (picked == null) return;
+                foreach (Item i in picked)
+                    if (Inv.TryPickUpItem(i))
                     {
-                        Timing.AddActionTime(TimeCost.PickUpCost(picked[0]));
-                        World.AllItemsOnFloor.Remove(picked[0]);
-                        Log.AddLine("You picked up the " + picked[0].Name + ".");
-                    }
-                if (picked.Count > 1)
-                    Inv.PickupMenu(picked);
+                        Timing.AddActionTime(TimeCost.PickUpCost(i));
+                        World.AllItemsOnFloor.Remove(i);
+                        Log.AddLine("You picked up the " + i.Name + ".");
+                    }                    
             }
             else
             {
@@ -243,8 +243,10 @@ namespace StealthRoguelike
                 strangleDialogue();
             if (keyPressed.Key == ConsoleKey.G) //grab (pick up) an item
                 pickupDialogue();
-            if (keyPressed.Key == ConsoleKey.D) //grab (pick up) an item
+            if (keyPressed.Key == ConsoleKey.D) //drop an item
                 Inv.DropDialogue();
+            if (keyPressed.Key == ConsoleKey.I) //drop an item
+                Inv.ShowInventory();
             //TODO!
         }
 
