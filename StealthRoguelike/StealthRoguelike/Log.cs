@@ -12,7 +12,6 @@ namespace StealthRoguelike
         const int LogSize = Program.LogSize;
         static LogMessage[] miniLog = new LogMessage[LogSize]; //log on display
         static string lastLogInput;
-        static string lastWarning;
         static int equalMessagesCount = 1;
 
         public static void ClearLog()
@@ -41,15 +40,12 @@ namespace StealthRoguelike
 
         public static void AddWarning(string line)
         {
-            if (line != lastWarning)
-            { 
-                //equalMessagesCount = 1;
-                lastWarning = line;
-                for (int i = 0; i < LogSize - 1; i++)
-                    miniLog[i] = miniLog[i + 1];
-                miniLog[LogSize - 1] = new LogMessage(line, ConsoleColor.Red);
-                DrawMiniLog();
-            }
+            equalMessagesCount = 1;
+            lastLogInput = line;
+            for (int i = 0; i < LogSize - 1; i++)
+                miniLog[i] = miniLog[i + 1];
+            miniLog[LogSize - 1] = new LogMessage(line, ConsoleColor.Red);
+            DrawMiniLog();
         }
 
         public static void ReplaceLastLine(string line)
