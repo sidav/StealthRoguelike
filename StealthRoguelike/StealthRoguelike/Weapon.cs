@@ -25,6 +25,7 @@ namespace StealthRoguelike
             return false;
         }
 
+
         public Weapon(string WeaponName)
         {
             Name = WeaponName;
@@ -37,6 +38,13 @@ namespace StealthRoguelike
                     maxdamage = 2;
                     break;
                 case "baton":
+                    type = weaponTypes.melee;
+                    TypeOfDamage = damageTypes.smash;
+                    mindamage = 1;
+                    maxdamage = 1;
+                    break;
+                //just for lulz
+                case "concept-art drawing":
                     type = weaponTypes.melee;
                     TypeOfDamage = damageTypes.smash;
                     mindamage = 1;

@@ -67,6 +67,15 @@ namespace StealthRoguelike
             return false;
         }
 
+        public static List<Item> getItemListAt(int x, int y)
+        {
+            List<Item> list = new List<Item>();
+            foreach (Item currItem in AllItemsOnFloor)
+                if (currItem.CoordX == x && currItem.CoordY == y)
+                    list.Add(currItem);
+            return list;
+        }
+
         public static Item getItemAt(int x, int y)
         {
             foreach (Item currItem in AllItemsOnFloor)
@@ -194,6 +203,7 @@ namespace StealthRoguelike
                     if (keyPressed.Key == ConsoleKey.F4) //development purposes
                     {
                         player.Hitpoints += player.MaxHitpoints;
+                        _DEBUG.InvDbg();
                         continue;
                     }
                     player.handleKeys(keyPressed);

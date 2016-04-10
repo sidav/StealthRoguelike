@@ -36,8 +36,15 @@ namespace StealthRoguelike
                 CoordY += y;
                 Timing.AddActionTime(TimeCost.MoveCost(this));
                 if (World.isItemPresent(CoordX, CoordY))
-                    Log.AddLine("You see here: "+World.getItemAt(CoordX, CoordY).Name);
-                return;
+                {
+                    List<Item> list = World.getItemListAt(CoordX, CoordY);
+                    int numberOfItemsOnFloor = list.Count();
+                    if (numberOfItemsOnFloor > 1)
+                        Log.AddLine("You see here: " + list[0].Name + " and " + (numberOfItemsOnFloor -1).ToString() + " more items");
+                    else
+                        Log.AddLine("You see here: " + list[0].Name);
+                    return;
+                }
             }
             if (World.isActorPresent(CoordX + x, CoordY + y))
             {
@@ -177,15 +184,18 @@ namespace StealthRoguelike
 
         void pickupDialogue() //NEED TO WORK WITH LISTS. !!!
         {
-            Item picked = World.getItemAt(CoordX, CoordY);
-            if (picked != null)
+            List<Item> picked = World.getItemListAt(CoordX, CoordY);
+            if (picked.Count > 0)
             {
-                if (Inv.TryPickUpItem(picked))
-                {
-                    Timing.AddActionTime(TimeCost.PickUpCost(picked));
-                    World.AllItemsOnFloor.Remove(picked);
-                    Log.AddLine("You picked up the " + picked.Name + ".");
-                }
+                if (picked.Count == 1)
+                    if (Inv.TryPickUpItem(picked[0]))
+                    {
+                        Timing.AddActionTime(TimeCost.PickUpCost(picked[0]));
+                        World.AllItemsOnFloor.Remove(picked[0]);
+                        Log.AddLine("You picked up the " + picked[0].Name + ".");
+                    }
+                if (picked.Count > 1)
+                    Inv.PickupMenu(picked);
             }
             else
             {

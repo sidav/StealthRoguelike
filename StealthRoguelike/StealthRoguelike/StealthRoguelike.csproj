@@ -69,6 +69,7 @@
     <Compile Include="AllChars.cs" />
     <Compile Include="WorldRendering.cs" />
     <Compile Include="TurnTiming.cs" />
+    <Compile Include="_DEBUG.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
