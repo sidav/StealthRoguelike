@@ -235,6 +235,8 @@ namespace StealthRoguelike
 
         public void DrawStatusbar()
         {
+            if (Hitpoints < MaxHitpoints / 4 || Hitpoints < 3)
+                Log.AddWarning("!!LOW HITPOINT WARNING!!");
             Console.ForegroundColor = ConsoleColor.Red;
             Console.SetCursorPosition(0, Program.consoleHeight-2);
             Console.Write("HP: " + Hitpoints.ToString()+"/"+MaxHitpoints.ToString());
