@@ -67,7 +67,7 @@ namespace StealthRoguelike
                 DropBody();
                 return;
             }
-            List<Item> dropped = ItemSelectionMenu("drop", Backpack);
+            List<Item> dropped = MultipleItemSelectionMenu("drop", Backpack);
             for (int i = 0; i < dropped.Count; i++)
             {
                 if (owner is Player)
@@ -81,6 +81,21 @@ namespace StealthRoguelike
             }
             Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.Gray;
+        }
+
+        public void WieldDialogue()
+        {
+            List<Item> weapsInBackpack = new List<Item>();
+            foreach (Item i in Backpack)
+                if (i is Weapon)
+                    weapsInBackpack.Add(i);
+            Weapon toWield = (Weapon)SingleItemSelectionMenu("wield", weapsInBackpack);
+            if (toWield != null)
+            {
+                Backpack.Add(Wielded);
+                Wielded = toWield;
+                Log.AddLine("You are now wielding the " + Wielded.Name);
+            }
         }
 
         public void ShowInventory()
@@ -100,7 +115,47 @@ namespace StealthRoguelike
             Console.ReadKey(true);
         }
 
-        public List<Item> ItemSelectionMenu(string ask, List<Item> itemlist)
+        public Item SingleItemSelectionMenu(string ask, List<Item> itemlist)
+        {
+            if (itemlist.Count <= 1)
+                return null;
+            int cursor = 0;
+            ConsoleKeyInfo keyPressed;
+            do
+            {
+                Console.BackgroundColor = ConsoleColor.Black;
+                Console.ForegroundColor = ConsoleColor.Gray;
+                Console.Clear();
+                Console.WriteLine("What item would you want to " + ask + "?");
+                for (int i = 0; i < itemlist.Count; i++)
+                {
+                    if (i == cursor)
+                        Console.BackgroundColor = ConsoleColor.DarkRed;
+                    else
+                        Console.BackgroundColor = ConsoleColor.Black;
+                    Console.WriteLine(itemlist[i].Name);
+                }
+                keyPressed = Console.ReadKey(true);
+                switch (keyPressed.Key)
+                {
+                    case ConsoleKey.NumPad2: case ConsoleKey.UpArrow: cursor++; break;
+                    case ConsoleKey.NumPad8: case ConsoleKey.DownArrow:cursor--; break;
+                    //case ConsoleKey.Spacebar: return itemlist[cursor]; break;
+                    //case ConsoleKey.Enter: return itemlist[cursor]; break;
+                    case ConsoleKey.Escape: Log.AddLine("Okay, then."); return null; break;
+                    default: break;
+                }
+                if (cursor >= itemlist.Count)
+                    cursor = 0;
+                if (cursor < 0)
+                    cursor = itemlist.Count - 1;
+            } while (keyPressed.Key != ConsoleKey.Spacebar && keyPressed.Key != ConsoleKey.Enter);
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.Gray;
+            return itemlist[cursor];
+        }
+
+        public List<Item> MultipleItemSelectionMenu(string ask, List<Item> itemlist)
         {
             if (itemlist.Count <= 1)
                 return itemlist;
@@ -130,8 +185,8 @@ namespace StealthRoguelike
                 keyPressed = Console.ReadKey(true);
                 switch (keyPressed.Key)
                 {
-                    case ConsoleKey.NumPad2: cursor++;  break;
-                    case ConsoleKey.NumPad8: cursor--;  break;
+                    case ConsoleKey.NumPad2: case ConsoleKey.UpArrow: cursor++; break;
+                    case ConsoleKey.NumPad8: case ConsoleKey.DownArrow: cursor--; break;
                     case ConsoleKey.Spacebar: selectedIndexes[cursor] = !selectedIndexes[cursor]; break;
                     case ConsoleKey.Escape: Log.AddLine("Okay, then.");  return selectedItems; break;
                     default: break;

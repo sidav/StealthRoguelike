@@ -12,9 +12,9 @@ namespace StealthRoguelike
         {
             int x, y;
             //just for lulz
-            x = World.AllActors[0].CoordX;
-            y = World.AllActors[0].CoordY;
-            World.AllActors[0] = UnitCreator.createActor("Kostik",x,y);
+            //x = World.AllActors[0].CoordX;
+            //y = World.AllActors[0].CoordY;
+            //World.AllActors[0] = UnitCreator.createActor("Kostik",x,y);
             //just for lulz ended
             x = World.player.CoordX;
             y = World.player.CoordY;

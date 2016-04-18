@@ -187,7 +187,7 @@ namespace StealthRoguelike
             List<Item> picked = World.getItemListAt(CoordX, CoordY);
             if (picked.Count > 0)
             {
-                picked = Inv.ItemSelectionMenu("pick up", picked);
+                picked = Inv.MultipleItemSelectionMenu("pick up", picked);
                 if (picked == null) return;
                 foreach (Item i in picked)
                     if (Inv.TryPickUpItem(i))
@@ -247,6 +247,8 @@ namespace StealthRoguelike
                 Inv.DropDialogue();
             if (keyPressed.Key == ConsoleKey.I) //drop an item
                 Inv.ShowInventory();
+            if (keyPressed.Key == ConsoleKey.W) //wield a weapon
+                Inv.WieldDialogue();
             //TODO!
         }
 
