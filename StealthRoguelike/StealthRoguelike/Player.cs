@@ -245,7 +245,7 @@ namespace StealthRoguelike
                 pickupDialogue();
             if (keyPressed.Key == ConsoleKey.D) //drop an item
                 Inv.DropDialogue();
-            if (keyPressed.Key == ConsoleKey.I) //drop an item
+            if (keyPressed.Key == ConsoleKey.I) //show inventory
                 Inv.ShowInventory();
             if (keyPressed.Key == ConsoleKey.W) //wield a weapon
                 Inv.WieldDialogue();
@@ -254,11 +254,30 @@ namespace StealthRoguelike
 
         public void DrawStatusbar()
         {
-            Console.ForegroundColor = ConsoleColor.Red;
             Console.SetCursorPosition(0, Program.consoleHeight-2);
-            Console.Write("HP: " + Hitpoints.ToString()+"/"+MaxHitpoints.ToString());
-            Console.Write(" Time: " + Timing.GetCurrentTurn()/10 + "." + Timing.GetCurrentTurn() % 10); ///THIS might be not cool...
-            Console.Write(" Wielding: " + Inv.Wielded.Name);
+            if (Hitpoints > 2*MaxHitpoints/3)
+                Console.ForegroundColor = ConsoleColor.Green;
+            if (Hitpoints > MaxHitpoints / 3 && Hitpoints <= 2*MaxHitpoints / 3)
+                Console.ForegroundColor = ConsoleColor.Yellow;
+            if (Hitpoints <= MaxHitpoints / 3)
+                Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write("HP: " + Hitpoints.ToString()+"/"+MaxHitpoints.ToString() + ";");
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.Write(" Time: " + Timing.GetCurrentTurn()/10 + "." + Timing.GetCurrentTurn() % 10 + ";"); ///THIS might be not cool...
+            Console.Write(" Wielding: " + Inv.Wielded.Name + ";");
+            int cx = Console.CursorLeft;
+            int cy = Console.CursorTop;
+            for (int i = 0; i < Program.consoleWidth; i++)
+                Console.Write(" ");
+            Console.SetCursorPosition(cx, cy);
+            if (Inv.isCarryingABody())
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.Write(" Carrying a " + Inv.BodyCarrying.Name);
+                //Log.AddDebugMessage("Watafuq? Body is " + Inv.BodyCarrying.Name);
+            }
+            else Console.Write("                                 ");
+            
         }
 
 

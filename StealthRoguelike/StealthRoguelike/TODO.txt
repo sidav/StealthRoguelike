@@ -16,7 +16,7 @@ Add locked doors with proper keys placing (that would be interesting)
 ?Repair map generator room placement
 
 #NEED TO BE REPLACED:
--Rework key routines in Player class. Vectorize it.
+
 -------------------------------------
 Prefixes: 
 !this means the major high priority task

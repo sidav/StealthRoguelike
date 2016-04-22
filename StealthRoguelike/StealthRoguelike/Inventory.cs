@@ -18,6 +18,13 @@ namespace StealthRoguelike
             owner = ownr;
         }
 
+        public bool isCarryingABody()
+        {
+            if (BodyCarrying == null)
+                return false;
+            else return true; 
+        }
+
         public void DropBody() //OF COURSE it's not final!
         {
             int dropCoordX = owner.CoordX;
@@ -34,7 +41,6 @@ namespace StealthRoguelike
                 World.AllItemsOnFloor.Add(dropped);
                 BodyCarrying = null;
             }
-
         }
 
         public bool TryPickUpItem(Item picked)

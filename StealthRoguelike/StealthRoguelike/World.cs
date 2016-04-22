@@ -177,36 +177,20 @@ namespace StealthRoguelike
                     keyPressed = Console.ReadKey(true);
                     if (keyPressed.Key == ConsoleKey.Escape)
                         break;
-                    if (keyPressed.Key == ConsoleKey.F1) //development purposes
+                    if (keyPressed.Key == ConsoleKey.F1)
                     {
                         HelpScreen.DrawHelpScreen();
                         Log.DrawMiniLog();
                         continue;
                     }
-                    if (keyPressed.Key == ConsoleKey.F2) //development purposes
-                    {
-                        WorldRendering.drawWorld(-1);
-                        WorldRendering.drawUnits(-1);
-                        Console.ReadKey(true);
+
+                    if (_DEBUG.DebugKey(keyPressed)) //DEBUG-ONLY
                         continue;
-                    }
-                    if (keyPressed.Key == ConsoleKey.F3) //development purposes
-                    {
-                        for (int j = 0; j < Program.mapHeight; j++)
-                            for (int i = 0; i < Program.mapWidth; i++)
-                            {
-                                if (map[i, j].IsPassable)
-                                    map[i, j].WasSeen = true;
-                            }
-                        continue;
-                    }
-                    if (keyPressed.Key == ConsoleKey.F4) //development purposes
-                    {
-                        player.Hitpoints += player.MaxHitpoints;
-                        _DEBUG.InvDbg();
-                        continue;
-                    }
+
                     player.handleKeys(keyPressed);
+
+                    if (player.Timing.IsTimeToAct()) //don't do anything if player did nothing at all
+                        continue;
                 }
                 for (int i = 0; i < AllActors.Count; i++)
                 {
