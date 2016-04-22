@@ -255,12 +255,14 @@ namespace StealthRoguelike
         public void DrawStatusbar()
         {
             Console.SetCursorPosition(0, Program.consoleHeight-2);
+
             if (Hitpoints > 2*MaxHitpoints/3)
-                Console.ForegroundColor = ConsoleColor.Green;
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
             if (Hitpoints > MaxHitpoints / 3 && Hitpoints <= 2*MaxHitpoints / 3)
                 Console.ForegroundColor = ConsoleColor.Yellow;
             if (Hitpoints <= MaxHitpoints / 3)
                 Console.ForegroundColor = ConsoleColor.Red;
+
             Console.Write("HP: " + Hitpoints.ToString()+"/"+MaxHitpoints.ToString() + ";");
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.Write(" Time: " + Timing.GetCurrentTurn()/10 + "." + Timing.GetCurrentTurn() % 10 + ";"); ///THIS might be not cool...

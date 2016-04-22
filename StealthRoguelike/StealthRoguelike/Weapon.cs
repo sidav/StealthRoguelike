@@ -43,6 +43,12 @@ namespace StealthRoguelike
                     mindamage = 1;
                     maxdamage = 1;
                     break;
+                case "katar":
+                    type = weaponTypes.melee;
+                    TypeOfDamage = damageTypes.stab;
+                    mindamage = 2;
+                    maxdamage = 3;
+                    break;
                 //just for lulz
                 case "concept-art drawing":
                     type = weaponTypes.melee;

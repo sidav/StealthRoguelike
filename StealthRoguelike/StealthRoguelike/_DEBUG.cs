@@ -43,14 +43,22 @@ namespace StealthRoguelike
             //just for lulz ended
             x = World.player.CoordX;
             y = World.player.CoordY;
+
             Weapon newwpn = new Weapon("dagger");
             newwpn.CoordX = x;
             newwpn.CoordY = y;
             World.AllItemsOnFloor.Add(newwpn);
+
             newwpn = new Weapon("baton");
             newwpn.CoordX = x;
             newwpn.CoordY = y;
             World.AllItemsOnFloor.Add(newwpn);
+
+            newwpn = new Weapon("katar");
+            newwpn.CoordX = x;
+            newwpn.CoordY = y;
+            World.AllItemsOnFloor.Add(newwpn);
+
             Log.AddDebugMessage("items created");
         }
 

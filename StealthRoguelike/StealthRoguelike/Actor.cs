@@ -109,6 +109,7 @@ namespace StealthRoguelike
             int newLookX, newLookY;
             do
             {
+                Log.AddLine("DEBUG: Turning the guard");
                 newLookX = Algorithms.getRandomInt(-1, 2);
                 newLookY = Algorithms.getRandomInt(-1, 2);
             } while ((newLookX == 0 && newLookY == 0) || !World.IsPassable(CoordX + newLookX, CoordY + newLookY));

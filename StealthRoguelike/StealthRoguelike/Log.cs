@@ -38,13 +38,23 @@ namespace StealthRoguelike
             }
         }
 
-        public static void AddWarning(string line)
+        public static void AddAlertMessage(string line)
         {
             equalMessagesCount = 1;
             lastLogInput = line;
             for (int i = 0; i < LogSize - 1; i++)
                 miniLog[i] = miniLog[i + 1];
             miniLog[LogSize - 1] = new LogMessage(line, ConsoleColor.Red);
+            DrawMiniLog();
+        }
+
+        public static void AddWarningMessage(string line)
+        {
+            equalMessagesCount = 1;
+            lastLogInput = line;
+            for (int i = 0; i < LogSize - 1; i++)
+                miniLog[i] = miniLog[i + 1];
+            miniLog[LogSize - 1] = new LogMessage(line, ConsoleColor.Yellow);
             DrawMiniLog();
         }
 

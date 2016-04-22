@@ -20,7 +20,7 @@ namespace StealthRoguelike
         public World()
         {
             makeMap();
-            Log.AddLine("Debug: Map generation... ok");
+            Log.AddDebugMessage("Map generation... ok");
             //find an entrance and place player
             for (int i = 0; i < mapWidth; i++)
                 for (int j = 0; j < mapHeight; j++)
@@ -28,8 +28,8 @@ namespace StealthRoguelike
                         player = UnitCreator.createPlayer(i, j);
             //place enemies
             placeActors();
-            Log.AddLine("Debug: Actors placement... ok");
-            Log.AddLine("Debug: All systems nominal... for now");
+            Log.AddDebugMessage("Actors placement... ok");
+            Log.AddDebugMessage("All systems nominal... for now");
             Log.AddLine("Press F1 for list of game commands");
         }
 

@@ -38,7 +38,7 @@ namespace StealthRoguelike
                 {
                     Gameover.KilledBy = attacker.Name;
                     if (victim.Hitpoints < victim.MaxHitpoints / 3 || victim.Hitpoints < 3)
-                        Log.AddWarning("!!LOW HITPOINT WARNING!!");
+                        Log.AddAlertMessage("!!LOW HITPOINT WARNING!!");
                 }
             }
         }

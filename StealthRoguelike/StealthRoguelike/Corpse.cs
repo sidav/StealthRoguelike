@@ -15,7 +15,7 @@ namespace StealthRoguelike
             CoordX = deadman.CoordX;
             CoordY = deadman.CoordY;
             Name = deadman.Name + " corpse";
-            Color = ConsoleColor.Red;
+            Color = deadman.color;
         }
     }
 }

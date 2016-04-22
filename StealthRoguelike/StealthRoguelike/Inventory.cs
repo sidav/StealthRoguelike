@@ -123,8 +123,10 @@ namespace StealthRoguelike
 
         public Item SingleItemSelectionMenu(string ask, List<Item> itemlist)
         {
-            if (itemlist.Count <= 1)
+            if (itemlist.Count == 0)
                 return null;
+            if (itemlist.Count == 1)
+                return itemlist[0];
             int cursor = 0;
             ConsoleKeyInfo keyPressed;
             do
