@@ -107,11 +107,16 @@ namespace StealthRoguelike
         void turnToRandomPassableDirection() //turn to random direction which is passable
         {
             int newLookX, newLookY;
+            int tries = 0;
+
             do
             {
-                Log.AddLine("DEBUG: Turning the guard");
                 newLookX = Algorithms.getRandomInt(-1, 2);
                 newLookY = Algorithms.getRandomInt(-1, 2);
+
+                if (tries > 50) break; //this is
+                tries++;               //a quite dirty workaround
+
             } while ((newLookX == 0 && newLookY == 0) || !World.IsPassable(CoordX + newLookX, CoordY + newLookY));
             turnToDirection(newLookX, newLookY);
             Timing.AddActionTime(TimeCost.GuardWait(this));

@@ -100,6 +100,7 @@ namespace StealthRoguelike
             {
                 Backpack.Add(Wielded);
                 Wielded = toWield;
+                Backpack.Remove(toWield);
                 Log.AddLine("You are now wielding the " + Wielded.Name);
             }
         }

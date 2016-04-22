@@ -48,17 +48,20 @@ namespace StealthRoguelike
 
         protected void drawLookingThingy() //draw a thingy that shows this unit's direction
         {
-            char thingy = '?';
-            if (lookX == 0)
-                thingy = '|';
-            if (lookY == 0)
-                thingy = '-';
-            if (lookX * lookY == 1)
-                thingy = '\\';
-            if (lookX * lookY == -1)
-                thingy = '/';
-            Console.SetCursorPosition(CoordX + lookX, CoordY + lookY);
-            Console.Write(thingy);
+            if (!World.isActorPresent(CoordX + lookX, CoordY + lookY))
+            {
+                char thingy = '?';
+                if (lookX == 0)
+                    thingy = '|';
+                if (lookY == 0)
+                    thingy = '-';
+                if (lookX * lookY == 1)
+                    thingy = '\\';
+                if (lookX * lookY == -1)
+                    thingy = '/';
+                Console.SetCursorPosition(CoordX + lookX, CoordY + lookY);
+                Console.Write(thingy);
+            }
             //TODO!
         }
 

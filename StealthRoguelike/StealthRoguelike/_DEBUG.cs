@@ -62,6 +62,12 @@ namespace StealthRoguelike
             Log.AddDebugMessage("items created");
         }
 
+        public static void F6()
+        {
+            World.player.Hitpoints += 100;
+            World.player.Timing.AddActionTime(1000);
+            Log.AddDebugMessage("Veeeeery long waiting");
+        }
 
         public static bool DebugKey(ConsoleKeyInfo keyPressed)
         {
@@ -85,6 +91,13 @@ namespace StealthRoguelike
                 F5();
                 return true;
             }
+
+            if (keyPressed.Key == ConsoleKey.F6) //development purposes
+            {
+                F6();
+                return true;
+            }
+
             return false;
         }
 

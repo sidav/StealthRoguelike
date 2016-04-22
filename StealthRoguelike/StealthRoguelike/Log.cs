@@ -58,10 +58,28 @@ namespace StealthRoguelike
             DrawMiniLog();
         }
 
+        public static void AddStackableDebugMessage(string line)
+        {
+            if (line == lastLogInput)
+            {
+                equalMessagesCount++;
+                ReplaceLastLine(line + " (x" + equalMessagesCount.ToString() + ")");
+            }
+            else
+            {
+                equalMessagesCount = 1;
+                lastLogInput = line;
+                for (int i = 0; i < LogSize - 1; i++)
+                    miniLog[i] = miniLog[i + 1];
+                miniLog[LogSize - 1] = new LogMessage("DBG:" + line, ConsoleColor.Cyan);
+                DrawMiniLog();
+            }
+        }
+
         public static void AddDebugMessage(string line)
         {
-            equalMessagesCount = 1;
-            lastLogInput = line;
+            //equalMessagesCount = 1;
+            //lastLogInput = line;
             for (int i = 0; i < LogSize - 1; i++)
                 miniLog[i] = miniLog[i + 1];
             miniLog[LogSize - 1] = new LogMessage("DBG:"+line, ConsoleColor.Cyan);
@@ -70,7 +88,8 @@ namespace StealthRoguelike
 
         public static void ReplaceLastLine(string line)
         {
-            miniLog[LogSize - 1] = new LogMessage(line);
+            ConsoleColor lastColor = miniLog[LogSize - 1].TextColor;
+            miniLog[LogSize - 1] = new LogMessage(line, lastColor);
             DrawMiniLog();
         }
 
