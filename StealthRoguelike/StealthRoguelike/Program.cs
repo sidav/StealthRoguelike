@@ -163,6 +163,10 @@ namespace StealthRoguelike
             Console.SetBufferSize(consoleWidth, consoleHeight);
             Console.Clear();
             Console.CursorVisible = false;
+
+            StartupScreen.ShowSplashScreen();
+            Console.Clear();
+
             MapGenerator.setParams(mapWidth, mapHeight);
             Log.ClearLog();
             //drawCrap();

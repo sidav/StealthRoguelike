@@ -49,6 +49,7 @@
     <Compile Include="HelpScreen.cs" />
     <Compile Include="Inventory.cs" />
     <Compile Include="KeyToVector.cs" />
+    <Compile Include="StartupScreen.cs" />
     <Compile Include="TimeCost.cs" />
     <Compile Include="UnconsciousBody.cs" />
     <Compile Include="UnitCreator.cs" />
