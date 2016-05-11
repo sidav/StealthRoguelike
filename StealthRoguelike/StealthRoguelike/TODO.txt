@@ -1,4 +1,5 @@
 ﻿#CURRENTLY WORKING AT:
+Stat system
 Items and weapons
 Shooting enemies
 Strangling (Not everything done)
@@ -7,7 +8,6 @@ Add locked doors with proper keys placing (that would be interesting)
 #NEED TO BE IMPLEMENTED:
 .make guards to investigate suspicious places (almost done)
 -Battle system
--Stat system
 -Pathfinding
 - STILL NEED better LOS algorithm
 ?Make actors react to any enemies in addition to player

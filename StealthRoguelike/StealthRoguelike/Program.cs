@@ -164,6 +164,8 @@ namespace StealthRoguelike
             Console.Clear();
             Console.CursorVisible = false;
 
+            Algorithms.setSeed();
+
             StartupScreen.ShowSplashScreen();
             Console.Clear();
 
