@@ -8,6 +8,13 @@ namespace StealthRoguelike
 {
     class _DEBUG
     {
+
+        public static void AnyShitBeforeStart()
+        { //just for testing of methods.
+            //randomtest();
+            //Console.ReadKey(true);
+        }
+
         public static void F2()
         {
             WorldRendering.drawWorld(-1);
@@ -99,6 +106,35 @@ namespace StealthRoguelike
             }
 
             return false;
+        }
+
+        static void randomtest()
+        {
+            const int testmax = 6;
+            const long picks = 1000000;
+            Algorithms.setSeed();
+
+            var pick = new long[testmax];
+            long picksum = 0;
+
+            for (long i = 0; i < testmax; i++)
+                pick[i] = 0;
+
+            for (long i = 0; i < picks; i++)
+            {
+                long j = Algorithms.getRandomInt(testmax);
+                picksum += j;
+                pick[j]++;
+            }
+
+            for (int i = 0; i < testmax; i++)
+            {
+                Console.Write(i.ToString() + ":x" + pick[i].ToString() + "; ");
+                if (i % 9 == 0 && i > 0) Console.WriteLine();
+            }
+
+            Console.Write("Pick medium: " + (picksum / picks).ToString());
+
         }
 
     }

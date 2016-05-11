@@ -30,6 +30,7 @@ namespace StealthRoguelike
             placeActors();
             Log.AddDebugMessage("Actors placement... ok");
             Log.AddDebugMessage("All systems nominal... for now");
+            Log.AddDebugMessage("Seed for this world is " + Algorithms.Seed.ToString());
             Log.AddLine("Press F1 for list of game commands");
         }
 
