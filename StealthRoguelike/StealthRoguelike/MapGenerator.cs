@@ -8,6 +8,17 @@ namespace StealthRoguelike
 {
     class MapGenerator
     {
+
+        //IMPORTANT(!!!) CONSTANTS
+        const int minRoomSize = 2;
+        const int maxRoomSize = 12;
+        const int minCorridorLength = 3;
+        const int maxCorridorLength = 75;
+        const int maxRooms = 35;// AFTER AI TESTING CHANGE THIS TO 35; 
+        const int maxCorridors = 25;// AFTER AI TESTING CHANGE THIS TO 15;
+        const int maxColumns = 25;
+        const int maxTries = 1000; //maximum amount of tries for structure placing
+
         public enum piece {wall, floor, door, upstair, downstair};
         public static int mapWidth, mapHeight;
         static piece[,] map;
@@ -21,14 +32,6 @@ namespace StealthRoguelike
         public const char floorChar = '.';
         public const char upstairChar = '<';
         public const char downstairChar = '>';
-        //IMPORTANT(!!!) CONSTANTS
-        const int minRoomSize = 2;
-        const int maxRoomSize = 12;
-        const int minCorridorLength = 3;
-        const int maxCorridorLength = 75;
-        const int maxRooms = 35;// AFTER AI TESTING CHANGE THIS TO 35; 
-        const int maxCorridors = 25;// AFTER AI TESTING CHANGE THIS TO 15;
-        const int maxTries = 1000; //maximum amount of tries for structure placing
 
         public static void setParams(int mapw, int maph)
         {
@@ -221,6 +224,24 @@ namespace StealthRoguelike
             }
         }
 
+        static void addColumns()
+        {
+            for (int i = 0; i < maxColumns; i++)
+                for (int j = 0; j < maxTries; j++)
+                {
+                    bool wrongCoords = false;
+                    int x = Algorithms.getRandomInt(1, mapWidth-1);
+                    int y = Algorithms.getRandomInt(1, mapHeight-1);
+                    for (int xx = -1; xx < 2; xx++)
+                        for (int yy = -1; yy < 2; yy++)
+                            if (map[x + xx, y + yy] != piece.floor)
+                                wrongCoords = true;
+                    if (wrongCoords == true) continue;
+                    map[x, y] = piece.wall;
+                    break;
+                }
+        }
+
         public static int[,] generateDungeon()
         {
             int roomwidth, roomheight, roomx, roomy;
@@ -286,6 +307,10 @@ namespace StealthRoguelike
                 sy = Algorithms.getRandomInt(mapHeight);
             }
             map[sx, sy] = piece.upstair;
+
+            //let's add some columns
+            addColumns();
+
             //transform "pieces" into ints
             int[,] finalMap = new int[mapWidth, mapHeight];
             for (int i = 0; i < mapWidth; i++)
