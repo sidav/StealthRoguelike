@@ -14,6 +14,9 @@ namespace StealthRoguelike
         public weaponTypes type;
         public damageTypes TypeOfDamage;
         public int mindamage, maxdamage;
+        public int minStrengthRequired = 5;
+        public float StrengthFactor = 1;
+        public float AgilityFactor = 1;
 
         public bool targetInRange(int fx, int fy, int tx, int ty)
         {
@@ -56,6 +59,7 @@ namespace StealthRoguelike
                     mindamage = 1;
                     maxdamage = 1;
                     break;
+                //If you see this ingame, then there is probaby a bug somewhere
                 default:
                     Name = "Default_Weapon";
                     type = weaponTypes.melee;

@@ -9,13 +9,22 @@ namespace StealthRoguelike
     class Attack
     {
 
+        static int CalculateDamage(Unit attacker, Unit victim)
+        {
+            int mindamage = attacker.Inv.Wielded.mindamage;
+            int maxdamage = attacker.Inv.Wielded.maxdamage;
+            int baseDamage = Algorithms.getRandomInt(mindamage, maxdamage);
+            int finalDamage = (int)(baseDamage + baseDamage * (attacker.Stats.Strength - 10)/10 * attacker.Inv.Wielded.StrengthFactor);
+            if (finalDamage < 0) finalDamage = 0;
+            return finalDamage;
+        }
+
         public static void dealDamage(Unit attacker, Unit victim)
         {
             if (attacker.Inv.Wielded != null)
             {
-                int mindamage = attacker.Inv.Wielded.mindamage;
-                int maxdamage = attacker.Inv.Wielded.maxdamage;
-                int finalDamage = Algorithms.getRandomInt(mindamage, maxdamage);
+                
+                int finalDamage = CalculateDamage(attacker, victim);
                 if (attacker.Inv.Wielded.TypeOfDamage == Weapon.damageTypes.stab && victim.IsUnaware())
                 {
                     finalDamage *= 2;
