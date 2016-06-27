@@ -21,6 +21,7 @@ namespace StealthRoguelike
         public ConsoleColor color;
         public Inventory Inv;
         //public Weapon Wielded;
+        public SneakRoleplayStats Stats = new SneakRoleplayStats();
         public int KnockedOutTime = 0; //amount of sleepy turns for knocked out unit
 
         public Unit(string name, int x, int y, char appear, bool fov, ConsoleColor thiscolor)

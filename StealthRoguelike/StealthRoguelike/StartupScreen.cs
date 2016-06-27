@@ -114,7 +114,7 @@ namespace StealthRoguelike
         {
             string[] Art = image4;
 
-            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.ForegroundColor = ConsoleColor.Red;
             int cursorXstart = Program.consoleWidth / 2 - Art[0].Length / 2;
             int cursorYstart = Program.consoleHeight / 2 - Art.Length / 2 - 1;
             for (int i = 0; i < Art.Length; i++)
