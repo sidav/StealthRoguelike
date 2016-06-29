@@ -18,6 +18,18 @@ namespace StealthRoguelike
             owner = ownr;
         }
 
+        public int getInventoryWeight()
+        {
+            int wght = 0;
+            foreach (Item i in Backpack)
+            {
+                wght += i.GetWeight();
+            }
+            if (isCarryingABody())
+                wght += BodyCarrying.GetWeight();
+            return wght;
+        }
+
         public bool isCarryingABody()
         {
             if (BodyCarrying == null)
@@ -110,14 +122,21 @@ namespace StealthRoguelike
             Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.Clear();
-            Console.WriteLine("YOUR ITEMS:");
+            Console.WriteLine("YOUR ITEMS: (total weight: "+getInventoryWeight() + "/" + owner.Stats.Strength*2 + ")");
             Console.WriteLine("\nWielded: " + Wielded.Name);
             if (BodyCarrying != null)
                 Console.WriteLine("Carrying body: " + BodyCarrying.Name);
-            Console.WriteLine("\n   Backpack: ");
-            foreach (Item i in Backpack)
+            if (Backpack.Count == 0)
             {
-                Console.WriteLine("" + i.Name);
+                Console.WriteLine("\n   Your backpack is empty.");
+            }
+            else
+            {
+                Console.WriteLine("\n   Backpack: ");
+                foreach (Item i in Backpack)
+                {
+                    Console.WriteLine("" + i.Name);
+                }
             }
             Console.ReadKey(true);
         }
