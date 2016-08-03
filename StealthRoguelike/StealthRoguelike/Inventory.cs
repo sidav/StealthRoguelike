@@ -141,6 +141,14 @@ namespace StealthRoguelike
             Console.ReadKey(true);
         }
 
+        public int getEncumbrance() //returns 0 if not encumbered at all, 1 if encumbered, 2 if heavily encumbered
+        {   //WORK IN PROGRESS
+            int str = owner.Stats.Strength;
+            int wght = getInventoryWeight();
+            if (wght <= str) return 0;
+            return 0;
+        }
+
         public Item SingleItemSelectionMenu(string ask, List<Item> itemlist)
         {
             if (itemlist.Count == 0)
