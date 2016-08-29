@@ -1,4 +1,6 @@
 ﻿#CURRENTLY WORKING AT:
+MAKE THE FUCKING LOS ALREADY
+Various time costs for moving with various encumbrance
 Stat system
 Items and weapons
 Shooting enemies
