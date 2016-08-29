@@ -150,17 +150,16 @@ namespace StealthRoguelike
 
         private int getMaxWeight()
         {
-            return owner.Stats.Strength * 2;
+            return (int)(owner.Stats.Strength * 1.5);
         }
 
         public int getEncumbrance() //returns 0 if not encumbered at all, 1 if encumbered, 2 if heavily encumbered, 3 if stressed
         {   //WORK IN PROGRESS
             int maxwght = getMaxWeight();
             int wght = getInventoryWeight();
-            if (wght <= maxwght) return 0;
-            if (wght > maxwght && wght < (maxwght + maxwght / 2)) return 1;
-            if (wght >= (maxwght + maxwght / 2)) return 2;
-            //Here should be stressed -> return 3 
+            if (wght > maxwght && wght <= 1.5*maxwght) return 1;
+            if (wght <= 2*maxwght) return 2;
+            if (wght > 2*maxwght) return 3;
             return 0;
         }
 
