@@ -122,7 +122,14 @@ namespace StealthRoguelike
             Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.Clear();
-            Console.WriteLine("YOUR ITEMS: (total weight: "+getInventoryWeight() + "/" + owner.Stats.Strength*2 + ")");
+            Console.Write("YOUR ITEMS: ");
+
+            if (getEncumbrance() == 1) Console.ForegroundColor = ConsoleColor.Yellow;
+            if (getEncumbrance() == 2) Console.ForegroundColor = ConsoleColor.DarkYellow;
+            if (getEncumbrance() == 3) Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("(total weight: " + getInventoryWeight() + "/" + getMaxWeight() + ")");
+            Console.ForegroundColor = ConsoleColor.Gray;
+
             Console.WriteLine("\nWielded: " + Wielded.Name);
             if (BodyCarrying != null)
                 Console.WriteLine("Carrying body: " + BodyCarrying.Name);
@@ -141,11 +148,19 @@ namespace StealthRoguelike
             Console.ReadKey(true);
         }
 
-        public int getEncumbrance() //returns 0 if not encumbered at all, 1 if encumbered, 2 if heavily encumbered
+        private int getMaxWeight()
+        {
+            return owner.Stats.Strength * 2;
+        }
+
+        public int getEncumbrance() //returns 0 if not encumbered at all, 1 if encumbered, 2 if heavily encumbered, 3 if stressed
         {   //WORK IN PROGRESS
-            int str = owner.Stats.Strength;
+            int maxwght = getMaxWeight();
             int wght = getInventoryWeight();
-            if (wght <= str) return 0;
+            if (wght <= maxwght) return 0;
+            if (wght > maxwght && wght < (maxwght + maxwght / 2)) return 1;
+            if (wght >= (maxwght + maxwght / 2)) return 2;
+            //Here should be stressed -> return 3 
             return 0;
         }
 
