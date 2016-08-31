@@ -1,5 +1,4 @@
 ﻿#CURRENTLY WORKING AT:
-MAKE THE FUCKING LOS ALREADY
 Various time costs for moving with various encumbrance
 Stat system
 Items and weapons
@@ -8,7 +7,6 @@ Strangling (Not everything done)
 Add locked doors with proper keys placing (that would be interesting)
 -----------------------------------------------------------
 #NEED TO BE IMPLEMENTED:
-!STILL NEED better LOS algorithm
 .make guards to investigate suspicious places (almost done)
 -Battle system
 -Pathfinding
