@@ -41,6 +41,8 @@ namespace StealthRoguelike
                 {
                     if (x+i < 0 || x+i >= mapWidth || y+j < 0 || y+j >= mapHeight)
                         continue;
+                    if (Math.Abs(i * j) == 1)
+                        continue;
                     if (!(World.map[x + i, y + j].isVisionBlocking) && FST[x + i, y + j])
                         return true;
                 }
@@ -57,7 +59,7 @@ namespace StealthRoguelike
             //Second stage
             bool[,] SecondStageTable = new bool[mapWidth, mapHeight];
             for (int i = 0; i < mapWidth; i++)
-                for (int j = 0; j < mapHeight; j++) //for each tile...
+                for (int j = 0; j < mapHeight; j++)
                     if (!firstStageTable[i, j] && World.map[i, j].isVisionBlocking)
                         SecondStageTable[i, j] = checkNeighbouringTiles(i, j, firstStageTable);
                     else SecondStageTable[i, j] = false;
