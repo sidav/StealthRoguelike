@@ -39,7 +39,7 @@ namespace StealthRoguelike
                 dy = currActor.CoordY - y;
                 if (dx * dx + dy * dy > radius * radius)
                     continue;
-                if (World.VisibleLineExist(x, y, currActor.CoordX, currActor.CoordY))
+                if (WorldLOS.VisibleLineExist(x, y, currActor.CoordX, currActor.CoordY))
                     currActor.Draw();
             }
         }
@@ -53,7 +53,7 @@ namespace StealthRoguelike
                 dy = currItem.CoordY - y;
                 if (dx * dx + dy * dy > radius * radius)
                     continue;
-                if (World.VisibleLineExist(x, y, currItem.CoordX, currItem.CoordY))
+                if (WorldLOS.VisibleLineExist(x, y, currItem.CoordX, currItem.CoordY))
                     currItem.Draw();
             }
         }
@@ -103,7 +103,7 @@ namespace StealthRoguelike
                     //Console.SetCursorPosition(i, j);
                     int xdiff = centerx - i;
                     int ydiff = centery - j;
-                    if (xdiff * xdiff + ydiff * ydiff <= radius * radius && World.VisibleLineExist(centerx, centery, i, j))
+                    if (xdiff * xdiff + ydiff * ydiff <= radius * radius && WorldLOS.VisibleLineExist(centerx, centery, i, j))
                     {
                         Console.ForegroundColor = World.map[i, j].Color;
                         Console.Write(World.map[i, j].Appearance);

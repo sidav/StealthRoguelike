@@ -134,7 +134,7 @@ namespace StealthRoguelike
             if (distance <= visibilityRadius)
             {
                 if (ViewSector.PointIsInSector(CoordX, CoordY, targetX, targetY, lookX, lookY, ViewAngle))
-                    if (World.VisibleLineExist(CoordX, CoordY, targetX, targetY))
+                    if (WorldLOS.VisibleLineExist(CoordX, CoordY, targetX, targetY))
                         return true;
             }
             return false;

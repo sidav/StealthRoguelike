@@ -70,6 +70,7 @@
     <Compile Include="Weapon.cs" />
     <Compile Include="World.cs" />
     <Compile Include="AllChars.cs" />
+    <Compile Include="WorldLOS.cs" />
     <Compile Include="WorldRendering.cs" />
     <Compile Include="TurnTiming.cs" />
     <Compile Include="_DEBUG.cs" />
