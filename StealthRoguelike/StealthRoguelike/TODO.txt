@@ -1,5 +1,6 @@
 ﻿#CURRENTLY WORKING AT:
-Various time costs for moving with various encumbrance
+Various time costs for moving with various encumbrance - DONE, testing needed
+Algorithms.getRandomInt(a,b) - WTF is with results range? 
 Stat system
 Items and weapons
 Shooting enemies
