@@ -157,6 +157,7 @@ namespace StealthRoguelike
         {   //WORK IN PROGRESS
             int maxwght = getMaxWeight();
             int wght = getInventoryWeight();
+            if (wght <= maxwght) return 0;
             if (wght > maxwght && wght <= 1.5*maxwght) return 1;
             if (wght <= 2*maxwght) return 2;
             if (wght > 2*maxwght) return 3;

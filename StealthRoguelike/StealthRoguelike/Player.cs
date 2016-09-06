@@ -55,7 +55,16 @@ namespace StealthRoguelike
             //World.Redraw(CoordX-x, CoordY-y);
         }
 
+
         //INTERACTION WITH GAMER.
+
+        void seeTheStats()
+        {
+            string statString = "s " + Stats.Strength.ToString() + "; n " + Stats.Nerve.ToString() +
+                "; e " + Stats.Endurance.ToString() + "; a " + Stats.Agility.ToString() + "; k " +
+                Stats.Knowledge.ToString();
+            Log.AddDebugMessage(statString);
+        }
 
         void closeDoorDialogue()
         {
@@ -235,6 +244,8 @@ namespace StealthRoguelike
             if (KeyToVector.ProperButtonPressed)
                 MoveOrOpenOrAttack(KeyToVector.x, KeyToVector.y);
             //ACTIONS
+            if (keyPressed.Key == ConsoleKey.D1)
+                seeTheStats();
             if (keyPressed.Key == ConsoleKey.C) //close door 
                 closeDoorDialogue();
             if (keyPressed.Key == ConsoleKey.P) //peep 
@@ -256,14 +267,14 @@ namespace StealthRoguelike
         {
             Console.SetCursorPosition(0, Program.consoleHeight-2);
 
-            if (Hitpoints > 2*MaxHitpoints/3)
+            if (Hitpoints > 2*GetMaxHitpoints()/3)
                 Console.ForegroundColor = ConsoleColor.DarkGreen;
-            if (Hitpoints > MaxHitpoints / 3 && Hitpoints <= 2*MaxHitpoints / 3)
+            if (Hitpoints > GetMaxHitpoints() / 3 && Hitpoints <= 2*GetMaxHitpoints() / 3)
                 Console.ForegroundColor = ConsoleColor.Yellow;
-            if (Hitpoints <= MaxHitpoints / 3)
+            if (Hitpoints <= GetMaxHitpoints() / 3)
                 Console.ForegroundColor = ConsoleColor.Red;
 
-            Console.Write("HP: " + Hitpoints.ToString()+"/"+MaxHitpoints.ToString() + ";");
+            Console.Write("HP: " + Hitpoints.ToString()+"/"+GetMaxHitpoints().ToString() + ";");
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.Write(" Time: " + Timing.GetCurrentTurn()/10 + "." + Timing.GetCurrentTurn() % 10 + ";"); ///THIS might be not cool...
             Console.Write(" Wielding: " + Inv.Wielded.Name + ";");

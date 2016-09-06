@@ -13,7 +13,7 @@ namespace StealthRoguelike
         {
             int mindamage = attacker.Inv.Wielded.mindamage;
             int maxdamage = attacker.Inv.Wielded.maxdamage;
-            int baseDamage = Algorithms.getRandomInt(mindamage, maxdamage);
+            int baseDamage = Algorithms.getRandomInt(mindamage, maxdamage+1);
             int finalDamage = (int)(baseDamage + baseDamage * (attacker.Stats.Strength - 10)/10 * attacker.Inv.Wielded.StrengthFactor);
             if (finalDamage < 0) finalDamage = 0;
             return finalDamage;
@@ -27,7 +27,7 @@ namespace StealthRoguelike
                 int finalDamage = CalculateDamage(attacker, victim);
                 if (attacker.Inv.Wielded.TypeOfDamage == Weapon.damageTypes.stab && victim.IsUnaware())
                 {
-                    finalDamage *= 2;
+                    finalDamage *= 6; //zomg
                     if (attacker is Player)
                         Log.AddLine("You silently stabbed " + victim.Name + "'s neck with your " + attacker.Inv.Wielded.Name + "!!");
                     else
@@ -42,11 +42,13 @@ namespace StealthRoguelike
                 }
 
                 victim.Hitpoints -= finalDamage;
+                if (attacker is Player)
+                    Log.AddDebugMessage(" " + finalDamage.ToString() + " damage");
 
                 if (victim is Player)
                 {
                     Gameover.KilledBy = attacker.Name;
-                    if (victim.Hitpoints < victim.MaxHitpoints / 3 || victim.Hitpoints < 3)
+                    if (victim.Hitpoints < victim.GetMaxHitpoints() / 3 || victim.Hitpoints < 3)
                         Log.AddAlertMessage("!!LOW HITPOINT WARNING!!");
                 }
             }

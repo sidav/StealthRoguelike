@@ -12,8 +12,8 @@ namespace StealthRoguelike
         public static Player createPlayer(int x, int y)
         {
             Player newPlayer = new Player(x,y);
-            newPlayer.MaxHitpoints = 5;
-            newPlayer.Hitpoints = newPlayer.MaxHitpoints;
+            newPlayer.Stats.Agility = 12;
+            newPlayer.Hitpoints = newPlayer.GetMaxHitpoints();
             Weapon givenWeapon = new Weapon("dagger");
             newPlayer.Inv.Wielded = givenWeapon;
             return newPlayer;

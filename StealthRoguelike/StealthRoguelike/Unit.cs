@@ -11,7 +11,6 @@ namespace StealthRoguelike
         public TurnTiming Timing = new TurnTiming();
         public string Name;
         public int Hitpoints;
-        public int MaxHitpoints;
         public int CoordX, CoordY; //global coords
         public int lookX = 0, lookY = -1;   //heading vector
         public int ViewAngle = 120; //in degrees.
@@ -27,8 +26,7 @@ namespace StealthRoguelike
         public Unit(string name, int x, int y, char appear, bool fov, ConsoleColor thiscolor)
         {
             Name = name;
-            MaxHitpoints = 2;
-            Hitpoints = MaxHitpoints;
+            Hitpoints = GetMaxHitpoints();
             CoordX = x;
             CoordY = y;
             appearance = appear;
@@ -45,6 +43,11 @@ namespace StealthRoguelike
             appearance = appear;
             hasFOV = false;
             color = ConsoleColor.White;
+        }
+
+        public int GetMaxHitpoints()
+        {
+            return (Stats.Level - 1) + (Stats.Endurance / 2);
         }
 
         protected void drawLookingThingy() //draw a thingy that shows this unit's direction
