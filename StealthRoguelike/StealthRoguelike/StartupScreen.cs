@@ -126,7 +126,7 @@ namespace StealthRoguelike
 
         public static void ShowSplashScreen()
         {
-            int WhatToDraw = Algorithms.getRandomInt(0, 4);
+            int WhatToDraw = LCGRandom.getRandomInt(0, 4);
             if (WhatToDraw == 0)
                 DrawImage1StartupScreen();
             if (WhatToDraw == 1)

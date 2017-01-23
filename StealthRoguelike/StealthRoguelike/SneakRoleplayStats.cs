@@ -17,11 +17,11 @@ namespace StealthRoguelike
         public SneakRoleplayStats() //"base human" stats
         {
             Level = 1;
-            Strength = Algorithms.getRandomInt(8, 13);
-            Nerve = Algorithms.getRandomInt(8, 13);
-            Endurance = Algorithms.getRandomInt(8, 13);
-            Agility = Algorithms.getRandomInt(8, 10);
-            Knowledge = Algorithms.getRandomInt(8, 13);
+            Strength = LCGRandom.getRandomInt(8, 13);
+            Nerve = LCGRandom.getRandomInt(8, 13);
+            Endurance = LCGRandom.getRandomInt(8, 13);
+            Agility = LCGRandom.getRandomInt(8, 10);
+            Knowledge = LCGRandom.getRandomInt(8, 13);
         }
 
         public SneakRoleplayStats(int s, int n, int e, int a, int k)

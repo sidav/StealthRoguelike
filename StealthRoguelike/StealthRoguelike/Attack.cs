@@ -13,7 +13,7 @@ namespace StealthRoguelike
         {
             int mindamage = attacker.Inv.Wielded.mindamage;
             int maxdamage = attacker.Inv.Wielded.maxdamage;
-            int baseDamage = Algorithms.getRandomInt(mindamage, maxdamage+1);
+            int baseDamage = LCGRandom.getRandomInt(mindamage, maxdamage+1);
             int finalDamage = (int)(baseDamage + baseDamage * (attacker.Stats.Strength - 10)/10 * attacker.Inv.Wielded.StrengthFactor);
             if (finalDamage < 0) finalDamage = 0;
             return finalDamage;
@@ -58,7 +58,7 @@ namespace StealthRoguelike
         {
             if (victim.IsUnaware())
             {
-                int kotime = Algorithms.getRandomInt(50, 150);
+                int kotime = LCGRandom.getRandomInt(50, 150);
                 victim.KnockedOutTime += 150;
                 if (attacker is Player)
                     Log.AddLine("You strangle " + victim.Name + "!");

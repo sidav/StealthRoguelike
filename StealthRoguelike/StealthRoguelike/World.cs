@@ -30,7 +30,7 @@ namespace StealthRoguelike
             placeActors();
             Log.AddDebugMessage("Actors placement... ok");
             Log.AddDebugMessage("All systems nominal... for now");
-            Log.AddDebugMessage("Seed for this world is " + Algorithms.Seed.ToString());
+            Log.AddDebugMessage("Seed for this world is " + LCGRandom.Seed.ToString());
             Log.AddLine("Press F1 for list of game commands");
         }
 
@@ -53,8 +53,8 @@ namespace StealthRoguelike
             for (int i = 0; i < 10; i++)
                 do
                 {
-                    x = Algorithms.getRandomInt(mapWidth);
-                    y = Algorithms.getRandomInt(mapHeight);
+                    x = LCGRandom.getRandomInt(mapWidth);
+                    y = LCGRandom.getRandomInt(mapHeight);
                     if (map[x, y].IsPassable && !WorldLOS.VisibleLineExist(x,y,plx,ply))
                         AllActors.Add(UnitCreator.createActor("Guard", x, y));
                 } while (!map[x, y].IsPassable);

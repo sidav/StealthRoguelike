@@ -112,7 +112,7 @@ namespace StealthRoguelike
         {
             const int testmax = 6;
             const long picks = 1000000;
-            Algorithms.setSeed();
+            LCGRandom.setSeed();
 
             var pick = new long[testmax];
             long picksum = 0;
@@ -122,7 +122,7 @@ namespace StealthRoguelike
 
             for (long i = 0; i < picks; i++)
             {
-                long j = Algorithms.getRandomInt(testmax);
+                long j = LCGRandom.getRandomInt(testmax);
                 picksum += j;
                 pick[j]++;
             }

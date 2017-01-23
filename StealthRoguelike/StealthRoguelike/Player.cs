@@ -74,7 +74,7 @@ namespace StealthRoguelike
             int doorX = CoordX+KeyToVector.x, doorY = CoordY + KeyToVector.y;
             if (doorX == CoordX && doorY == CoordY)
             {
-                int randomMessageNumber = Algorithms.getRandomInt(3);
+                int randomMessageNumber = LCGRandom.getRandomInt(3);
                 switch (randomMessageNumber)
                 {
                     case 0:
@@ -106,7 +106,7 @@ namespace StealthRoguelike
             int peepX = CoordX + KeyToVector.x, peepY = CoordY + KeyToVector.y;
             if (peepX == CoordX && peepY == CoordY)
             {
-                int randomMessageNumber = Algorithms.getRandomInt(3);
+                int randomMessageNumber = LCGRandom.getRandomInt(3);
                 switch (randomMessageNumber)
                 {
                     case 0:
@@ -167,7 +167,7 @@ namespace StealthRoguelike
             int strangleX = CoordX + KeyToVector.x, strangleY = CoordY + KeyToVector.y;
             if (strangleX == CoordX && strangleY == CoordY)
             {
-                int randomMessageNumber = Algorithms.getRandomInt(3);
+                int randomMessageNumber = LCGRandom.getRandomInt(3);
                 switch (randomMessageNumber)
                 {
                     case 0:
@@ -208,7 +208,7 @@ namespace StealthRoguelike
             }
             else
             {
-                int randomMessageNumber = Algorithms.getRandomInt(3);
+                int randomMessageNumber = LCGRandom.getRandomInt(3);
                 switch (randomMessageNumber)
                 {
                     case 0:

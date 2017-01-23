@@ -8,7 +8,7 @@ namespace StealthRoguelike
 {
    class Algorithms
     {
-        static Random random = new Random();
+        //static Random random = new Random();
         const long A = 16807;
         const long M = 2147483647;
         const long C = 77711;
