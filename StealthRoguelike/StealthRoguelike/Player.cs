@@ -290,7 +290,28 @@ namespace StealthRoguelike
                 //Log.AddDebugMessage("Watafuq? Body is " + Inv.BodyCarrying.Name);
             }
             else Console.Write("                                 ");
-            
+
+            //Text statuses (like, "poisoned", "frightened" etc)
+            Console.SetCursorPosition(0, Program.consoleHeight - 1);
+            int burden = Inv.getEncumbrance();
+            if (burden == 1)
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.Write("Burdened ");
+            }
+            if (burden == 2)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write("Very burdened ");
+            }
+            if (burden == 3)
+            {
+                Console.ForegroundColor = ConsoleColor.Black;
+                Console.BackgroundColor = ConsoleColor.Red;
+                Console.Write("Overburdened ");
+                Console.BackgroundColor = ConsoleColor.Black;
+            }
+
         }
 
 

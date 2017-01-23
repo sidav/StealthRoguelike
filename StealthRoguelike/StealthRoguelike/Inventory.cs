@@ -74,6 +74,25 @@ namespace StealthRoguelike
             return true;
         }
 
+        private int getMaxWeight()
+        {
+            return (int)(owner.Stats.Strength * 1.5);
+        }
+
+        public int getEncumbrance() //returns 0 if not encumbered at all, 1 if encumbered, 2 if heavily encumbered, 3 if stressed
+        {   //WORK IN PROGRESS
+            int maxwght = getMaxWeight();
+            int wght = getInventoryWeight();
+            if (wght <= maxwght) return 0;
+            if (wght > maxwght && wght <= 1.5 * maxwght) return 1;
+            if (wght <= 2 * maxwght) return 2;
+            if (wght > 2 * maxwght) return 3;
+            return 0;
+        }
+
+        /// <summary>
+        /// ///
+        /// </summary>
         //Player-only interfaces
 
         public void DropDialogue()
@@ -146,22 +165,6 @@ namespace StealthRoguelike
                 }
             }
             Console.ReadKey(true);
-        }
-
-        private int getMaxWeight()
-        {
-            return (int)(owner.Stats.Strength * 1.5);
-        }
-
-        public int getEncumbrance() //returns 0 if not encumbered at all, 1 if encumbered, 2 if heavily encumbered, 3 if stressed
-        {   //WORK IN PROGRESS
-            int maxwght = getMaxWeight();
-            int wght = getInventoryWeight();
-            if (wght <= maxwght) return 0;
-            if (wght > maxwght && wght <= 1.5*maxwght) return 1;
-            if (wght <= 2*maxwght) return 2;
-            if (wght > 2*maxwght) return 3;
-            return 0;
         }
 
         public Item SingleItemSelectionMenu(string ask, List<Item> itemlist)
