@@ -45,7 +45,7 @@ namespace StealthRoguelike
             if (BodyCarrying != null)
             {
                 if (owner is Player)
-                    Log.AddLine("You dropped the " + BodyCarrying.Name + " from your shoulder.");
+                    Log.AddLine("You dropped the " + BodyCarrying.DisplayName + " from your shoulder.");
                 dropped = BodyCarrying;
                 dropped.CoordX = dropCoordX;
                 dropped.CoordY = dropcoordY;
@@ -108,7 +108,7 @@ namespace StealthRoguelike
             for (int i = 0; i < dropped.Count; i++)
             {
                 if (owner is Player)
-                    Log.AddLine("You dropped the " + dropped[i].Name);
+                    Log.AddLine("You dropped the " + dropped[i].DisplayName);
                 dropped[i].CoordX = dropCoordX;
                 dropped[i].CoordY = dropcoordY;
                 owner.Timing.AddActionTime(TimeCost.DropItemCost(dropped[i]));
@@ -132,7 +132,7 @@ namespace StealthRoguelike
                 Backpack.Add(Wielded);
                 Wielded = toWield;
                 Backpack.Remove(toWield);
-                Log.AddLine("You are now wielding the " + Wielded.Name);
+                Log.AddLine("You are now wielding the " + Wielded.DisplayName);
             }
         }
 
@@ -149,9 +149,9 @@ namespace StealthRoguelike
             Console.WriteLine("(total weight: " + getInventoryWeight() + "/" + getMaxWeight() + ")");
             Console.ForegroundColor = ConsoleColor.Gray;
 
-            Console.WriteLine("\nWielded: " + Wielded.Name);
+            Console.WriteLine("\nWielded: " + Wielded.DisplayName);
             if (BodyCarrying != null)
-                Console.WriteLine("Carrying body: " + BodyCarrying.Name);
+                Console.WriteLine("Carrying body: " + BodyCarrying.DisplayName);
             if (Backpack.Count == 0)
             {
                 Console.WriteLine("\n   Your backpack is empty.");
@@ -161,7 +161,7 @@ namespace StealthRoguelike
                 Console.WriteLine("\n   Backpack: ");
                 foreach (Item i in Backpack)
                 {
-                    Console.WriteLine("" + i.Name);
+                    Console.WriteLine("" + i.DisplayName);
                 }
             }
             Console.ReadKey(true);
@@ -187,7 +187,7 @@ namespace StealthRoguelike
                         Console.BackgroundColor = ConsoleColor.DarkRed;
                     else
                         Console.BackgroundColor = ConsoleColor.Black;
-                    Console.WriteLine(itemlist[i].Name);
+                    Console.WriteLine(itemlist[i].DisplayName);
                 }
                 keyPressed = Console.ReadKey(true);
                 switch (keyPressed.Key)
@@ -234,7 +234,7 @@ namespace StealthRoguelike
                         Console.BackgroundColor = ConsoleColor.Black;
                     if (selectedIndexes[i] == false) selectChar = "-";
                     else selectChar = " +";
-                    Console.WriteLine(selectChar + " " + itemlist[i].Name);
+                    Console.WriteLine(selectChar + " " + itemlist[i].DisplayName);
                 }
                 keyPressed = Console.ReadKey(true);
                 switch (keyPressed.Key)

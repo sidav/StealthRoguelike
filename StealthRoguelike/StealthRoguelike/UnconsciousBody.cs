@@ -16,7 +16,7 @@ namespace StealthRoguelike
             weight = 25;
             CoordX = victim.CoordX;
             CoordY = victim.CoordY;
-            Name = "unconscious " + victim.Name;
+            name = "unconscious " + victim.Name;
             Color = victim.color;
             TurnToWakeUp = victim.Timing.GetCurrentTurn() + victim.KnockedOutTime;
             Knocked = victim;

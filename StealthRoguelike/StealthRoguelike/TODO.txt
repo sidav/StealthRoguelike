@@ -1,9 +1,11 @@
 ﻿#CURRENTLY WORKING AT:
+
+STACKABLE ITEMS - extremely needed for the next goal
+Shooting enemies - Let it be the first priority!
 Various time costs for moving with various encumbrance - DONE, testing needed
 LCGRandom.getRandomInt(a,b) - WTF is with results range? 
 Stat system
 Items and weapons
-Shooting enemies
 Strangling (Not everything done)
 Add locked doors with proper keys placing (that would be interesting)
 -----------------------------------------------------------

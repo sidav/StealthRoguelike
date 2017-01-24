@@ -8,7 +8,17 @@ namespace StealthRoguelike
 {
     class Item //Any thing that can be picked up.
     {
-        public string Name;
+        protected string name;
+        public string DisplayName
+        {
+            get
+            {
+                if (isStackable && Quantity > 1)
+                    return "{0} " + name + "s";
+                else
+                    return name;
+            }
+        }
         protected int weight = 1;
         public int Quantity = 1;
         public bool isStackable = true;

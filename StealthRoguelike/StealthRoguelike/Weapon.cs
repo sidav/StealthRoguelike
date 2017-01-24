@@ -31,8 +31,8 @@ namespace StealthRoguelike
 
         public Weapon(string WeaponName)
         {
-            Name = WeaponName;
-            switch (Name)
+            name = WeaponName;
+            switch (name)
             {
                 case "dagger":
                     type = weaponTypes.melee;
@@ -61,7 +61,7 @@ namespace StealthRoguelike
                     break;
                 //If you see this ingame, then there is probaby a bug somewhere
                 default:
-                    Name = "Default_Weapon";
+                    name = "Default_Weapon";
                     type = weaponTypes.melee;
                     TypeOfDamage = damageTypes.smash;
                     mindamage = 1;

@@ -29,16 +29,16 @@ namespace StealthRoguelike
                 {
                     finalDamage *= 6; //zomg
                     if (attacker is Player)
-                        Log.AddLine("You silently stabbed " + victim.Name + "'s neck with your " + attacker.Inv.Wielded.Name + "!!");
+                        Log.AddLine("You silently stabbed " + victim.Name + "'s neck with your " + attacker.Inv.Wielded.DisplayName + "!!");
                     else
-                        Log.AddLine(attacker.Name + " stabs " + victim.Name + " with the " + attacker.Inv.Wielded.Name + "!");
+                        Log.AddLine(attacker.Name + " stabs " + victim.Name + " with the " + attacker.Inv.Wielded.DisplayName + "!");
                 }
                 else
                 {
                     if (attacker is Player)
-                        Log.AddLine("You hit " + victim.Name + " with your " + attacker.Inv.Wielded.Name + "!");
+                        Log.AddLine("You hit " + victim.Name + " with your " + attacker.Inv.Wielded.DisplayName + "!");
                     else
-                        Log.AddLine(attacker.Name + " hits " + victim.Name + " with the " + attacker.Inv.Wielded.Name + "!");
+                        Log.AddLine(attacker.Name + " hits " + victim.Name + " with the " + attacker.Inv.Wielded.DisplayName + "!");
                 }
 
                 victim.Hitpoints -= finalDamage;

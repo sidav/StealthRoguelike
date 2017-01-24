@@ -40,9 +40,9 @@ namespace StealthRoguelike
                     List<Item> list = World.getItemListAt(CoordX, CoordY);
                     int numberOfItemsOnFloor = list.Count();
                     if (numberOfItemsOnFloor > 1)
-                        Log.AddLine("You see here: " + list[0].Name + " and " + (numberOfItemsOnFloor -1).ToString() + " more items");
+                        Log.AddLine("You see here: " + list[0].DisplayName + " and " + (numberOfItemsOnFloor -1).ToString() + " more items");
                     else
-                        Log.AddLine("You see here: " + list[0].Name);
+                        Log.AddLine("You see here: " + list[0].DisplayName);
                 }
                 return;
             }
@@ -203,7 +203,7 @@ namespace StealthRoguelike
                     {
                         Timing.AddActionTime(TimeCost.PickUpCost(i));
                         World.AllItemsOnFloor.Remove(i);
-                        Log.AddLine("You picked up the " + i.Name + ".");
+                        Log.AddLine("You picked up the " + i.DisplayName + ".");
                     }                    
             }
             else
@@ -277,7 +277,7 @@ namespace StealthRoguelike
             Console.Write("HP: " + Hitpoints.ToString()+"/"+GetMaxHitpoints().ToString() + ";");
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.Write(" Time: " + Timing.GetCurrentTurn()/10 + "." + Timing.GetCurrentTurn() % 10 + ";"); ///THIS might be not cool...
-            Console.Write(" Wielding: " + Inv.Wielded.Name + ";");
+            Console.Write(" Wielding: " + Inv.Wielded.DisplayName + ";");
             int cx = Console.CursorLeft;
             int cy = Console.CursorTop;
             for (int i = 0; i < Program.consoleWidth; i++)
@@ -286,8 +286,8 @@ namespace StealthRoguelike
             if (Inv.isCarryingABody())
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.Write(" Carrying a " + Inv.BodyCarrying.Name);
-                //Log.AddDebugMessage("Watafuq? Body is " + Inv.BodyCarrying.Name);
+                Console.Write(" Carrying a " + Inv.BodyCarrying.DisplayName);
+                //Log.AddDebugMessage("Watafuq? Body is " + Inv.BodyCarrying.DisplayName);
             }
             else Console.Write("                                 ");
 
