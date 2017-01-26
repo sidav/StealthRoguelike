@@ -14,7 +14,7 @@ namespace StealthRoguelike
             get
             {
                 if (isStackable && Quantity > 1)
-                    return "{0} " + name + "s";
+                    return Quantity.ToString() + " " + name + "s";
                 else
                     return name;
             }
@@ -29,6 +29,24 @@ namespace StealthRoguelike
         public int GetWeight()
         {
             return weight * Quantity;
+        }
+
+        public bool tryMergeStacks(Item someItem)
+        {
+            if (isEqualTo(someItem))
+            {
+                this.Quantity += someItem.Quantity;
+                return true;
+            }
+            return false;
+
+        }
+
+        public bool isEqualTo(Item someItem)
+        {
+            if (this.name == someItem.name)
+                return true;
+            return false;
         }
 
         public void Draw()

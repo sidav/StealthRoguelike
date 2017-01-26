@@ -70,7 +70,20 @@ namespace StealthRoguelike
                     BodyCarrying = picked;
             }
             else
-                Backpack.Add(picked);
+            {
+                bool pickedUp = false;
+                foreach (Item itm in Backpack)
+                {
+                    if (itm.isEqualTo(picked))
+                    {
+                        itm.Quantity += picked.Quantity;
+                        pickedUp = true;
+                        break;
+                    }
+                }
+                if (!pickedUp)
+                    Backpack.Add(picked);
+            }
             return true;
         }
 
