@@ -72,14 +72,15 @@ namespace StealthRoguelike
             else
             {
                 bool pickedUp = false;
-                foreach (Item itm in Backpack)
+                if (picked.isStackable)
                 {
-                    if (itm.isEqualTo(picked))
-                    {
-                        itm.Quantity += picked.Quantity;
-                        pickedUp = true;
-                        break;
-                    }
+                    foreach (Item itm in Backpack)
+                        if (itm.isEqualTo(picked))
+                        {
+                            itm.Quantity += picked.Quantity;
+                            pickedUp = true;
+                            break;
+                        }
                 }
                 if (!pickedUp)
                     Backpack.Add(picked);

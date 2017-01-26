@@ -33,7 +33,7 @@ namespace StealthRoguelike
 
         public bool tryMergeStacks(Item someItem)
         {
-            if (isEqualTo(someItem))
+            if (isEqualTo(someItem) && this.isStackable)
             {
                 this.Quantity += someItem.Quantity;
                 return true;
