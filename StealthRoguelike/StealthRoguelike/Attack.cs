@@ -25,7 +25,7 @@ namespace StealthRoguelike
             {
                 
                 int finalDamage = CalculateDamage(attacker, victim);
-                if (attacker.Inv.Wielded.TypeOfDamage == Weapon.damageTypes.stab && victim.IsUnaware())
+                if (attacker.Inv.Wielded.TypeOfDamage == Weapon.damageTypes.Stab && victim.IsUnaware())
                 {
                     finalDamage *= 6; //zomg
                     if (attacker is Player)

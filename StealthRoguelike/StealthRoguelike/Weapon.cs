@@ -8,8 +8,8 @@ namespace StealthRoguelike
 {
     class Weapon:Item
     {
-        public enum weaponTypes { melee }
-        public enum damageTypes { stab, smash }
+        public enum weaponTypes { Melee }
+        public enum damageTypes { Stab, Smash }
 
         public weaponTypes type;
         public damageTypes TypeOfDamage;
@@ -23,7 +23,7 @@ namespace StealthRoguelike
             int dx = fx - tx;
             int dy = fy - ty;
             int sqdistance = dx * dx + dy * dy;
-            if (type == weaponTypes.melee && sqdistance <= 2)
+            if (type == weaponTypes.Melee && sqdistance <= 2)
                 return true;
             return false;
         }
@@ -35,40 +35,40 @@ namespace StealthRoguelike
             switch (name)
             {
                 case "dagger":
-                    type = weaponTypes.melee;
-                    TypeOfDamage = damageTypes.stab;
+                    type = weaponTypes.Melee;
+                    TypeOfDamage = damageTypes.Stab;
                     mindamage = 1;
                     maxdamage = 2;
                     break;
                 case "baton":
-                    type = weaponTypes.melee;
-                    TypeOfDamage = damageTypes.smash;
+                    type = weaponTypes.Melee;
+                    TypeOfDamage = damageTypes.Smash;
                     mindamage = 1;
                     maxdamage = 1;
                     break;
                 case "katar":
-                    type = weaponTypes.melee;
-                    TypeOfDamage = damageTypes.stab;
+                    type = weaponTypes.Melee;
+                    TypeOfDamage = damageTypes.Stab;
                     mindamage = 2;
                     maxdamage = 3;
                     break;
                 //just for lulz
                 case "concept-art drawing":
-                    type = weaponTypes.melee;
-                    TypeOfDamage = damageTypes.smash;
+                    type = weaponTypes.Melee;
+                    TypeOfDamage = damageTypes.Smash;
                     mindamage = 1;
                     maxdamage = 1;
                     break;
                 //If you see this ingame, then there is probaby a bug somewhere
                 default:
                     name = "Default_Weapon";
-                    type = weaponTypes.melee;
-                    TypeOfDamage = damageTypes.smash;
+                    type = weaponTypes.Melee;
+                    TypeOfDamage = damageTypes.Smash;
                     mindamage = 1;
                     maxdamage = 1;
                     break;
             }
-            if (type == weaponTypes.melee)
+            if (type == weaponTypes.Melee)
             {
                 Appearance = ')';
                 Color = ConsoleColor.White;

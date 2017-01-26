@@ -11,6 +11,7 @@ namespace StealthRoguelike
         Unit owner;
         public Weapon Wielded;
         public Item BodyCarrying = null; //when you carry a body
+        public Ammunition Quiver;
         public List<Item> Backpack = new List<Item>();
 
         public Inventory(Unit ownr)
