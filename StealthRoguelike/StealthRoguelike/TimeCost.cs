@@ -42,9 +42,19 @@ namespace StealthRoguelike
             return 10;
         }
 
-        public static int AttackCost(Unit acting)
+        public static int MeleeAttackCost(Unit acting)
         {
             return 10;
+        }
+
+        public static int RangedAttackCost(Unit acting)
+        {
+            return 15;
+        }
+
+        public static int ReloadCost(Unit acting)
+        {
+            return acting.Inv.Wielded.MaxAmmo*10;
         }
 
         public static int PeepCost(Unit acting)
@@ -74,7 +84,7 @@ namespace StealthRoguelike
 
         public static int DropItemCost(Item dropped)
         {
-            return dropped.GetWeight() / 2;
+            return dropped.GetWeight() * 2;
         }
 
         //Next methods are actor-only routines

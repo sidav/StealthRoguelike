@@ -8,7 +8,7 @@ namespace StealthRoguelike
 {
     class Weapon:Item
     {
-        public enum WeaponTypes { Melee, Firearm }
+        //public enum WeaponTypes { Melee, Firearm }
         public enum MeleeDamageTypes { Stab, Smash }
         public enum RangedDamageTypes { NoRangedDamage, Piercing }
 
@@ -19,30 +19,39 @@ namespace StealthRoguelike
                 if (isStackable && Quantity > 1)
                     return Quantity.ToString() + " " + name.ToLower() + "s";
                 else
-                    if (TypeOfWeapon == WeaponTypes.Firearm)
+                    if (IsReloadable)
                         return name.ToLower() + " (" + CurrentAmmo + "/" + MaxAmmo + ")";
                     else
                         return name.ToLower();
             }
         }
 
-        public WeaponTypes TypeOfWeapon;
+        public bool IsReloadable
+        {
+            get
+            {
+                return (MaxAmmo > 0);
+            }
+        }
+
+        //public WeaponTypes TypeOfWeapon;
         public MeleeDamageTypes TypeOfMeleeDamage;
         public RangedDamageTypes TypeOfRangedDamage;
         public int MinMeleeDamage = 1, MaxMeleeDamage = 1; //melee
         public int MinRangedDamage = 0, MaxRangedDamage = 0;
-        public int Range;
+        public int Range = 1;
+        public int AmmoConsuming = 1;
         public int CurrentAmmo = 0, MaxAmmo = 0; //for ranged...
         public int minStrengthRequired = 5;
         public float StrengthFactor = 1;
         public float AgilityFactor = 1;
 
-        public bool targetInRange(int fx, int fy, int tx, int ty)
+        public bool targetInEffectiveRange(int fx, int fy, int tx, int ty)
         {
             int dx = fx - tx;
             int dy = fy - ty;
             int sqdistance = dx * dx + dy * dy;
-            if (TypeOfWeapon == WeaponTypes.Melee && sqdistance <= 2)
+            if (Range == 1 && sqdistance <= 2) //This is so dirty.
                 return true;
             else
                 return (sqdistance <= Range * Range);
@@ -50,7 +59,7 @@ namespace StealthRoguelike
 
         public bool TryReload(Ammunition value)
         {
-            if (value.TypeOfAmmunition == Ammunition.AmmoTypes.Bullet && TypeOfWeapon == WeaponTypes.Firearm)
+            if (value.TypeOfAmmunition == Ammunition.AmmoTypes.Bullet && IsReloadable)
             {
                 int toFull = MaxAmmo - CurrentAmmo;
                 if (value.Quantity >= toFull)
@@ -68,6 +77,16 @@ namespace StealthRoguelike
             return false;
         }
 
+        public bool TryConsumeAmmo()
+        {
+            if (CurrentAmmo >= AmmoConsuming)
+            {
+                CurrentAmmo -= AmmoConsuming;
+                return true;
+            }
+            return false;
+        }
+
 
         public Weapon(string WeaponName)
         {
@@ -78,19 +97,19 @@ namespace StealthRoguelike
             {
                 //MELEE:
                 case "Dagger":
-                    TypeOfWeapon = WeaponTypes.Melee;
+                    //TypeOfWeapon = WeaponTypes.Melee;
                     TypeOfMeleeDamage = MeleeDamageTypes.Stab;
                     MinMeleeDamage = 1;
                     MaxMeleeDamage = 2;
                     break;
                 case "Baton":
-                    TypeOfWeapon = WeaponTypes.Melee;
+                    //TypeOfWeapon = WeaponTypes.Melee;
                     TypeOfMeleeDamage = MeleeDamageTypes.Smash;
                     MinMeleeDamage = 1;
                     MaxMeleeDamage = 1;
                     break;
                 case "Katar":
-                    TypeOfWeapon = WeaponTypes.Melee;
+                    //TypeOfWeapon = WeaponTypes.Melee;
                     TypeOfMeleeDamage = MeleeDamageTypes.Stab;
                     MinMeleeDamage = 2;
                     MaxMeleeDamage = 3;
@@ -98,7 +117,6 @@ namespace StealthRoguelike
 
                 //FIREARMS:
                 case "Revolver":
-                    TypeOfWeapon = WeaponTypes.Firearm;
                     TypeOfRangedDamage = RangedDamageTypes.Piercing;
                     MinMeleeDamage = 1;
                     MaxMeleeDamage = 2;
@@ -106,7 +124,6 @@ namespace StealthRoguelike
                     Range = 6; 
                     break;
                 case "Pistolknife":
-                    TypeOfWeapon = WeaponTypes.Firearm;
                     TypeOfMeleeDamage = MeleeDamageTypes.Stab;
                     TypeOfRangedDamage = RangedDamageTypes.Piercing;
                     MinMeleeDamage = 1;
@@ -118,21 +135,21 @@ namespace StealthRoguelike
                 //If you see this ingame, then there is probably a bug somewhere
                 default:
                     name = "??Default_Weapon??";
-                    TypeOfWeapon = WeaponTypes.Melee;
+                    //TypeOfWeapon = WeaponTypes.Melee;
                     TypeOfMeleeDamage = MeleeDamageTypes.Smash;
                     MinMeleeDamage = 1;
                     MaxMeleeDamage = 1;
                     break;
             }
             //Appearance:
-            switch (TypeOfWeapon)
+            switch (IsReloadable)
             {
-                case WeaponTypes.Melee:
+                case false:
                     Appearance = AllChars.meleeWeaponChar;
                     Color = ConsoleColor.White;
                     Range = 1;
                     break;
-                case WeaponTypes.Firearm:
+                case true:
                     Appearance = AllChars.firearmChar;
                     Color = ConsoleColor.DarkCyan;
                     break;

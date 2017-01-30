@@ -72,29 +72,47 @@ namespace StealthRoguelike
             }
             else
             {
-                bool pickedUp = false;
+                bool stacked = false;
                 if (picked.isStackable)
                 {
+                    if (Ready != null)
+                    {
+                        if (Ready.isEqualTo(picked))
+                        {
+                            Ready.Quantity += picked.Quantity;
+                            stacked = true;
+                        }
+                    }
+                    else if (picked is Ammunition)
+                    {
+                        Ready = (Ammunition)picked;
+                        stacked = true;    
+                    }
+                    if (!stacked)
                     foreach (Item itm in Backpack)
                         if (itm.isEqualTo(picked))
                         {
                             itm.Quantity += picked.Quantity;
-                            pickedUp = true;
+                            stacked = true;
                             break;
                         }
                 }
-                if (!pickedUp)
+                if (!stacked)
                     Backpack.Add(picked);
             }
+            owner.Timing.AddActionTime(TimeCost.PickUpCost(picked));
             return true;
         }
 
         public bool tryReloadWeapon()
         {
-            if (Wielded.TypeOfWeapon == Weapon.WeaponTypes.Firearm && Ready != null)
+            if (Wielded.IsReloadable && Ready != null)
             {
                 if (Wielded.TryReload(Ready))
+                {
+                    owner.Timing.AddActionTime(TimeCost.ReloadCost(owner));
                     return true;
+                }
             }
             return false;
         }
@@ -180,18 +198,61 @@ namespace StealthRoguelike
 
         public void ReloadDialogue()
         {
+            if (!Wielded.IsReloadable)
+            {
+                Log.AddLine("Your " + Wielded.DisplayName + " can't be reloaded!");
+                return;
+            }
             if (tryReloadWeapon())
             {
                 Log.AddLine("You reload your " + Wielded.DisplayName);
+                if (Ready.Quantity == 0)
+                {
+                    Log.AddLine("No ammo left in the ready!");
+                    Ready = null;
+                }
                 return;
             }
             if (Ready == null)
             {
-                Log.AddLine("You've got no ammo in ready!");
+                Log.AddLine("You've got nothing in ready!");
                 return;
             }
             Log.AddLine("Wrong ammo in ready!");
 
+        }
+
+        public void PickupDialogue() //NEED TO WORK WITH LISTS. !!!
+        {
+            List<Item> picked = World.getItemListAt(owner.CoordX, owner.CoordY);
+            if (picked.Count > 0)
+            {
+                picked = MultipleItemSelectionMenu("pick up", picked);
+                if (picked == null) return;
+                foreach (Item i in picked)
+                    if (TryPickUpItem(i))
+                    {
+                        World.AllItemsOnFloor.Remove(i);
+                        Log.AddLine("You picked up the " + i.DisplayName + ".");
+                    }
+            }
+            else
+            {
+                int randomMessageNumber = MyRandom.getRandomInt(3);
+                switch (randomMessageNumber)
+                {
+                    case 0:
+                        Log.AddLine("There's nothing here to pick up.");
+                        break;
+                    case 1:
+                        Log.AddLine("All that lying here is the dust.");
+                        break;
+                    case 2:
+                        Log.AddLine("Of course you can pick up the air.");
+                        break;
+                }
+                return;
+            }
         }
 
         public void ShowInventory()
@@ -267,11 +328,11 @@ namespace StealthRoguelike
                 keyPressed = Console.ReadKey(true);
                 switch (keyPressed.Key)
                 {
-                    case ConsoleKey.NumPad2: case ConsoleKey.UpArrow: cursor++; break;
-                    case ConsoleKey.NumPad8: case ConsoleKey.DownArrow:cursor--; break;
+                    case ConsoleKey.NumPad2: case ConsoleKey.DownArrow: cursor++; break;
+                    case ConsoleKey.NumPad8: case ConsoleKey.UpArrow: cursor--; break;
                     //case ConsoleKey.Spacebar: return itemlist[cursor]; break;
                     //case ConsoleKey.Enter: return itemlist[cursor]; break;
-                    case ConsoleKey.Escape: Log.AddLine("Okay, then."); return null; break;
+                    case ConsoleKey.Escape: Log.AddOneFromList(StringFactory.CancelStrings()); return null;
                     default: break;
                 }
                 if (cursor >= itemlist.Count)
@@ -314,10 +375,10 @@ namespace StealthRoguelike
                 keyPressed = Console.ReadKey(true);
                 switch (keyPressed.Key)
                 {
-                    case ConsoleKey.NumPad2: case ConsoleKey.UpArrow: cursor++; break;
-                    case ConsoleKey.NumPad8: case ConsoleKey.DownArrow: cursor--; break;
+                    case ConsoleKey.NumPad2: case ConsoleKey.DownArrow: cursor++; break;
+                    case ConsoleKey.NumPad8: case ConsoleKey.UpArrow: cursor--; break;
                     case ConsoleKey.Spacebar: selectedIndexes[cursor] = !selectedIndexes[cursor]; break;
-                    case ConsoleKey.Escape: Log.AddLine("Okay, then.");  return selectedItems; break;
+                    case ConsoleKey.Escape: Log.AddOneFromList(StringFactory.CancelStrings());  return selectedItems; break;
                     default: break;
                 }
                 if (cursor >= itemlist.Count)

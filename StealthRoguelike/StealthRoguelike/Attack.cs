@@ -9,7 +9,7 @@ namespace StealthRoguelike
     class Attack
     {
 
-        static int CalculateDamage(Unit attacker, Unit victim)
+        static int CalculateMeleeDamage(Unit attacker, Unit victim)
         {
             int MinMeleeDamage = attacker.Inv.Wielded.MinMeleeDamage;
             int MaxMeleeDamage = attacker.Inv.Wielded.MaxMeleeDamage;
@@ -21,9 +21,11 @@ namespace StealthRoguelike
 
         public static void MeleeAttack(Unit attacker, Unit victim)
         {
-            if (attacker.Inv.Wielded != null)
-            {                
-                int finalDamage = CalculateDamage(attacker, victim);
+            Weapon attackerWeapon = attacker.Inv.Wielded;
+            if (attackerWeapon != null)
+            {
+                attacker.Timing.AddActionTime(TimeCost.MeleeAttackCost(attacker));
+                int finalDamage = CalculateMeleeDamage(attacker, victim);
                 bool victimStabbed = false;
 
                 if (attacker.Inv.Wielded.TypeOfMeleeDamage == Weapon.MeleeDamageTypes.Stab && victim.IsUnaware())
@@ -57,12 +59,48 @@ namespace StealthRoguelike
             }
         }
 
+        static int CalculateRangedDamage(Unit attacker, Unit victim)
+        {
+            int MinDamage = attacker.Inv.Wielded.MinMeleeDamage;
+            int MaxDamage = attacker.Inv.Wielded.MaxMeleeDamage;
+            int baseDamage = MyRandom.getRandomInt(MinDamage, MaxDamage + 1);
+            int finalDamage = baseDamage;
+            if (finalDamage < 0) finalDamage = 0;
+            return finalDamage;
+        }
+
+        public static void RangedAttack(Unit attacker, Unit victim)
+        {
+            Weapon attackerWeapon = attacker.Inv.Wielded;
+            if (attackerWeapon.Range > 1)
+            {
+                attacker.Timing.AddActionTime(TimeCost.RangedAttackCost(attacker));
+                if (!attackerWeapon.TryConsumeAmmo())
+                {
+                    if (attacker is Player)
+                        Log.ReplaceLastLine("Click!");
+                    else
+                        Log.AddLine("Click!");
+                    return;
+                }
+                int damage = CalculateRangedDamage(attacker, victim);
+                victim.Hitpoints -= damage;
+                if (attacker is Player)
+                    Log.AddLine("You shot the " + victim.Name + " with your " + attacker.Inv.Wielded.DisplayName + "!");
+                else
+                    Log.AddLine(attacker.Name + " shoots at " + victim.Name + " with the " + attacker.Inv.Wielded.DisplayName + "!");
+            }
+            else
+                _DEBUG.AddDebugMessage("ERROR: attempt to shoot from non-ranged weapon!");
+
+        }
+
         public static void Strangle(Unit attacker, Unit victim)
         {
             if (victim.IsUnaware())
             {
-                int kotime = MyRandom.getRandomInt(50, 150);
-                victim.KnockedOutTime += 150;
+                int KOtime = MyRandom.getRandomInt(50, 150);
+                victim.KnockedOutTime += KOtime;
                 if (attacker is Player)
                     Log.AddLine("You strangle " + victim.Name + "!");
             }

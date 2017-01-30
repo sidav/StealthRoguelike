@@ -10,8 +10,9 @@ namespace StealthRoguelike
     {
         //IT WORKS. DON'T TOUCH
 
-        public static int CurX = 0, CurY = 0, deltax, deltay, xmod, ymod;
-        static bool lineEnded = true;
+        public static int CurX = 0, CurY = 0;
+        static int deltax, deltay, xmod, ymod;
+        //static bool lineEnded = true;
         static int fromX, fromY, toX, toY, /*deltax, deltay,*/ err, deltaerr, 
             /*xmod, ymod,*/ stepsMade, lineLengthSquare;
 

@@ -80,6 +80,30 @@ namespace StealthRoguelike
             Console.ForegroundColor = temp;
         }
 
+        public void DrawHighlighted()
+        {
+            ConsoleColor temp = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.BackgroundColor = color;
+            Console.SetCursorPosition(this.CoordX, this.CoordY);
+            Console.Write(appearance);
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = temp;
+            //if (hasFOV)
+            //    drawLookingThingy();
+
+            //Experimental:
+            //Console.ForegroundColor = ConsoleColor.Red;
+            //Console.SetCursorPosition(this.CoordX, this.CoordY-1);
+            //Console.Write("-");
+            //Console.SetCursorPosition(this.CoordX - 1, this.CoordY);
+            //Console.Write("|");
+            //Console.SetCursorPosition(this.CoordX + 1, this.CoordY);
+            //Console.Write("|");
+            //Console.SetCursorPosition(this.CoordX, this.CoordY + 1);
+            //Console.Write("-");
+        }
+
         protected void moveForwardOrOpen()
         {
             if (!World.TryOpenDoor(CoordX + lookX, CoordY + lookY))

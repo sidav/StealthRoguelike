@@ -127,6 +127,17 @@ namespace StealthRoguelike
                 }
         }
 
+        public static void DrawLineNotInclusive(int fromx, int fromy, int tox, int toy, char lineChar)
+        {
+            Line.Init(fromx, fromy, tox, toy);
+            while (!Line.Step())
+            {
+                Console.SetCursorPosition(Line.CurX, Line.CurY);
+                Console.Write(lineChar);
+            }
+            
+        }
+
 
     }
 }

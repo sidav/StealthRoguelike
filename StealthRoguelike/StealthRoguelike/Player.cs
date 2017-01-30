@@ -50,7 +50,6 @@ namespace StealthRoguelike
             {
                 Actor attacked = World.getActorAt(CoordX + x, CoordY + y);
                 Attack.MeleeAttack(this, attacked);
-                Timing.AddActionTime(TimeCost.AttackCost(this));
             }
             //World.Redraw(CoordX-x, CoordY-y);
         }
@@ -159,6 +158,50 @@ namespace StealthRoguelike
             }
         }
 
+        void shootDialogue()
+        {
+            if (Inv.Wielded.Range == 1)
+            {
+                Log.AddLine("You can't shoot with the " + Inv.Wielded.DisplayName + "!");
+                return;
+            }
+            Log.AddLine("Which target? (tab - next, f - fire, esc - cancel)");
+            bool nextTargetPlease = true;
+            while (nextTargetPlease)
+            {
+                nextTargetPlease = false;
+                foreach (Actor currTarget in World.AllActors)
+                {
+                    if (WorldLOS.VisibleLineExist(CoordX, CoordY, currTarget.CoordX, currTarget.CoordY))
+                    {
+                        WorldRendering.drawInCircleFOV(CoordX, CoordY, visibilityRadius);
+                        WorldRendering.drawUnitsInCircle(CoordX, CoordY, visibilityRadius);
+                        this.Draw();
+                        currTarget.DrawHighlighted();
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        WorldRendering.DrawLineNotInclusive(CoordX, CoordY, currTarget.CoordX, currTarget.CoordY, '*');
+                        ConsoleKeyInfo keyPressed = Console.ReadKey(true);
+                        if (keyPressed.Key == ConsoleKey.Tab)
+                        {
+                            nextTargetPlease = true;
+                            continue;
+                        }
+                        if (keyPressed.Key == ConsoleKey.Escape)
+                        {
+                            Log.AddOneFromList(StringFactory.CancelStrings());
+                            return;
+                        }
+                        if (keyPressed.Key == ConsoleKey.F)
+                        {
+                            Attack.RangedAttack(this, currTarget);
+                            return;
+                        }
+                    }
+                }
+            }
+            Log.ReplaceLastLine("No targets in range!");
+        }
+
         void strangleDialogue()
         {
             Log.AddLine("Grab in which direction?");
@@ -191,40 +234,6 @@ namespace StealthRoguelike
                 Log.AddLine("There's nobody here!");
         }
 
-        void pickupDialogue() //NEED TO WORK WITH LISTS. !!!
-        {
-            List<Item> picked = World.getItemListAt(CoordX, CoordY);
-            if (picked.Count > 0)
-            {
-                picked = Inv.MultipleItemSelectionMenu("pick up", picked);
-                if (picked == null) return;
-                foreach (Item i in picked)
-                    if (Inv.TryPickUpItem(i))
-                    {
-                        Timing.AddActionTime(TimeCost.PickUpCost(i));
-                        World.AllItemsOnFloor.Remove(i);
-                        Log.AddLine("You picked up the " + i.DisplayName + ".");
-                    }                    
-            }
-            else
-            {
-                int randomMessageNumber = MyRandom.getRandomInt(3);
-                switch (randomMessageNumber)
-                {
-                    case 0:
-                        Log.AddLine("There's nothing here to pick up.");
-                        break;
-                    case 1:
-                        Log.AddLine("All that lying here is the dust.");
-                        break;
-                    case 2:
-                        Log.AddLine("Of course you can pick up the air.");
-                        break;
-                }
-                return;
-            }
-        }
-
 
         public void handleKeys(ConsoleKeyInfo keyPressed)
         {
@@ -248,16 +257,18 @@ namespace StealthRoguelike
                 seeTheStats();
             if (keyPressed.Key == ConsoleKey.C) //close door 
                 closeDoorDialogue();
+            if (keyPressed.Key == ConsoleKey.D) //drop an item
+                Inv.DropDialogue();
+            if (keyPressed.Key == ConsoleKey.F) //fire current weapon
+                shootDialogue();
+            if (keyPressed.Key == ConsoleKey.G) //grab (pick up) an item
+                Inv.PickupDialogue();
+            if (keyPressed.Key == ConsoleKey.I) //show inventory
+                Inv.ShowInventory();
             if (keyPressed.Key == ConsoleKey.P) //peep 
                 peepDialogue();
             if (keyPressed.Key == ConsoleKey.S) //strangle
                 strangleDialogue();
-            if (keyPressed.Key == ConsoleKey.G) //grab (pick up) an item
-                pickupDialogue();
-            if (keyPressed.Key == ConsoleKey.D) //drop an item
-                Inv.DropDialogue();
-            if (keyPressed.Key == ConsoleKey.I) //show inventory
-                Inv.ShowInventory();
             if (keyPressed.Key == ConsoleKey.W) //wield a weapon
                 Inv.WieldDialogue();
             if (keyPressed.Key == ConsoleKey.Q) //ready the ammo

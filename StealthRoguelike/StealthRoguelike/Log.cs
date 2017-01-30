@@ -94,6 +94,7 @@ namespace StealthRoguelike
 
         public static void ReplaceLastLine(string line)
         {
+            lastLogInput = line;
             ConsoleColor lastColor = miniLog[LogSize - 1].TextColor;
             miniLog[LogSize - 1] = new LogMessage(line, lastColor);
             DrawMiniLog();

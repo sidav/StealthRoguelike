@@ -8,7 +8,17 @@ namespace StealthRoguelike
 {
     class StringFactory
     {
+        //For player interactions:
+        public static List<string> CancelStrings()
+        {
+            List<string> res = new List<string>();
+            res.Add("Okay, then.");
+            res.Add("Okely-dokely.");
+            res.Add("Never mind.");
+            return res;
+        }
 
+        //For Attack class:
         public static List<string> AttackerStabsVictim(Unit attacker, Unit victim)
         {
             List<string> res = new List<string>();
