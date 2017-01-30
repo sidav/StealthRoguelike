@@ -24,6 +24,12 @@ namespace StealthRoguelike
             Weapon attackerWeapon = attacker.Inv.Wielded;
             if (attackerWeapon != null)
             {
+                if (!attackerWeapon.targetInMeleeRange(attacker.CoordX, attacker.CoordY, victim.CoordX, victim.CoordY))
+                {
+                    //Zomg error
+                    _DEBUG.AddDebugMessage("ERROR: attempt to melee from non-melee range.")
+                }
+
                 attacker.Timing.AddActionTime(TimeCost.MeleeAttackCost(attacker));
                 int finalDamage = CalculateMeleeDamage(attacker, victim);
                 bool victimStabbed = false;
@@ -80,7 +86,7 @@ namespace StealthRoguelike
                     if (attacker is Player)
                         Log.ReplaceLastLine("Click!");
                     else
-                        Log.AddLine("Click!");
+                        Log.AddLine(attacker.Name + "'s " +attackerWeapon.DisplayName + " clicks!");
                     return;
                 }
                 int damage = CalculateRangedDamage(attacker, victim);

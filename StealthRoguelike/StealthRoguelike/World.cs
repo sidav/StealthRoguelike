@@ -50,13 +50,21 @@ namespace StealthRoguelike
             plx = player.CoordX;
             ply = player.CoordY;
             int x, y;
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 7; i++)
                 do
                 {
                     x = MyRandom.getRandomInt(mapWidth);
                     y = MyRandom.getRandomInt(mapHeight);
                     if (map[x, y].IsPassable && !WorldLOS.VisibleLineExist(x,y,plx,ply))
                         AllActors.Add(UnitCreator.createActor("Guard", x, y));
+                } while (!map[x, y].IsPassable);
+            for (int i = 0; i < 3; i++)
+                do
+                {
+                    x = MyRandom.getRandomInt(mapWidth);
+                    y = MyRandom.getRandomInt(mapHeight);
+                    if (map[x, y].IsPassable && !WorldLOS.VisibleLineExist(x, y, plx, ply))
+                        AllActors.Add(UnitCreator.createActor("Officer", x, y));
                 } while (!map[x, y].IsPassable);
         }
 

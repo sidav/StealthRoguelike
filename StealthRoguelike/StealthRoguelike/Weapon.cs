@@ -34,6 +34,14 @@ namespace StealthRoguelike
             }
         }
 
+        public bool isShooting
+        {
+            get
+            {
+                return (Range > 1);
+            }
+        }
+
         //public WeaponTypes TypeOfWeapon;
         public MeleeDamageTypes TypeOfMeleeDamage;
         public RangedDamageTypes TypeOfRangedDamage;
@@ -46,15 +54,25 @@ namespace StealthRoguelike
         public float StrengthFactor = 1;
         public float AgilityFactor = 1;
 
-        public bool targetInEffectiveRange(int fx, int fy, int tx, int ty)
+        public bool targetInEffectiveShootingRange(int fx, int fy, int tx, int ty)
         {
             int dx = fx - tx;
             int dy = fy - ty;
             int sqdistance = dx * dx + dy * dy;
-            if (Range == 1 && sqdistance <= 2) //This is so dirty.
+            //if (Range == 1 && sqdistance <= 2) //This is so dirty.
+            //    return true;
+            //else
+            return (Range > 1 && sqdistance <= Range * Range);
+        }
+
+        public bool targetInMeleeRange(int fx, int fy, int tx, int ty)
+        {
+            int dx = fx - tx;
+            int dy = fy - ty;
+            int sqdistance = dx * dx + dy * dy;
+            if (sqdistance <= 2) //This is so dirty.
                 return true;
-            else
-                return (sqdistance <= Range * Range);
+            return false;
         }
 
         public bool TryReload(Ammunition value)
@@ -134,7 +152,7 @@ namespace StealthRoguelike
 
                 //If you see this ingame, then there is probably a bug somewhere
                 default:
-                    name = "??Default_Weapon??";
+                    name = "??Error_Weapon??";
                     //TypeOfWeapon = WeaponTypes.Melee;
                     TypeOfMeleeDamage = MeleeDamageTypes.Smash;
                     MinMeleeDamage = 1;
@@ -154,6 +172,7 @@ namespace StealthRoguelike
                     Color = ConsoleColor.DarkCyan;
                     break;
             }
+            CurrentAmmo = MaxAmmo;
         }
 
     }

@@ -1,7 +1,6 @@
 ﻿#CURRENTLY WORKING AT:
 
-STACKABLE ITEMS - extremely needed for the next goal
-Shooting enemies - Let it be the first priority!
+Shooting enemies - almost done!
 Various time costs for moving with various encumbrance - DONE, testing needed
 LCGRandom.getRandomInt(a,b) - WTF is with results range? 
 Stat system

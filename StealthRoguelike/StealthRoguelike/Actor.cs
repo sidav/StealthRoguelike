@@ -186,10 +186,20 @@ namespace StealthRoguelike
 
         void DoAttacking() //not only hit enemy, but also walk toward him first!
         {
-            if (Inv.Wielded.targetInEffectiveRange(CoordX, CoordY, DestinationX, DestinationY))
+            //Can we shoot it?
+            if (Inv.Wielded.isShooting &&
+                Inv.Wielded.targetInEffectiveShootingRange(CoordX, CoordY, DestinationX, DestinationY)
+                && Inv.Wielded.CurrentAmmo > 0
+                )
+            {
+                Attack.RangedAttack(this, Target);
+            }
+            //No?.. Can we beat it then?
+            else if (Inv.Wielded.targetInMeleeRange(CoordX, CoordY, DestinationX, DestinationY))
             {
                 Attack.MeleeAttack(this, Target);
-            }            
+            }
+            //No? Okay, let's chase it.
             else
                 moveToDestination();
         }

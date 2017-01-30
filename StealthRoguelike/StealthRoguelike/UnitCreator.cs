@@ -21,26 +21,26 @@ namespace StealthRoguelike
 
         public static Actor createActor(string name, int x, int y)
         {
-            char appearance = '!';
+            char appear = '%';
+            Actor newActor = new Actor(name, x, y, appear);
             Weapon givenWeapon;
             switch (name)
             {
                 case "Guard":
-                    appearance = 'G';
-                    givenWeapon = new Weapon("baton");
+                    newActor.appearance = 'G';
+                    givenWeapon = new Weapon("Baton");
                     break;
-                //just for lulz
-                case "Kostik":
-                    appearance = 'K';
-                    givenWeapon = new Weapon("concept-art drawing");
+                case "Officer":
+                    newActor.appearance = 'G';
+                    newActor.color = ConsoleColor.Yellow;
+                    givenWeapon = new Weapon("Revolver");
                     break;
+                //If you see this ingame, then there is probably a bug somewhere
                 default:
-                    appearance = 'D';
-                    givenWeapon = new Weapon("pointless string");
+                    newActor.appearance = '%';
+                    givenWeapon = new Weapon("error weapon");
                     break;
             }
-
-            Actor newActor = new Actor(name, x, y, appearance);
             newActor.Inv.Wielded = givenWeapon;
             return newActor;
         }
