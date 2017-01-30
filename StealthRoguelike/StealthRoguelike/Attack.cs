@@ -27,7 +27,7 @@ namespace StealthRoguelike
                 if (!attackerWeapon.targetInMeleeRange(attacker.CoordX, attacker.CoordY, victim.CoordX, victim.CoordY))
                 {
                     //Zomg error
-                    _DEBUG.AddDebugMessage("ERROR: attempt to melee from non-melee range.")
+                    _DEBUG.AddDebugMessage("ERROR: attempt to melee from non-melee range.");
                 }
 
                 attacker.Timing.AddActionTime(TimeCost.MeleeAttackCost(attacker));
