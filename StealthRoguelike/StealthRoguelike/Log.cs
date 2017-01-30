@@ -20,6 +20,12 @@ namespace StealthRoguelike
                 miniLog[i] = new LogMessage("Debug: Game log operational");
         }
 
+        public static void AddOneFromList(List<string> values)
+        {
+            int r = MyRandom.getRandomInt(values.Count);
+            AddLine(values[r]);
+        }
+
         public static void AddLine(string line)
         {
             if (line == lastLogInput)

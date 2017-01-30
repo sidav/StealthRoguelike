@@ -13,7 +13,7 @@ namespace StealthRoguelike
             Arrow, Bullet, Energycell
         }
 
-        public AmmoTypes type;
+        public AmmoTypes TypeOfAmmunition;
 
         public Ammunition(string ammoName, int qnty):base()
         {
@@ -26,15 +26,15 @@ namespace StealthRoguelike
             switch (name)
             {
                 case "Arrow":
-                    type = AmmoTypes.Arrow;
+                    TypeOfAmmunition = AmmoTypes.Arrow;
                     break;
                 case "Bullet":
-                    type = AmmoTypes.Bullet;
+                    TypeOfAmmunition = AmmoTypes.Bullet;
                     break;
-                //If you see this ingame, then there is probaby a bug somewhere
+                //If you see this ingame, then there is probably a bug somewhere
                 default:
-                    name = "DEFAULT_AMMO";
-                    type = AmmoTypes.Arrow;
+                    name = "??DEFAULT_AMMO??";
+                    TypeOfAmmunition = AmmoTypes.Arrow;
                     break;
             }
 

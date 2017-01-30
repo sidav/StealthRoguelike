@@ -49,7 +49,7 @@ namespace StealthRoguelike
             if (World.isActorPresent(CoordX + x, CoordY + y))
             {
                 Actor attacked = World.getActorAt(CoordX + x, CoordY + y);
-                Attack.dealDamage(this, attacked);
+                Attack.MeleeAttack(this, attacked);
                 Timing.AddActionTime(TimeCost.AttackCost(this));
             }
             //World.Redraw(CoordX-x, CoordY-y);
@@ -63,7 +63,7 @@ namespace StealthRoguelike
             string statString = "s " + Stats.Strength.ToString() + "; n " + Stats.Nerve.ToString() +
                 "; e " + Stats.Endurance.ToString() + "; a " + Stats.Agility.ToString() + "; k " +
                 Stats.Knowledge.ToString();
-            Log.AddDebugMessage(statString);
+            _DEBUG.AddDebugMessage(statString);
         }
 
         void closeDoorDialogue()
@@ -74,7 +74,7 @@ namespace StealthRoguelike
             int doorX = CoordX+KeyToVector.x, doorY = CoordY + KeyToVector.y;
             if (doorX == CoordX && doorY == CoordY)
             {
-                int randomMessageNumber = LCGRandom.getRandomInt(3);
+                int randomMessageNumber = MyRandom.getRandomInt(3);
                 switch (randomMessageNumber)
                 {
                     case 0:
@@ -106,7 +106,7 @@ namespace StealthRoguelike
             int peepX = CoordX + KeyToVector.x, peepY = CoordY + KeyToVector.y;
             if (peepX == CoordX && peepY == CoordY)
             {
-                int randomMessageNumber = LCGRandom.getRandomInt(3);
+                int randomMessageNumber = MyRandom.getRandomInt(3);
                 switch (randomMessageNumber)
                 {
                     case 0:
@@ -167,7 +167,7 @@ namespace StealthRoguelike
             int strangleX = CoordX + KeyToVector.x, strangleY = CoordY + KeyToVector.y;
             if (strangleX == CoordX && strangleY == CoordY)
             {
-                int randomMessageNumber = LCGRandom.getRandomInt(3);
+                int randomMessageNumber = MyRandom.getRandomInt(3);
                 switch (randomMessageNumber)
                 {
                     case 0:
@@ -208,7 +208,7 @@ namespace StealthRoguelike
             }
             else
             {
-                int randomMessageNumber = LCGRandom.getRandomInt(3);
+                int randomMessageNumber = MyRandom.getRandomInt(3);
                 switch (randomMessageNumber)
                 {
                     case 0:
@@ -260,6 +260,10 @@ namespace StealthRoguelike
                 Inv.ShowInventory();
             if (keyPressed.Key == ConsoleKey.W) //wield a weapon
                 Inv.WieldDialogue();
+            if (keyPressed.Key == ConsoleKey.Q) //ready the ammo
+                Inv.ReadyAmmoDialogue();
+            if (keyPressed.Key == ConsoleKey.R) //reload a gun
+                Inv.ReloadDialogue();
             //TODO!
         }
 
@@ -287,7 +291,7 @@ namespace StealthRoguelike
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.Write(" Carrying a " + Inv.BodyCarrying.DisplayName);
-                //Log.AddDebugMessage("Watafuq? Body is " + Inv.BodyCarrying.DisplayName);
+                //_DEBUG.AddDebugMessage("Watafuq? Body is " + Inv.BodyCarrying.DisplayName);
             }
             else Console.Write("                                 ");
 

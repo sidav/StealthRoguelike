@@ -59,7 +59,7 @@ namespace StealthRoguelike
 
         public static int StrangleCost(Unit acting)
         {
-            return LCGRandom.getRandomInt(15, 25);
+            return MyRandom.getRandomInt(15, 25);
         }
 
         public static int TurningCost(Unit acting)

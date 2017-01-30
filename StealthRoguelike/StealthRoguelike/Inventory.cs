@@ -11,7 +11,7 @@ namespace StealthRoguelike
         Unit owner;
         public Weapon Wielded;
         public Item BodyCarrying = null; //when you carry a body
-        public Ammunition Quiver;
+        public Ammunition Ready;
         public List<Item> Backpack = new List<Item>();
 
         public Inventory(Unit ownr)
@@ -64,7 +64,7 @@ namespace StealthRoguelike
                 {
                     if (owner is Player)
                         Log.AddLine("You're already carrying a body!");
-                    //Log.AddDebugMessage("Already carrying!");
+                    //_DEBUG.AddDebugMessage("Already carrying!");
                     return false;
                 }
                 else
@@ -87,6 +87,16 @@ namespace StealthRoguelike
                     Backpack.Add(picked);
             }
             return true;
+        }
+
+        public bool tryReloadWeapon()
+        {
+            if (Wielded.TypeOfWeapon == Weapon.WeaponTypes.Firearm && Ready != null)
+            {
+                if (Wielded.TryReload(Ready))
+                    return true;
+            }
+            return false;
         }
 
         private int getMaxWeight()
@@ -151,6 +161,39 @@ namespace StealthRoguelike
             }
         }
 
+        public void ReadyAmmoDialogue()
+        {
+            List<Item> ammoInBackpack = new List<Item>();
+            foreach (Item i in Backpack)
+                if (i is Ammunition)
+                    ammoInBackpack.Add(i);
+            Ammunition toReady = (Ammunition)SingleItemSelectionMenu("ready", ammoInBackpack);
+            if (toReady != null)
+            {
+                if (Ready != null)
+                    Backpack.Add(Ready);
+                Ready = toReady;
+                Backpack.Remove(toReady);
+                Log.AddLine("You now have the " + Ready.DisplayName + " as a current ammunition.");
+            }
+        }
+
+        public void ReloadDialogue()
+        {
+            if (tryReloadWeapon())
+            {
+                Log.AddLine("You reload your " + Wielded.DisplayName);
+                return;
+            }
+            if (Ready == null)
+            {
+                Log.AddLine("You've got no ammo in ready!");
+                return;
+            }
+            Log.AddLine("Wrong ammo in ready!");
+
+        }
+
         public void ShowInventory()
         {
             Console.BackgroundColor = ConsoleColor.Black;
@@ -182,6 +225,8 @@ namespace StealthRoguelike
             Console.ReadKey(true);
         }
 
+
+        ///ROUTINES.
         public Item SingleItemSelectionMenu(string ask, List<Item> itemlist)
         {
             if (itemlist.Count == 0)

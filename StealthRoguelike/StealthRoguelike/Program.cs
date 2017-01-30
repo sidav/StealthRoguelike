@@ -166,7 +166,7 @@ namespace StealthRoguelike
 
             _DEBUG.AnyShitBeforeStart();
 
-            LCGRandom.setSeed();
+            MyRandom.setSeed();
 
             StartupScreen.ShowSplashScreen();
             Console.Clear();

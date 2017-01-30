@@ -13,25 +13,27 @@ namespace StealthRoguelike
         {
             int mindamage = attacker.Inv.Wielded.mindamage;
             int maxdamage = attacker.Inv.Wielded.maxdamage;
-            int baseDamage = LCGRandom.getRandomInt(mindamage, maxdamage+1);
+            int baseDamage = MyRandom.getRandomInt(mindamage, maxdamage+1);
             int finalDamage = (int)(baseDamage + baseDamage * (attacker.Stats.Strength - 10)/10 * attacker.Inv.Wielded.StrengthFactor);
             if (finalDamage < 0) finalDamage = 0;
             return finalDamage;
         }
 
-        public static void dealDamage(Unit attacker, Unit victim)
+        public static void MeleeAttack(Unit attacker, Unit victim)
         {
             if (attacker.Inv.Wielded != null)
-            {
-                
+            {                
                 int finalDamage = CalculateDamage(attacker, victim);
-                if (attacker.Inv.Wielded.TypeOfMeleeDamage == Weapon.damageTypes.Stab && victim.IsUnaware())
+                bool victimStabbed = false;
+
+                if (attacker.Inv.Wielded.TypeOfMeleeDamage == Weapon.MeleeDamageTypes.Stab && victim.IsUnaware())
                 {
                     finalDamage *= 6; //zomg
                     if (attacker is Player)
                         Log.AddLine("You silently stabbed " + victim.Name + "'s neck with your " + attacker.Inv.Wielded.DisplayName + "!!");
                     else
                         Log.AddLine(attacker.Name + " stabs " + victim.Name + " with the " + attacker.Inv.Wielded.DisplayName + "!");
+                    victimStabbed = true;
                 }
                 else
                 {
@@ -43,13 +45,20 @@ namespace StealthRoguelike
 
                 victim.Hitpoints -= finalDamage;
                 if (attacker is Player)
-                    Log.AddDebugMessage(" " + finalDamage.ToString() + " damage");
+                    _DEBUG.AddDebugMessage(" " + finalDamage.ToString() + " damage");
 
                 if (victim is Player)
                 {
                     Gameover.KilledBy = attacker.Name;
                     if (victim.Hitpoints < victim.GetMaxHitpoints() / 3 || victim.Hitpoints < 3)
                         Log.AddAlertMessage("!!LOW HITPOINT WARNING!!");
+                }
+                if (victimStabbed)
+                {
+                    List<string> stabbedMsgs = new List<string>();
+                    stabbedMsgs.Add(victim.Name + " convulces in agony!");
+                    stabbedMsgs.Add(victim.Name + " chokes his blood!");
+                    Log.AddOneFromList(stabbedMsgs);
                 }
             }
         }
@@ -58,7 +67,7 @@ namespace StealthRoguelike
         {
             if (victim.IsUnaware())
             {
-                int kotime = LCGRandom.getRandomInt(50, 150);
+                int kotime = MyRandom.getRandomInt(50, 150);
                 victim.KnockedOutTime += 150;
                 if (attacker is Player)
                     Log.AddLine("You strangle " + victim.Name + "!");

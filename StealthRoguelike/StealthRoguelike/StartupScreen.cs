@@ -149,7 +149,7 @@ namespace StealthRoguelike
 
         public static void ShowSplashScreen()
         {
-            int WhatToDraw = LCGRandom.getRandomInt(0, 5);
+            int WhatToDraw = MyRandom.getRandomInt(0, 5);
             if (WhatToDraw == 0)
                 DrawImage1StartupScreen();
             if (WhatToDraw == 1)

@@ -20,7 +20,7 @@ namespace StealthRoguelike
         public World()
         {
             makeMap();
-            Log.AddDebugMessage("Map generation... ok");
+            _DEBUG.AddDebugMessage("Map generation... ok");
             //find an entrance and place player
             for (int i = 0; i < mapWidth; i++)
                 for (int j = 0; j < mapHeight; j++)
@@ -28,9 +28,9 @@ namespace StealthRoguelike
                         player = UnitCreator.createPlayer(i, j);
             //place enemies
             placeActors();
-            Log.AddDebugMessage("Actors placement... ok");
-            Log.AddDebugMessage("All systems nominal... for now");
-            Log.AddDebugMessage("Seed for this world is " + LCGRandom.Seed.ToString());
+            _DEBUG.AddDebugMessage("Actors placement... ok");
+            _DEBUG.AddDebugMessage("All systems nominal... for now");
+            _DEBUG.AddDebugMessage("Seed for this world is " + MyRandom.Seed.ToString());
             Log.AddLine("Press F1 for list of game commands");
         }
 
@@ -53,8 +53,8 @@ namespace StealthRoguelike
             for (int i = 0; i < 10; i++)
                 do
                 {
-                    x = LCGRandom.getRandomInt(mapWidth);
-                    y = LCGRandom.getRandomInt(mapHeight);
+                    x = MyRandom.getRandomInt(mapWidth);
+                    y = MyRandom.getRandomInt(mapHeight);
                     if (map[x, y].IsPassable && !WorldLOS.VisibleLineExist(x,y,plx,ply))
                         AllActors.Add(UnitCreator.createActor("Guard", x, y));
                 } while (!map[x, y].IsPassable);

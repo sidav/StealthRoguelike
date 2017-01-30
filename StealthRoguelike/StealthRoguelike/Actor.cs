@@ -111,8 +111,8 @@ namespace StealthRoguelike
 
             do
             {
-                newLookX = LCGRandom.getRandomInt(-1, 2);
-                newLookY = LCGRandom.getRandomInt(-1, 2);
+                newLookX = MyRandom.getRandomInt(-1, 2);
+                newLookY = MyRandom.getRandomInt(-1, 2);
 
                 if (tries > 50) break; //this is
                 tries++;               //a quite dirty workaround
@@ -169,7 +169,7 @@ namespace StealthRoguelike
             if (World.TryCloseDoor(CoordX - lookX, CoordY - lookY))
                 return;
             //let's SUDDENLY turn to the random direction, maybe? :D
-            if (LCGRandom.getRandomInt(suddenTurningFrequency) == 0)
+            if (MyRandom.getRandomInt(suddenTurningFrequency) == 0)
             {
                 turnToRandomPassableDirection();
                 return;
@@ -188,7 +188,7 @@ namespace StealthRoguelike
         {
             if (Inv.Wielded.targetInRange(CoordX, CoordY, DestinationX, DestinationY))
             {
-                Attack.dealDamage(this, Target);
+                Attack.MeleeAttack(this, Target);
                 Timing.AddActionTime(TimeCost.AttackCost(this));
             }            
             else

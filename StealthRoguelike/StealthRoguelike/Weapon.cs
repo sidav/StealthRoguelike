@@ -9,7 +9,8 @@ namespace StealthRoguelike
     class Weapon:Item
     {
         public enum WeaponTypes { Melee, Firearm }
-        public enum damageTypes { Stab, Smash }
+        public enum MeleeDamageTypes { Stab, Smash }
+        public enum RangedDamageTypes { Piercing }
 
         new public string DisplayName
         {
@@ -25,12 +26,11 @@ namespace StealthRoguelike
             }
         }
 
-
         public WeaponTypes TypeOfWeapon;
-        public damageTypes TypeOfMeleeDamage; //type of non-melee damage depends on the ammo.
+        public MeleeDamageTypes TypeOfMeleeDamage;
+        public RangedDamageTypes TypeOfRangedDamage;
         public int mindamage, maxdamage; //melee
         public int Range;
-        public Item ammoLoaded;
         public int CurrentAmmo = 0, MaxAmmo = 0; //for ranged...
         public int minStrengthRequired = 5;
         public float StrengthFactor = 1;
@@ -47,46 +47,68 @@ namespace StealthRoguelike
                 return (sqdistance <= Range * Range);
         }
 
+        public bool TryReload(Ammunition value)
+        {
+            if (value.TypeOfAmmunition == Ammunition.AmmoTypes.Bullet && TypeOfWeapon == WeaponTypes.Firearm)
+            {
+                int toFull = MaxAmmo - CurrentAmmo;
+                if (value.Quantity >= toFull)
+                {
+                    value.Quantity -= toFull;
+                    CurrentAmmo = MaxAmmo;
+                }
+                else
+                {
+                    CurrentAmmo += value.Quantity;
+                    value.Quantity = 0;
+                }
+                return true;
+            }
+            return false;
+        }
+
 
         public Weapon(string WeaponName)
         {
-            name = WeaponName;
+            setProperName(WeaponName);
             switch (name)
             {
                 //MELEE:
                 case "Dagger":
                     TypeOfWeapon = WeaponTypes.Melee;
-                    TypeOfMeleeDamage = damageTypes.Stab;
+                    TypeOfMeleeDamage = MeleeDamageTypes.Stab;
                     mindamage = 1;
                     maxdamage = 2;
                     break;
                 case "Baton":
                     TypeOfWeapon = WeaponTypes.Melee;
-                    TypeOfMeleeDamage = damageTypes.Smash;
+                    TypeOfMeleeDamage = MeleeDamageTypes.Smash;
                     mindamage = 1;
                     maxdamage = 1;
                     break;
                 case "Katar":
                     TypeOfWeapon = WeaponTypes.Melee;
-                    TypeOfMeleeDamage = damageTypes.Stab;
+                    TypeOfMeleeDamage = MeleeDamageTypes.Stab;
                     mindamage = 2;
                     maxdamage = 3;
                     break;
 
                 //FIREARMS:
-                case "Pistol":
+                case "Revolver":
                     TypeOfWeapon = WeaponTypes.Firearm;
-                    TypeOfMeleeDamage = damageTypes.Smash;
+                    TypeOfMeleeDamage = MeleeDamageTypes.Smash;
+                    //TypeOf
                     mindamage = 1;
                     maxdamage = 2;
+                    MaxAmmo = 6;
                     Range = 6; 
                     break;
 
-                //If you see this ingame, then there is probaby a bug somewhere
+                //If you see this ingame, then there is probably a bug somewhere
                 default:
-                    name = "Default_Weapon";
+                    name = "??Default_Weapon??";
                     TypeOfWeapon = WeaponTypes.Melee;
-                    TypeOfMeleeDamage = damageTypes.Smash;
+                    TypeOfMeleeDamage = MeleeDamageTypes.Smash;
                     mindamage = 1;
                     maxdamage = 1;
                     break;

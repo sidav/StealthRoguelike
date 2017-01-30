@@ -15,11 +15,16 @@ namespace StealthRoguelike
             //Console.ReadKey(true);
         }
 
+        public static void AddDebugMessage(string msg)
+        {
+            Log.AddDebugMessage(msg);
+        }
+
         public static void F2()
         {
             WorldRendering.drawWorld(-1);
             WorldRendering.drawUnits(-1);
-            Log.AddDebugMessage("clairvoyance... Press any key");
+            _DEBUG.AddDebugMessage("clairvoyance... Press any key");
             Console.ReadKey(true);
         }
 
@@ -31,13 +36,13 @@ namespace StealthRoguelike
                     if (World.map[i, j].IsPassable)
                         World.map[i, j].WasSeen = true;
                 }
-            Log.AddDebugMessage("mapping");
+            _DEBUG.AddDebugMessage("mapping");
         }
 
         public static void F4()
         {
             World.player.Hitpoints += World.player.GetMaxHitpoints();
-            Log.AddDebugMessage("health added");
+            _DEBUG.AddDebugMessage("health added");
         }
 
         public static void F5()
@@ -66,7 +71,7 @@ namespace StealthRoguelike
             newwpn.CoordY = y;
             World.AllItemsOnFloor.Add(newwpn);
 
-            newwpn = new Weapon("Pistol");
+            newwpn = new Weapon("Revolver");
             newwpn.CoordX = x;
             newwpn.CoordY = y;
             World.AllItemsOnFloor.Add(newwpn);
@@ -76,14 +81,14 @@ namespace StealthRoguelike
             newammo.CoordY = y;
             World.AllItemsOnFloor.Add(newammo);
 
-            Log.AddDebugMessage("items created");
+            _DEBUG.AddDebugMessage("items created");
         }
 
         public static void F6()
         {
             World.player.Hitpoints += 100;
             World.player.Timing.AddActionTime(1000);
-            Log.AddDebugMessage("Veeeeery long waiting");
+            _DEBUG.AddDebugMessage("Veeeeery long waiting");
         }
 
         public static bool DebugKey(ConsoleKeyInfo keyPressed)
@@ -122,7 +127,7 @@ namespace StealthRoguelike
         {
             const int testmax = 6;
             const long picks = 1000000;
-            LCGRandom.setSeed();
+            MyRandom.setSeed();
 
             var pick = new long[testmax];
             long picksum = 0;
@@ -132,7 +137,7 @@ namespace StealthRoguelike
 
             for (long i = 0; i < picks; i++)
             {
-                long j = LCGRandom.getRandomInt(testmax);
+                long j = MyRandom.getRandomInt(testmax);
                 picksum += j;
                 pick[j]++;
             }

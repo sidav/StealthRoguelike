@@ -26,6 +26,11 @@ namespace StealthRoguelike
         public char Appearance;
         public ConsoleColor Color;
 
+        protected void setProperName(string value)
+        {
+            name = value.Substring(0, 1).ToUpper() + value.Substring(1).ToLower();
+        }
+
         public int GetWeight()
         {
             return weight * Quantity;

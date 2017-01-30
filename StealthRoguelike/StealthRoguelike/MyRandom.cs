@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StealthRoguelike
 {
-   class LCGRandom
+   class MyRandom
     {
         //static Random random = new Random();
         const long A = 16807;
