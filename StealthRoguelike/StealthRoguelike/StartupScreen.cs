@@ -51,6 +51,15 @@ namespace StealthRoguelike
                 @":::   :   : :   :: ::,,:   ::.    :.  ::      .     :   :.  :  :::  ..:::  !  ",
         };
 
+        static string[] image3a = new string[]
+        {
+                @" ████ █  ██  ████  █████   ████  ██ ██ ██     ████  █████  ██ █████  ████ ████",
+                @"▒█    █  ██ █▒  ██ █▒  ██ █▒  ██ ██ █▒ ██     █▒ ██ █▒  █▒ █▒ ██    ▒█     █▒ ",
+                @" ▒█▒  ███▒█ ██▒█▒▒ ██  ▒▒ ██  ▒▒ █▒ ▒█ █▒     ██▒▒  ██▒▒▒  ▒█ █▒▒▒   ▒█▒   █▒ ",
+                @"   ▒▒ █  ▒█ ▒░  ▒▒ ▒░  ▒▒ ▒▒  ▒▒ ▒░ ▒░ ▒▒     ▒░    ▒▒ ░.  ▒░ ▒▒       ▒▒  ▒░ ",
+                @"░░░   ░   ░ ░   ░░ ░░:░░   ░░░:   ░.  ░░      .     ░   ░.  ░  ░░░  ..░░░  ▒  ",
+        };
+
         static string[] image4 = new string[]
         {
                 @"    :    #                                                 :!                  ",
@@ -110,6 +119,20 @@ namespace StealthRoguelike
             }
         }
 
+        public static void DrawImage3aStartupScreen()
+        {
+            string[] Art = image3a;
+
+            Console.ForegroundColor = ConsoleColor.Red;
+            int cursorXstart = Program.consoleWidth / 2 - Art[0].Length / 2;
+            int cursorYstart = Program.consoleHeight / 2 - Art.Length / 2 - 1;
+            for (int i = 0; i < Art.Length; i++)
+            {
+                Console.SetCursorPosition(cursorXstart, i + cursorYstart);
+                Console.Write(Art[i]);
+            }
+        }
+
         public static void DrawImage4StartupScreen()
         {
             string[] Art = image4;
@@ -126,7 +149,7 @@ namespace StealthRoguelike
 
         public static void ShowSplashScreen()
         {
-            int WhatToDraw = LCGRandom.getRandomInt(0, 4);
+            int WhatToDraw = LCGRandom.getRandomInt(0, 5);
             if (WhatToDraw == 0)
                 DrawImage1StartupScreen();
             if (WhatToDraw == 1)
@@ -134,6 +157,8 @@ namespace StealthRoguelike
             if (WhatToDraw == 2)
                 DrawImage3StartupScreen();
             if (WhatToDraw == 3)
+                DrawImage3aStartupScreen();
+            if (WhatToDraw == 4)
                 DrawImage4StartupScreen();
 
             //DrawImage4StartupScreen();

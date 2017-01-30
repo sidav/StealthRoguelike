@@ -17,6 +17,9 @@ namespace StealthRoguelike
 
         public Ammunition(string ammoName, int qnty):base()
         {
+            Appearance = AllChars.AmmunitionChar;
+            Color = ConsoleColor.White;
+
             name = ammoName;
             Quantity = qnty;
             weight = 0;
@@ -24,6 +27,9 @@ namespace StealthRoguelike
             {
                 case "Arrow":
                     type = AmmoTypes.Arrow;
+                    break;
+                case "Bullet":
+                    type = AmmoTypes.Bullet;
                     break;
                 //If you see this ingame, then there is probaby a bug somewhere
                 default:

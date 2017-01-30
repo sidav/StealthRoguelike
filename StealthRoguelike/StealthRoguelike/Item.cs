@@ -14,9 +14,9 @@ namespace StealthRoguelike
             get
             {
                 if (isStackable && Quantity > 1)
-                    return Quantity.ToString() + " " + name + "s";
+                    return Quantity.ToString() + " " + name.ToLower() + "s";
                 else
-                    return name;
+                    return name.ToLower();
             }
         }
         protected int weight = 1;

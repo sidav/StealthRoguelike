@@ -51,20 +51,30 @@ namespace StealthRoguelike
             x = World.player.CoordX;
             y = World.player.CoordY;
 
-            Weapon newwpn = new Weapon("dagger");
+            Weapon newwpn = new Weapon("Dagger");
             newwpn.CoordX = x;
             newwpn.CoordY = y;
             World.AllItemsOnFloor.Add(newwpn);
 
-            newwpn = new Weapon("baton");
+            newwpn = new Weapon("Baton");
             newwpn.CoordX = x;
             newwpn.CoordY = y;
             World.AllItemsOnFloor.Add(newwpn);
 
-            newwpn = new Weapon("katar");
+            newwpn = new Weapon("Katar");
             newwpn.CoordX = x;
             newwpn.CoordY = y;
             World.AllItemsOnFloor.Add(newwpn);
+
+            newwpn = new Weapon("Pistol");
+            newwpn.CoordX = x;
+            newwpn.CoordY = y;
+            World.AllItemsOnFloor.Add(newwpn);
+
+            Ammunition newammo = new Ammunition("Bullet", 6);
+            newammo.CoordX = x;
+            newammo.CoordY = y;
+            World.AllItemsOnFloor.Add(newammo);
 
             Log.AddDebugMessage("items created");
         }
