@@ -196,27 +196,42 @@ namespace StealthRoguelike
 
         public void ShowInventory()
         {
+            Console.Clear();
+            Console.BackgroundColor = ConsoleColor.DarkGreen;
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.Write("YOUR ITEMS");
             Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.Gray;
-            Console.Clear();
-            Console.Write("YOUR ITEMS: ");
 
             if (getEncumbrance() == 1) Console.ForegroundColor = ConsoleColor.Yellow;
             if (getEncumbrance() == 2) Console.ForegroundColor = ConsoleColor.DarkYellow;
             if (getEncumbrance() == 3) Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("(total weight: " + getInventoryWeight() + "/" + getMaxWeight() + ")");
+            Console.WriteLine(" (total weight: " + getInventoryWeight() + "/" + getMaxWeight() + "):");
             Console.ForegroundColor = ConsoleColor.Gray;
 
-            Console.WriteLine("\nWielded: " + Wielded.DisplayName);
+            Console.Write("\nWielded:");
+            Console.WriteLine(" " + Wielded.DisplayName);
+
+            if (Ready != null)
+                Console.WriteLine("\nIn ready: " + Ready.DisplayName);
+
             if (BodyCarrying != null)
-                Console.WriteLine("Carrying body: " + BodyCarrying.DisplayName);
+                Console.WriteLine("On the shoulder: " + BodyCarrying.DisplayName);
             if (Backpack.Count == 0)
             {
-                Console.WriteLine("\n   Your backpack is empty.");
+                Console.BackgroundColor = ConsoleColor.DarkGreen;
+                Console.ForegroundColor = ConsoleColor.Black;
+                Console.WriteLine("\n   Your backpack is empty.   ");
+                Console.BackgroundColor = ConsoleColor.Black;
+                Console.ForegroundColor = ConsoleColor.Gray;
             }
             else
             {
-                Console.WriteLine("\n   Backpack: ");
+                Console.BackgroundColor = ConsoleColor.DarkGreen;
+                Console.ForegroundColor = ConsoleColor.Black;
+                Console.WriteLine("\n   Backpack:   ");
+                Console.BackgroundColor = ConsoleColor.Black;
+                Console.ForegroundColor = ConsoleColor.Gray;
                 foreach (Item i in Backpack)
                 {
                     Console.WriteLine("" + i.DisplayName);

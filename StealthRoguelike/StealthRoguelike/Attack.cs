@@ -11,9 +11,9 @@ namespace StealthRoguelike
 
         static int CalculateDamage(Unit attacker, Unit victim)
         {
-            int mindamage = attacker.Inv.Wielded.mindamage;
-            int maxdamage = attacker.Inv.Wielded.maxdamage;
-            int baseDamage = MyRandom.getRandomInt(mindamage, maxdamage+1);
+            int MinMeleeDamage = attacker.Inv.Wielded.MinMeleeDamage;
+            int MaxMeleeDamage = attacker.Inv.Wielded.MaxMeleeDamage;
+            int baseDamage = MyRandom.getRandomInt(MinMeleeDamage, MaxMeleeDamage+1);
             int finalDamage = (int)(baseDamage + baseDamage * (attacker.Stats.Strength - 10)/10 * attacker.Inv.Wielded.StrengthFactor);
             if (finalDamage < 0) finalDamage = 0;
             return finalDamage;
@@ -29,10 +29,7 @@ namespace StealthRoguelike
                 if (attacker.Inv.Wielded.TypeOfMeleeDamage == Weapon.MeleeDamageTypes.Stab && victim.IsUnaware())
                 {
                     finalDamage *= 6; //zomg
-                    if (attacker is Player)
-                        Log.AddLine("You silently stabbed " + victim.Name + "'s neck with your " + attacker.Inv.Wielded.DisplayName + "!!");
-                    else
-                        Log.AddLine(attacker.Name + " stabs " + victim.Name + " with the " + attacker.Inv.Wielded.DisplayName + "!");
+                    Log.AddOneFromList(StringFactory.AttackerStabsVictim(attacker, victim));
                     victimStabbed = true;
                 }
                 else
@@ -55,10 +52,7 @@ namespace StealthRoguelike
                 }
                 if (victimStabbed)
                 {
-                    List<string> stabbedMsgs = new List<string>();
-                    stabbedMsgs.Add(victim.Name + " convulces in agony!");
-                    stabbedMsgs.Add(victim.Name + " chokes his blood!");
-                    Log.AddOneFromList(stabbedMsgs);
+                    Log.AddOneFromList(StringFactory.stabbedVictimReacts(victim));
                 }
             }
         }

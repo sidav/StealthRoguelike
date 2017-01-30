@@ -53,6 +53,7 @@
     <Compile Include="KeyToVector.cs" />
     <Compile Include="SneakRoleplayStats.cs" />
     <Compile Include="StartupScreen.cs" />
+    <Compile Include="StringFactory.cs" />
     <Compile Include="TimeCost.cs" />
     <Compile Include="UnconsciousBody.cs" />
     <Compile Include="UnitCreator.cs" />

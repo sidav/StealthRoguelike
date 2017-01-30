@@ -10,7 +10,7 @@ namespace StealthRoguelike
     {
         public enum WeaponTypes { Melee, Firearm }
         public enum MeleeDamageTypes { Stab, Smash }
-        public enum RangedDamageTypes { Piercing }
+        public enum RangedDamageTypes { NoRangedDamage, Piercing }
 
         new public string DisplayName
         {
@@ -29,7 +29,8 @@ namespace StealthRoguelike
         public WeaponTypes TypeOfWeapon;
         public MeleeDamageTypes TypeOfMeleeDamage;
         public RangedDamageTypes TypeOfRangedDamage;
-        public int mindamage, maxdamage; //melee
+        public int MinMeleeDamage = 1, MaxMeleeDamage = 1; //melee
+        public int MinRangedDamage = 0, MaxRangedDamage = 0;
         public int Range;
         public int CurrentAmmo = 0, MaxAmmo = 0; //for ranged...
         public int minStrengthRequired = 5;
@@ -71,37 +72,47 @@ namespace StealthRoguelike
         public Weapon(string WeaponName)
         {
             setProperName(WeaponName);
+            TypeOfRangedDamage = RangedDamageTypes.NoRangedDamage;
+            TypeOfMeleeDamage = MeleeDamageTypes.Smash;
             switch (name)
             {
                 //MELEE:
                 case "Dagger":
                     TypeOfWeapon = WeaponTypes.Melee;
                     TypeOfMeleeDamage = MeleeDamageTypes.Stab;
-                    mindamage = 1;
-                    maxdamage = 2;
+                    MinMeleeDamage = 1;
+                    MaxMeleeDamage = 2;
                     break;
                 case "Baton":
                     TypeOfWeapon = WeaponTypes.Melee;
                     TypeOfMeleeDamage = MeleeDamageTypes.Smash;
-                    mindamage = 1;
-                    maxdamage = 1;
+                    MinMeleeDamage = 1;
+                    MaxMeleeDamage = 1;
                     break;
                 case "Katar":
                     TypeOfWeapon = WeaponTypes.Melee;
                     TypeOfMeleeDamage = MeleeDamageTypes.Stab;
-                    mindamage = 2;
-                    maxdamage = 3;
+                    MinMeleeDamage = 2;
+                    MaxMeleeDamage = 3;
                     break;
 
                 //FIREARMS:
                 case "Revolver":
                     TypeOfWeapon = WeaponTypes.Firearm;
-                    TypeOfMeleeDamage = MeleeDamageTypes.Smash;
-                    //TypeOf
-                    mindamage = 1;
-                    maxdamage = 2;
+                    TypeOfRangedDamage = RangedDamageTypes.Piercing;
+                    MinMeleeDamage = 1;
+                    MaxMeleeDamage = 2;
                     MaxAmmo = 6;
                     Range = 6; 
+                    break;
+                case "Pistolknife":
+                    TypeOfWeapon = WeaponTypes.Firearm;
+                    TypeOfMeleeDamage = MeleeDamageTypes.Stab;
+                    TypeOfRangedDamage = RangedDamageTypes.Piercing;
+                    MinMeleeDamage = 1;
+                    MaxMeleeDamage = 3;
+                    MaxAmmo = 1;
+                    Range = 4;
                     break;
 
                 //If you see this ingame, then there is probably a bug somewhere
@@ -109,8 +120,8 @@ namespace StealthRoguelike
                     name = "??Default_Weapon??";
                     TypeOfWeapon = WeaponTypes.Melee;
                     TypeOfMeleeDamage = MeleeDamageTypes.Smash;
-                    mindamage = 1;
-                    maxdamage = 1;
+                    MinMeleeDamage = 1;
+                    MaxMeleeDamage = 1;
                     break;
             }
             //Appearance:

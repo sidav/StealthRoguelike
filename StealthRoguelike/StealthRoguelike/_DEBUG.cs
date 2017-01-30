@@ -76,6 +76,13 @@ namespace StealthRoguelike
             newwpn.CoordY = y;
             World.AllItemsOnFloor.Add(newwpn);
 
+            newwpn = new Weapon("Pistolknife");
+            newwpn.CoordX = x;
+            newwpn.CoordY = y;
+            World.AllItemsOnFloor.Add(newwpn);
+
+            //Ammo
+
             Ammunition newammo = new Ammunition("Bullet", 6);
             newammo.CoordX = x;
             newammo.CoordY = y;
