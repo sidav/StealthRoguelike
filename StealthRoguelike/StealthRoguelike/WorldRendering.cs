@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace StealthRoguelike
@@ -127,6 +128,35 @@ namespace StealthRoguelike
                 }
         }
 
+        public static void DrawPlayerFOV()
+        {
+            drawInCircleFOV(World.player.CoordX, World.player.CoordY, World.player.visibilityRadius);
+            drawUnitsInCircle(World.player.CoordX, World.player.CoordY, World.player.visibilityRadius);
+        }
+
+        public static void DrawWorldAtCoordinate(int x, int y)
+        {
+            if (World.player.CoordX == x && World.player.CoordY == y)
+            {
+                World.player.Draw();
+                return;
+            }
+            if (World.isActorPresent(x,y))
+            {
+                World.getActorAt(x, y).Draw();
+                return;
+            }
+            if (World.isItemPresent(x, y))
+            {
+                World.getItemAt(x, y).Draw();
+                return;
+            }
+            Console.SetCursorPosition(x, y);
+            Console.ForegroundColor = World.map[x, y].Color;
+            Console.Write(World.map[x, y].Appearance);
+        }
+
+        //Separate class maybe?
         public static void DrawLineNotInclusive(int fromx, int fromy, int tox, int toy, char lineChar)
         {
             Line.Init(fromx, fromy, tox, toy);
@@ -136,6 +166,25 @@ namespace StealthRoguelike
                 Console.Write(lineChar);
             }
             
+        }
+
+        public static void DrawTraversingBullet(int fromx, int fromy, int tox, int toy, char bulletChar)
+        {
+            Line.Init(fromx, fromy, tox, toy);
+            int lastx = fromx, lasty = fromy; 
+            while (!Line.Step())
+            {
+
+                //DrawPlayerFOV();
+                //World.player.Draw();
+                Console.SetCursorPosition(Line.CurX, Line.CurY);
+                Console.Write(bulletChar);
+                DrawWorldAtCoordinate(lastx, lasty);
+                lastx = Line.CurX;
+                lasty = Line.CurY;
+                Thread.Sleep(100);
+            }
+
         }
 
 

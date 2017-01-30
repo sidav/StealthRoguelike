@@ -89,6 +89,8 @@ namespace StealthRoguelike
                     Log.AddLine("You shot the " + victim.Name + " with your " + attacker.Inv.Wielded.DisplayName + "!");
                 else
                     Log.AddLine(attacker.Name + " shoots at " + victim.Name + " with the " + attacker.Inv.Wielded.DisplayName + "!");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                WorldRendering.DrawTraversingBullet(attacker.CoordX, attacker.CoordY, victim.CoordX, victim.CoordY, '*');
             }
             else
                 _DEBUG.AddDebugMessage("ERROR: attempt to shoot from non-ranged weapon!");
