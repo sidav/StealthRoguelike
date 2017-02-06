@@ -12,8 +12,9 @@ namespace StealthRoguelike
         public ConsoleColor Color;
         public bool WasSeen;
         public bool IsPassable, isVisionBlocking, IsDoor, IsOpened, IsLocked, IsUpstair, IsDownstair;
+        public int lockLevel = 0;
 
-        public Tile(int code)
+        public Tile(int code, int locklvl)
         {
             WasSeen = false;
             Appearance = '&';
@@ -25,10 +26,10 @@ namespace StealthRoguelike
             IsUpstair = false;
             IsDownstair = false;
             isVisionBlocking = true;
-            CodeToTile(code);
+            CodeToTile(code, locklvl);
         }
 
-        public void CodeToTile(int code)
+        public void CodeToTile(int code, int locklvl)
         {
             if (code == MapGenerator.wallCode)
             {
@@ -47,7 +48,14 @@ namespace StealthRoguelike
                 Appearance = AllChars.closedDoorChar;
                 IsDoor = true;
                 IsOpened = false;
-                Color = ConsoleColor.DarkMagenta;
+                switch (locklvl)
+                {
+                    case 0: Color = ConsoleColor.DarkMagenta; break;
+                    case 1: Color = ConsoleColor.Green; break;
+                    case 2: Color = ConsoleColor.DarkYellow; break;
+                    default: Color = ConsoleColor.Green; break;
+                }
+                lockLevel = locklvl;
             }
             if (code == MapGenerator.upstairCode)
             {
@@ -56,6 +64,19 @@ namespace StealthRoguelike
                 IsUpstair = true;
                 isVisionBlocking = false;
                 Color = ConsoleColor.Gray;
+            }
+            if (code == MapGenerator.keyplaceCode)
+            {
+                Appearance = '&'; //TEMPORARY
+                IsPassable = true;
+                switch (locklvl)
+                {
+                    case 0: Color = ConsoleColor.DarkMagenta; break;
+                    case 1: Color = ConsoleColor.Green; break;
+                    case 2: Color = ConsoleColor.DarkYellow; break;
+                    default: Color = ConsoleColor.Green; break;
+                }
+                lockLevel = locklvl;
             }
         }
 

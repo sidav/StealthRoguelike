@@ -19,25 +19,31 @@ namespace StealthRoguelike
         const int maxColumns = 25;
         const int maxTries = 1000; //maximum amount of tries for structure placing
 
-        public enum piece {wall, floor, door, upstair, downstair};
+        public enum piece {wall, floor, door, upstair, downstair, keyplace};
         public static int mapWidth, mapHeight;
         static piece[,] map;
+        public static int[,] lockMap; //for the locked doors placement
+        static int maxKeys = 0; //max amount of different keys needed for the map
+        static int currentLockLevel = 0;
         public const int wallCode = (int)piece.wall;
         public const int floorCode = (int)piece.floor;
         public const int doorCode = (int)piece.door;
         public const int upstairCode = (int)piece.upstair;
         public const int downstairCode = (int)piece.downstair;
+        public const int keyplaceCode = (int)piece.keyplace;
         public const char wallChar = '#';
         public const char doorChar = '+';
         public const char floorChar = '.';
         public const char upstairChar = '<';
         public const char downstairChar = '>';
 
-        public static void setParams(int mapw, int maph)
+        public static void setParams(int mapw, int maph, int lockment)
         {
             mapWidth = mapw;
             mapHeight = maph;
             map = new piece[mapWidth, mapHeight];
+            lockMap = new int[mapWidth, mapHeight];
+            maxKeys = lockment;
         }
 
         static bool dig(int x, int y, int roomwidth, int roomheight)
@@ -46,7 +52,10 @@ namespace StealthRoguelike
                 return false;
             for (int i = 0; i < roomwidth; i++)
                 for (int j = 0; j < roomheight; j++)
-                    map[x+i, y+j] = piece.floor;
+                {
+                    map[x + i, y + j] = piece.floor;
+                    lockMap[x + i, y + j] = currentLockLevel;
+                }
             return true; 
         }
        
@@ -105,6 +114,7 @@ namespace StealthRoguelike
                 {
                     dig(x, y - corrLength, 1, corrLength);
                     map[x, y] = piece.door;
+                    lockMap[x, y] = currentLockLevel;
                     return true;
                 }
             }
@@ -114,6 +124,7 @@ namespace StealthRoguelike
                 {
                     dig(x, y, corrLength, 1);
                     map[x, y] = piece.door;
+                    lockMap[x, y] = currentLockLevel;
                     return true;
                 }
             }
@@ -123,6 +134,7 @@ namespace StealthRoguelike
                 {
                     dig(x, y, 1, corrLength);
                     map[x, y] = piece.door;
+                    lockMap[x, y] = currentLockLevel;
                     return true;
                 }
             }
@@ -132,6 +144,7 @@ namespace StealthRoguelike
                 {
                     dig(x - corrLength, y, corrLength, 1);
                     map[x, y] = piece.door;
+                    lockMap[x, y] = currentLockLevel;
                     return true;
                 }
             }
@@ -154,6 +167,7 @@ namespace StealthRoguelike
                 {
                     dig(x - intersect, y - roomHeight, roomWidth + 1, roomHeight);
                     map[x, y] = piece.door;
+                    lockMap[x, y] = currentLockLevel;
                     return true;
                 }
             }
@@ -164,6 +178,7 @@ namespace StealthRoguelike
                 {
                     dig(x + 1, y - intersect, roomWidth, roomHeight);
                     map[x, y] = piece.door;
+                    lockMap[x, y] = currentLockLevel;
                     return true;
                 }
             }
@@ -174,6 +189,7 @@ namespace StealthRoguelike
                 {
                     dig(x - intersect, y+1, roomWidth, roomHeight);
                     map[x, y] = piece.door;
+                    lockMap[x, y] = currentLockLevel;
                     return true;
                 }
             }
@@ -184,6 +200,7 @@ namespace StealthRoguelike
                 {
                     dig(x - roomWidth, y - intersect, roomWidth, roomHeight);
                     map[x, y] = piece.door;
+                    lockMap[x, y] = currentLockLevel;
                     return true;
                 }
             }
@@ -224,6 +241,23 @@ namespace StealthRoguelike
             }
         }
 
+        static void tryAddKeyplace() //this tries to add a tile where the key should be placed.
+        {
+            int x = MyRandom.getRandomInt(1, mapWidth - 1);
+            int y = MyRandom.getRandomInt(1, mapHeight - 1);
+            //for (int i = 0; i < maxTries; i++)
+            //{
+            while (map[x,y] != piece.floor || lockMap[x,y] != currentLockLevel)
+                {
+                    x = MyRandom.getRandomInt(1, mapWidth - 1);
+                    y = MyRandom.getRandomInt(1, mapHeight - 1);
+                }
+                map[x, y] = piece.keyplace;
+                lockMap[x, y] = currentLockLevel + 1;
+            //    break;
+            //}
+        }
+
         static void addColumns()
         {
             for (int i = 0; i < maxColumns; i++)
@@ -246,9 +280,13 @@ namespace StealthRoguelike
         {
             int roomwidth, roomheight, roomx, roomy;
             //fill everything with "earth"
+            //set everything with zero lock level as well
             for (int i = 0; i < mapWidth; i++)
                 for (int j = 0; j < mapHeight; j++)
+                {
                     map[i, j] = piece.wall;
+                    lockMap[i, j] = currentLockLevel;
+                }
             //place a room in the centre
             roomwidth = MyRandom.getRandomInt(minRoomSize+1, maxRoomSize);
             roomheight = MyRandom.getRandomInt(minRoomSize+1, maxRoomSize);
@@ -263,6 +301,18 @@ namespace StealthRoguelike
             int iteration = 0;
             while (corridors < maxCorridors || rooms < maxRooms)
             {
+                //do we need to increase the current lock level?
+                //TEMPORARY SOLUTION!!111
+                //Hehehe... Temporary...
+                for (int i = 0; i <= maxKeys; i++)
+                {
+                    if (rooms > i * maxRooms / (maxKeys + 1) && i > currentLockLevel)
+                    {
+                        tryAddKeyplace();
+                        currentLockLevel = i;
+                    }
+                }
+
                 //firstly, pick a random wall adjacent to room 
                 //or corridor or something
                     ///!!MOVED TO ANOTHER METHOD!!

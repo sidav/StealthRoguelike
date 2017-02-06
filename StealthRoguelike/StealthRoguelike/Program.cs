@@ -171,7 +171,7 @@ namespace StealthRoguelike
             StartupScreen.ShowSplashScreen();
             Console.Clear();
 
-            MapGenerator.setParams(mapWidth, mapHeight);
+            MapGenerator.setParams(mapWidth, mapHeight, 2);
             Log.ClearLog();
             //drawCrap();
             //char[,] map = MapGenerator.generateDungeon();

@@ -38,10 +38,21 @@ namespace StealthRoguelike
         {                        // and transform it into tiles array
             //generate map
             int[,] codemap = MapGenerator.generateDungeon();
+            int[,] lockmap = MapGenerator.lockMap;
             //transform int-based map into tiles array
             for (int i = 0; i < mapWidth; i++)
                 for (int j = 0; j < mapHeight; j++)
-                    map[i, j] = new Tile(codemap[i, j]);
+                {
+                    map[i, j] = new Tile(codemap[i, j], lockmap[i, j]);
+
+                }
+            //Replace keyplaces with floor tiles with the key...
+            //for (int i = 0; i < mapWidth; i++)
+            //    for (int j = 0; j < mapHeight; j++)
+            //    {
+            //        map[i, j] = new Tile(codemap[i, j], lockmap[i, j]);
+
+            //    }
         }
 
         static void placeActors()

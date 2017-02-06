@@ -1,12 +1,14 @@
 ﻿#CURRENTLY WORKING AT:
 
+Replace keyplaces with floor tiles with the key... <- AS SOON AS POSSIBLE.
+Add locked doors with proper keys placing (that would be interesting) <- let it be the first priority!
+Guards with keys.
 Shooting enemies - almost done!
 Various time costs for moving with various encumbrance - DONE, testing needed
 LCGRandom.getRandomInt(a,b) - WTF is with results range? 
 Stat system
 Items and weapons
 Strangling (Not everything done)
-Add locked doors with proper keys placing (that would be interesting)
 -----------------------------------------------------------
 #NEED TO BE IMPLEMENTED:
 .make guards to investigate suspicious places (almost done)
