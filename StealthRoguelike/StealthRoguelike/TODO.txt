@@ -1,7 +1,8 @@
 ﻿#CURRENTLY WORKING AT:
 
-Replace keyplaces with floor tiles with the key... <- AS SOON AS POSSIBLE.
-Add locked doors with proper keys placing (that would be interesting) <- let it be the first priority!
+Add downward stairways with proper key requirement.
+Add guards with keys istead of keys just lying on the floor.
+Add locked doors with proper keys placing (that would be interesting) <- almost done!
 Guards with keys.
 Shooting enemies - almost done!
 Various time costs for moving with various encumbrance - DONE, testing needed

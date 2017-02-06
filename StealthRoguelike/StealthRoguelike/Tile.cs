@@ -11,7 +11,7 @@ namespace StealthRoguelike
         public char Appearance;
         public ConsoleColor Color;
         public bool WasSeen;
-        public bool IsPassable, isVisionBlocking, IsDoor, IsOpened, IsLocked, IsUpstair, IsDownstair;
+        public bool IsPassable, isVisionBlocking, IsDoor, IsOpened, IsLocked, IsUpstair, IsDownstair, isKeyPlace;
         public int lockLevel = 0;
 
         public Tile(int code, int locklvl)
@@ -48,14 +48,9 @@ namespace StealthRoguelike
                 Appearance = AllChars.closedDoorChar;
                 IsDoor = true;
                 IsOpened = false;
-                switch (locklvl)
-                {
-                    case 0: Color = ConsoleColor.DarkMagenta; break;
-                    case 1: Color = ConsoleColor.Green; break;
-                    case 2: Color = ConsoleColor.DarkYellow; break;
-                    default: Color = ConsoleColor.Green; break;
-                }
+                Color = AllChars.getKeyColor(locklvl);
                 lockLevel = locklvl;
+                IsLocked = (lockLevel > 0);
             }
             if (code == MapGenerator.upstairCode)
             {
@@ -67,17 +62,24 @@ namespace StealthRoguelike
             }
             if (code == MapGenerator.keyplaceCode)
             {
-                Appearance = '&'; //TEMPORARY
+                Appearance = AllChars.keyPlaceChar;
                 IsPassable = true;
-                switch (locklvl)
-                {
-                    case 0: Color = ConsoleColor.DarkMagenta; break;
-                    case 1: Color = ConsoleColor.Green; break;
-                    case 2: Color = ConsoleColor.DarkYellow; break;
-                    default: Color = ConsoleColor.Green; break;
-                }
+                Color = AllChars.getKeyColor(locklvl);
                 lockLevel = locklvl;
+                isKeyPlace = true;
             }
+        }
+
+        public bool TryUnlockDoor(List<Key> keys)
+        {
+            if (IsDoor && IsLocked)
+                foreach (Key k in keys)
+                    if (k.CanOpenLock(lockLevel))
+                    {
+                        IsLocked = false;
+                        return true;
+                    }
+            return false;
         }
 
         public bool TryOpenDoor()

@@ -24,11 +24,20 @@ namespace StealthRoguelike
 
         public void MoveOrOpenOrAttack(int x, int y) //-1 or 0 or 1 for x and y
         {
-            if (World.TryOpenDoor(CoordX + x, CoordY + y))
+            if (World.IsDoorPresent(CoordX + x, CoordY + y))
             {
-                Timing.AddActionTime(TimeCost.OpenDoorCost(this));
-                Log.AddLine("You opened the door.");
-                return;
+                if (World.TryUnlockDoor(CoordX + x, CoordY + y, Inv.GetAllKeys))
+                {
+                    Timing.AddActionTime(TimeCost.OpenDoorCost(this));
+                    Log.AddLine("You have unlocked the door with your key.");
+                    return;
+                }
+                if (World.TryOpenDoor(CoordX + x, CoordY + y))
+                {
+                    Timing.AddActionTime(TimeCost.OpenDoorCost(this));
+                    Log.AddLine("You opened the door.");
+                    return;
+                }
             }
             if (World.IsPassable(CoordX + x, CoordY + y))
             {
@@ -51,6 +60,8 @@ namespace StealthRoguelike
                 Actor attacked = World.getActorAt(CoordX + x, CoordY + y);
                 Attack.MeleeAttack(this, attacked);
             }
+            else if (!World.IsPassable(CoordX + x, CoordY + y))
+                Log.AddLine("Locked! You need a key.");
             //World.Redraw(CoordX-x, CoordY-y);
         }
 
@@ -121,7 +132,7 @@ namespace StealthRoguelike
                 return;
             }
             //don't peep through walls anymore! :D
-            if (World.IsPassable(peepX, peepY) || World.IsDoor(peepX, peepY))
+            if (World.IsPassable(peepX, peepY) || World.IsDoorPresent(peepX, peepY))
             {
                 isPeeping = true;
                 lastPeepX = peepX;

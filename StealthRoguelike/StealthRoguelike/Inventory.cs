@@ -19,6 +19,18 @@ namespace StealthRoguelike
             owner = ownr;
         }
 
+        public List<Key> GetAllKeys
+        {
+            get
+            {
+                List<Key> keyList = new List<Key>();
+                foreach (Item i in Backpack)
+                    if (i is Key)
+                        keyList.Add((Key)i);
+                return keyList;
+            }
+        }
+
         public int getInventoryWeight()
         {
             int wght = 0;

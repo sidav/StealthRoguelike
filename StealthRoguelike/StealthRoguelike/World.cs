@@ -47,12 +47,17 @@ namespace StealthRoguelike
 
                 }
             //Replace keyplaces with floor tiles with the key...
-            //for (int i = 0; i < mapWidth; i++)
-            //    for (int j = 0; j < mapHeight; j++)
-            //    {
-            //        map[i, j] = new Tile(codemap[i, j], lockmap[i, j]);
+            for (int i = 0; i < mapWidth; i++)
+                for (int j = 0; j < mapHeight; j++)
+                {
+                    if (map[i,j].isKeyPlace)
+                    {
+                        int keylvl = map[i, j].lockLevel;
+                        //map[i, j] = new Tile(MapGenerator.floorCode, keylvl);
+                        AllItemsOnFloor.Add(new Key(i, j, keylvl));
+                    }
 
-            //    }
+                }
         }
 
         static void placeActors()
@@ -133,11 +138,18 @@ namespace StealthRoguelike
             return map[x,y].IsPassable;
         }
 
-        public static bool IsDoor(int x, int y)
+        public static bool IsDoorPresent(int x, int y)
         {
             if (x < 0 || x >= mapWidth || y < 0 || y >= mapHeight)
                 return false;
             return map[x, y].IsDoor;
+        }
+
+        public static bool TryUnlockDoor(int x, int y, List<Key> keys)
+        {
+            if (x < 0 || x >= mapWidth || y < 0 || y >= mapHeight)
+                return false;
+            return map[x, y].TryUnlockDoor(keys);
         }
 
         public static bool TryOpenDoor(int x, int y)

@@ -106,10 +106,13 @@ namespace StealthRoguelike
 
         protected void moveForwardOrOpen()
         {
-            if (!World.TryOpenDoor(CoordX + lookX, CoordY + lookY))
+            if (World.IsDoorPresent(CoordX + lookX, CoordY + lookY))
+            {
+                if (World.TryUnlockDoor(CoordX + lookX, CoordY + lookY, Inv.GetAllKeys))
+                    Timing.AddActionTime(TimeCost.OpenDoorCost(this));
+            }
+            else 
                 TryMoveForward();
-            else
-                Timing.AddActionTime(TimeCost.OpenDoorCost(this));
         }
 
         protected void turnToDirection(int x, int y)

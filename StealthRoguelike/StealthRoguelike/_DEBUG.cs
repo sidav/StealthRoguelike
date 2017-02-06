@@ -41,7 +41,7 @@ namespace StealthRoguelike
 
         public static void F4()
         {
-            World.player.Hitpoints += World.player.GetMaxHitpoints();
+            World.player.Hitpoints += 5*World.player.GetMaxHitpoints();
             _DEBUG.AddDebugMessage("health added");
         }
 
