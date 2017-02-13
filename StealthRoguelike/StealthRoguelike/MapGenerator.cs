@@ -14,8 +14,8 @@ namespace StealthRoguelike
         const int maxRoomSize = 12;
         const int minCorridorLength = 3;
         const int maxCorridorLength = 75;
-        const int maxRooms = 35;// AFTER AI TESTING CHANGE THIS TO 35; 
-        const int maxCorridors = 25;// AFTER AI TESTING CHANGE THIS TO 15;
+        const int maxRooms = 35;//35;
+        const int maxCorridors = 0;//25;
         const int maxColumns = 25;
         const int maxTries = 1000; //maximum amount of tries for structure placing
 
@@ -37,13 +37,13 @@ namespace StealthRoguelike
         public const char upstairChar = '<';
         public const char downstairChar = '>';
 
-        public static void setParams(int mapw, int maph, int lockment)
+        public static void setParams(int mapw, int maph, int mk)
         {
             mapWidth = mapw;
             mapHeight = maph;
             map = new piece[mapWidth, mapHeight];
             lockMap = new int[mapWidth, mapHeight];
-            maxKeys = lockment;
+            maxKeys = mk;
         }
 
         static bool dig(int x, int y, int roomwidth, int roomheight)
@@ -79,7 +79,7 @@ namespace StealthRoguelike
                 {
                     if (x + i >= mapWidth || y + j >= mapHeight)
                         return false;
-                    if (map[x + i, y + j] == piece.floor)
+                    if (map[x + i, y + j] == piece.floor || map[x + i, y + j] == piece.door)
                         return false;
                 }
             return true;
@@ -156,6 +156,11 @@ namespace StealthRoguelike
             int roomWidth = MyRandom.getRandomInt(minRoomSize, maxRoomSize);
             int roomHeight = MyRandom.getRandomInt(minRoomSize, maxRoomSize);
             int dir = corrDirection(x, y);
+
+            //DEBUG
+            //if (dir != 1) return false;
+            //DEBUG ENDED 
+
             //directions:
             // 0
             //3#1
@@ -163,9 +168,9 @@ namespace StealthRoguelike
             if (dir == 0) //dig up
             {
                 int intersect = MyRandom.getRandomInt(roomWidth);
-                if (isEmpty(x - intersect - 1, y - roomHeight, roomWidth + 1, roomHeight + 1))
+                if (isEmpty(x - intersect - 1, y - roomHeight-1, roomWidth + 2, roomHeight + 1))
                 {
-                    dig(x - intersect, y - roomHeight, roomWidth + 1, roomHeight);
+                    dig(x - intersect, y - roomHeight, roomWidth/* + 1*/, roomHeight);
                     map[x, y] = piece.door;
                     lockMap[x, y] = currentLockLevel;
                     return true;
@@ -174,7 +179,7 @@ namespace StealthRoguelike
             if (dir == 1) //dig right
             {
                 int intersect = MyRandom.getRandomInt(roomHeight);
-                if (isEmpty(x, y - intersect - 1, roomWidth + 1, roomHeight + 1))
+                if (isEmpty(x, y - intersect - 1, roomWidth + 1, roomHeight + 2))
                 {
                     dig(x + 1, y - intersect, roomWidth, roomHeight);
                     map[x, y] = piece.door;
@@ -185,7 +190,7 @@ namespace StealthRoguelike
             if (dir == 2) //dig down
             {
                 int intersect = MyRandom.getRandomInt(roomWidth);
-                if (isEmpty(x - intersect - 1, y, roomWidth + 1, roomHeight + 1))
+                if (isEmpty(x - intersect - 1, y, roomWidth + 2, roomHeight + 1))
                 {
                     dig(x - intersect, y+1, roomWidth, roomHeight);
                     map[x, y] = piece.door;
@@ -196,7 +201,7 @@ namespace StealthRoguelike
             if (dir == 3) //dig left
             {
                 int intersect = MyRandom.getRandomInt(roomHeight);
-                if (isEmpty(x - roomWidth - 1 , y - intersect - 1, roomWidth + 1, roomHeight + 1))
+                if (isEmpty(x - roomWidth - 1 , y - intersect - 1, roomWidth + 1, roomHeight + 2))
                 {
                     dig(x - roomWidth, y - intersect, roomWidth, roomHeight);
                     map[x, y] = piece.door;
